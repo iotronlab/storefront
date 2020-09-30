@@ -76,6 +76,7 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
+    '@aceforth/nuxt-optimized-images',
   ],
   /*
    ** Nuxt.js modules
@@ -87,7 +88,12 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
+    '@nuxtjs/component-cache',
   ],
+
+  optimizedImages: {
+    optimizeImages: true,
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -115,17 +121,17 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: '/auth/login',
+            url: '/login',
             method: 'post',
-            propertyName: 'token',
+            propertyName: 'accessToken',
           },
           user: {
-            url: '/auth/me',
+            url: '/details',
             method: 'get',
-            propertyName: 'data',
+            propertyName: 'user',
           },
           logout: {
-            url: '/auth/logout',
+            url: '/logout',
             method: 'get',
           },
         },
@@ -133,12 +139,6 @@ export default {
         tokenType: 'Bearer',
         watchLoggedIn: true,
         localStorage: true,
-      },
-
-      'laravel.passport': {
-        url: '/auth/login',
-        client_id: '1',
-        client_secret: 'qncrYUzAv4Qdtj6A0Z6yiYVLRj88yZztq13PRUy5',
       },
     },
   },

@@ -15,9 +15,14 @@ export const mutations = {
 }
 
 export const actions = {
-  async updateNavMenu({ commit, dispatch }) {
-    let response = await this.$axios.$get('/categories')
-
-    commit('SET_CATEGORIES', response.data)
+  async updateNavMenu({ commit }) {
+    await this.$axios
+      .$get('/categories')
+      .then((res) => {
+        commit('SET_CATEGORIES', res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   },
 }
