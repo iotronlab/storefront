@@ -1,23 +1,36 @@
 <template>
   <v-container>
-    <v-img height="400px" src="/carousel/dress.jpg"></v-img>
+    <v-img height="400px" :src="require('@/assets/img/dress.jpg')"></v-img>
     <br />
     <v-row>
       <v-col cols="12" md="3" lg="3">
-        <span class="title">{{slug }}</span>
+        <span class="title">{{ slug }}</span>
         <h1 class="overline accent--text">Sub categories</h1>
         <div v-if="category">
-          <v-expansion-panels popout class="mt-4" style="border-radius: 0 20px 0 20px">
-            <v-expansion-panel v-for="subcategory in category.children" :key="subcategory.id">
-              <v-expansion-panel-header class="primary--text">{{subcategory.name}}</v-expansion-panel-header>
+          <v-expansion-panels
+            popout
+            class="mt-4"
+            style="border-radius: 0 20px 0 20px;"
+          >
+            <v-expansion-panel
+              v-for="subcategory in category.children"
+              :key="subcategory.id"
+            >
+              <v-expansion-panel-header class="primary--text">{{
+                subcategory.name
+              }}</v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-list dense rounded class="mt-n4 px-0 py-0">
                   <v-list-item
                     v-for="subchildren in subcategory.children"
                     :key="subchildren.id"
-                    :to="{ name: 'categories-slug', params: { slug: subcategory.slug}}"
+                    :to="{
+                      name: 'categories-slug',
+                      params: { slug: subcategory.slug },
+                    }"
                     class="accent--text body-2 mt-n2 py-0"
-                  >{{subchildren.name}}</v-list-item>
+                    >{{ subchildren.name }}</v-list-item
+                  >
                 </v-list>
               </v-expansion-panel-content>
             </v-expansion-panel>

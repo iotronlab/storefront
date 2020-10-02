@@ -41,7 +41,11 @@
         <v-divider />
 
         <v-list-item>
-          <v-switch v-model="$vuetify.theme.dark" color="primary" label="Dark"></v-switch>
+          <v-switch
+            v-model="$vuetify.theme.dark"
+            color="primary"
+            label="Dark"
+          ></v-switch>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -57,7 +61,7 @@
             <!-- nav categories -->
             <v-col class="hidden-sm-and-down">
               <v-col class="d-flex align-center">
-                <v-col v-for="category in categories" :key="category.id">
+                <v-col v-for="category in categories" :key="category.slug">
                   <v-menu
                     open-on-hover
                     :close-on-content-click="false"
@@ -70,14 +74,15 @@
                       <v-btn
                         :to="{
                           name: 'category-slug',
-                          params: { slug: category.slug, category: category },
+                          params: { slug: category.slug },
                         }"
                         text
                         small
                         rounded
                         v-on="on"
                         color="primary"
-                      >{{ category.name }}</v-btn>
+                        >{{ category.name }}</v-btn
+                      >
                     </template>
 
                     <v-card width="600px" height="300px">
@@ -97,12 +102,16 @@
                               >
                                 <v-list-item-title
                                   class="primary--text overline"
-                                >{{ subcategory.name }}</v-list-item-title>
+                                  >{{ subcategory.name }}</v-list-item-title
+                                >
                               </v-list-item>
                             </v-list>
                           </v-row>
 
-                          <v-row v-for="subchildren in subcategory.children" :key="subchildren.id">
+                          <v-row
+                            v-for="subchildren in subcategory.children"
+                            :key="subchildren.id"
+                          >
                             <v-list flat dense height="30px" rounded>
                               <v-list-item
                                 :to="{
@@ -110,11 +119,9 @@
                                   params: { slug: subchildren.slug },
                                 }"
                               >
-                                <v-list-item-subtitle class="overline">
-                                  {{
+                                <v-list-item-subtitle class="overline">{{
                                   subchildren.name
-                                  }}
-                                </v-list-item-subtitle>
+                                }}</v-list-item-subtitle>
                               </v-list-item>
                             </v-list>
                           </v-row>
@@ -140,10 +147,32 @@
             </v-col>
 
             <!-- Account button -->
-            <span class="hidden-sm-and-down mx-2" v-if="$auth.loggedIn==false">
+            <span class="mx-2" v-if="$auth.loggedIn == false">
               <Login />
             </span>
+
+            <!-- Account button -->
+            <div v-if="$auth.loggedIn" class="hidden-sm-and-down mr-2">
+              <v-menu bottom offset-y>
+                <template v-slot:activator="{ on }">
+                  <v-btn color="primary" dark v-on="on" icon>
+                    <v-icon>mdi-account</v-icon>
+                  </v-btn>
+                </template>
+                <ProfileList />
+              </v-menu>
+            </div>
+
             <!-- Cart button -->
+            <div v-if="$auth.loggedIn == true">
+              <v-badge overlap>
+                <span slot="badge">{{ cartCount }}</span>
+                <v-btn :to="{ name: 'cart' }" rounded outlined color="primary">
+                  Cart
+                  <v-icon right>mdi-cart</v-icon>
+                </v-btn>
+              </v-badge>
+            </div>
           </v-col>
         </v-row>
       </v-container>
