@@ -1,6 +1,26 @@
 <template>
   <v-container fluid>
+    <v-row v-if="items.length == 0">
+      <v-col
+        v-for="n in item_count"
+        :key="n"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
+        <v-card class="mx-auto" shaped height="320">
+          <v-skeleton-loader
+            class="mx-auto"
+            type="card"
+            max-height="250"
+          ></v-skeleton-loader>
+        </v-card>
+      </v-col>
+        
+    </v-row>
     <v-data-iterator
+      v-else
       :items="items"
       :items-per-page.sync="itemsPerPage"
       :page="page"
@@ -69,6 +89,8 @@ export default {
   },
   data() {
     return {
+      params: {},
+      app: {},
       itemsPerPageArray: [4, 8, 12],
       search: '',
       filter: {},
@@ -78,6 +100,7 @@ export default {
       sortBy: 'name',
       keys: ['name', 'slug', 'price'],
       items: [],
+      item_count: null,
     }
   },
   computed: {
@@ -85,13 +108,18 @@ export default {
       return this.keys.filter((key) => key !== `Name`)
     },
   },
-  async asyncData({ params, app }) {
-    let response = await app.$axios.$get(`/products?category=${params.slug}`)
-    // this.title = params.slug
-    // console.log(params.slug)
-    return {
-      items: response.data,
-    }
+  async mounted(){
+    let response = await this.app.$axios.$get(`/products?category=${this.params.slug}`)
+    this.item_count = response.data.length
+    setTimeout(() => {
+      this.items = response.data
+    }, 500)
   },
+  asyncData({ params, app }){
+    return {
+      params: params,
+      app: app
+    }
+  }
 }
 </script>
