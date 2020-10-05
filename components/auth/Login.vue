@@ -141,6 +141,7 @@ export default {
         })
         .catch((err) => {
           console.log(err)
+          this.$toast.error(err.message)
         })
       this.checkLogin()
     },
