@@ -88,6 +88,7 @@ export default {
     Product,
   },
   data() {
+    console.log("loading data")
     return {
       params: {},
       app: {},
@@ -100,7 +101,7 @@ export default {
       sortBy: 'name',
       keys: ['name', 'slug', 'price'],
       items: [],
-      item_count: null,
+      item_count: 4,
     }
   },
   computed: {
@@ -109,13 +110,16 @@ export default {
     },
   },
   async mounted(){
+    console.log("Mounting data")
     let response = await this.app.$axios.$get(`/products?category=${this.params.slug}`)
+    console.log(response)
     this.item_count = response.data.length
     setTimeout(() => {
       this.items = response.data
     }, 500)
   },
   asyncData({ params, app }){
+    console.log("async func runing")
     return {
       params: params,
       app: app
