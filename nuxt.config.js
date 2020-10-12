@@ -54,6 +54,13 @@ export default {
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      {
+        hid: "rzpay",
+        src: "https://checkout.razorpay.com/v1/checkout.js",
+        defer: true,
+      }
+    ]
   },
   /*
    ** Global CSS
