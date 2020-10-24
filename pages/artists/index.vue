@@ -110,8 +110,11 @@ export default {
     setTimeout(() => {
       this.items = response.data
     }, 500)
+    // http://localhost:8000/api/products/create?family=1
   },
   asyncData({ params, app }){
+    console.log('app below')
+    console.log(app)
     return {
       params: params,
       app: app
