@@ -2,13 +2,16 @@
   <v-container fluid>
     <v-row>
       <v-col lg="4">
-        <h1
-          class="landing-title text--primary font-weight-thin text-uppercase"
-        >A Curated Store for Art</h1>
+        <h1 class="landing-title text--primary font-weight-thin text-uppercase">
+          A Curated Store for Art
+        </h1>
 
-        <h2
-          class="subtitle-1 landing-title text--secondary mt-6"
-        >A citizen's initiative to revive the Indian economy post the covid pandemic 2020, by empowering artists, creator of crafts, and boutiques at the grassroot level, to showcase their creations on a platform crafted for them.</h2>
+        <h2 class="subtitle-1 landing-title text--secondary mt-6">
+          A citizen's initiative to revive the Indian economy post the covid
+          pandemic 2020, by empowering artists, creator of crafts, and boutiques
+          at the grassroot level, to showcase their creations on a platform
+          crafted for them.
+        </h2>
 
         <v-btn outlined rounded class="mt-6">Learn More</v-btn>
       </v-col>
@@ -18,19 +21,21 @@
     </v-row>
     <v-row>
       <h2 headline class="landing-title">Featured</h2>
+      <DropDown />
     </v-row>
   </v-container>
 </template>
 
 <script>
 import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import DropDown from '~/components/nav/DropDown'
 
 export default {
   components: {
     Logo,
-    VuetifyLogo,
+    DropDown,
   },
+  layout: 'landing-page',
 }
 </script>
 <style >
