@@ -23,7 +23,21 @@
                 :disabled="!valid"
                 primary
                 @click="getDetails"
-            >Submit</v-btn>
+            >Available services
+            </v-btn>
+            <v-btn
+                primary
+                @click="generateOrder" 
+            >
+                Place Order
+            </v-btn>
+            <v-btn
+               :disabled="!successOrders"
+                primary
+                @click="generateOrder" 
+            >
+                Cancel order
+            </v-btn>
         </v-form>
         <v-sheet
             v-if="submitted"
@@ -101,9 +115,48 @@ export default {
             ],
             cod: 0,
             services: {},
+            successfulOrders: [],
+            canceledOrders: [],
         }
     },
     methods: {     
+        generateOrder(){
+            this.$axios.post(`https://apiv2.shiprocket.in/v1/external/orders/create/adhoc/?order_id=224-477&order_date=2020-12-26 12:01&pickup_location=Jammu&billing_customer_name=Naruto&billing_last_name=Uzumaki&billing_city=New Delhi&billing_pincode=110002&billing_state=Delhi&billing_country=India&billing_email=naruto@uzumaki.com&billing_phone=9876543210&shipping_is_billing=true&shipping_customer_name=Vegita&shipping_address=Planet Vegeta&shipping_city=Mumbai&shipping_pincode=200912&shipping_country=India&shipping_state=Maharashtra&shipping_email=vegeta@saiyyan.com&shipping_phone=987654322&order_items=[{name:Kunai,sku:chakra123,units:10,selling_price:900,hsn:441122}]&payment_method=Prepaid&shipping_charges=0&giftwrap_charges=0&transaction_charges=0&total_discount=0&sub_total=9000&length=10&breadth=15&height=20&weight=2.5`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${this.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                },
+            )
+            .then(function (response) {
+                console.log(response.data)
+                console.log(JSON.stringify(response.data));
+                this.successOrders.push(response.data)
+                this.canceledOrders.push(response.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        cancelOrder(){
+            this.$axios.post(`https://apiv2.shiprocket.in/v1/external/orders/cancel/?ids=${[this.successOrders[this.successOrders.length]]}`, 
+                {
+                    headers: {
+                        'Authorization': `Bearer ${this.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                },
+            )
+            .then(function (response) {
+                console.log(response.data)
+                console.log(JSON.stringify(response.data));
+
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+        },
         validate () {
             this.$refs.form.validate()
         },   
