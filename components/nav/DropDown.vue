@@ -29,9 +29,7 @@
                   <v-avatar color="grey" class="mr-4"></v-avatar>
                   <strong class="title">{{ item.name }}</strong>
                   <v-spacer></v-spacer>
-                  <v-btn outlined rounded x-small>
-                    see more...
-                  </v-btn>
+                  <v-btn outlined rounded x-small> see more... </v-btn>
                 </v-row>
 
                 <p>

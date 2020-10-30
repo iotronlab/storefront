@@ -3,7 +3,9 @@
     <v-row no-gutters>
       <v-col>
         <v-toolbar flat>
-          <v-toolbar-title v-if="$auth.loggedIn==true">Hi, {{user.name}}</v-toolbar-title>
+          <v-toolbar-title v-if="$auth.loggedIn == true"
+            >Hi, {{ user.name }}</v-toolbar-title
+          >
 
           <v-spacer></v-spacer>
         </v-toolbar>
@@ -30,10 +32,11 @@
 
 <script>
 import ProfileList from '@/components/profile/ProfileList'
+import DropDrawer from '@/components/nav/DropDown'
 import { mapState } from 'vuex'
 export default {
   middleware: ['auth'],
-  components: { ProfileList },
+  components: { ProfileList, DropDrawer },
   computed: {
     ...mapState({
       user: (state) => state.auth.user,

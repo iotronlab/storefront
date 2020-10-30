@@ -1,7 +1,9 @@
 <template>
   <v-app dark>
     <v-navigation-drawer v-model="drawer" temporary fixed app hidden-md-and-up>
-      <v-list avatar shaped>
+      <NavDrawer :items="categories" v-if="categories.length > 0" />
+
+      <!-- <v-list avatar shaped>
         <v-list-group v-for="category in categories" :key="category.id">
           <template v-slot:activator>
             <v-list-item-avatar>
@@ -47,7 +49,7 @@
             label="Dark"
           ></v-switch>
         </v-list-item>
-      </v-list>
+      </v-list> -->
     </v-navigation-drawer>
     <v-app-bar fixed dense app flat>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -136,7 +138,7 @@
                 append-icon="mdi-magnify"
                 placeholder="Search"
                 hide-details
-                style="background-color: white;"
+                style="background-color: white"
                 rounded
                 dense
               />
@@ -192,6 +194,12 @@ export default {
     return {
       drawer: false,
       avatar: '/butiq.png',
+      items: [
+        { title: 'Dashboard', icon: 'mdi-view-dashboard' },
+        { title: 'Photos', icon: 'mdi-image' },
+        { title: 'About', icon: 'mdi-help-box' },
+      ],
+      right: null,
       categories: [
         {
           name: 'Learn',

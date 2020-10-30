@@ -140,7 +140,7 @@ export default {
           user: {
             url: '/details',
             method: 'get',
-            propertyName: 'user',
+            propertyName: 'data',
           },
           logout: {
             url: '/logout',
