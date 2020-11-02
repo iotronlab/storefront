@@ -1,6 +1,6 @@
 <template>
   <v-container>
-        <!--  <v-card class="mx-auto" dark tile height="150">
+    <!--  <v-card class="mx-auto" dark tile height="150">
       <v-img
         height="100%"
         src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
@@ -29,39 +29,40 @@
         do.
       </v-card-subtitle>
     </v-card>-->
-    
-    <v-card :to="link" class="mx-auto" max-width="360">
+
+    <v-card :to="link" class="mx-auto">
       <v-img
         class="white--text align-end"
         height="120px"
         src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
       >
       </v-img>
-      <v-row no-gutters>
-        <v-col>
-          <v-avatar rounded class="profile mx-2 mt-n16" color="grey" size="164">
+      <v-row class="justify-end" no-gutters>
+        <v-col cols="7">
+          <v-avatar class="profile mx-2 mt-n10" color="grey" size="80">
             <v-img
-              :src="vendor.image"
-            ></v-img> </v-avatar
-        ></v-col>
-        <v-col><v-btn>Follow</v-btn></v-col></v-row
-      >
-      <v-card-subtitle class="pb-0">{{vendor.number}}</v-card-subtitle>
+              src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
+            ></v-img>
+          </v-avatar>
+        </v-col>
+        <v-col cols="5" class="pt-1 pr-1 text-right"
+          ><v-btn color="primary">Follow</v-btn></v-col
+        >
+        <v-col class="ml-1 py-0"
+          ><p>{{ vendor.name }}</p>
+        </v-col>
+      </v-row>
+
+      <v-card-subtitle class="pb-0">{{ vendor.number }}</v-card-subtitle>
 
       <v-card-text class="text--primary">
-        <div>{{vendor.name}}</div>
-
         <div>Whitsunday Island, Whitsunday Islands</div>
       </v-card-text>
 
       <v-card-actions>
-        <v-btn color="orange" text>
-          Share
-        </v-btn>
+        <v-btn color="orange" text> Share </v-btn>
 
-        <v-btn color="orange" text>
-          Explore
-        </v-btn>
+        <v-btn color="orange" text> Explore </v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -76,12 +77,7 @@ export default {
   },
   computed: {
     link() {
-      return {
-        name: 'vendors-slug',
-        params: {
-          slug: this.vendor.slug,
-        },
-      }
+      return `/artists/${this.vendor.slug}`
     },
   },
 }

@@ -1,19 +1,16 @@
 <template>
-  <v-row v-if="!vendor">
-    <v-col>
-      <v-card class="mx-auto" shaped height="320">
-        <v-skeleton-loader
-          class="mx-auto"
-          type="card"
-          max-height="250"
-        ></v-skeleton-loader>
-      </v-card>
-    </v-col>
-
-  </v-row>
-  <v-row v-else>
-    <ProfileCard :vendor="vendor" />
-  </v-row>
+  <v-container>
+    <v-row v-if="!vendor">
+      <v-col>
+        <v-card class="mx-auto" shaped>
+          <v-skeleton-loader class="mx-auto" type="card"></v-skeleton-loader>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row v-else>
+      <ProfileCard :vendor="vendor" />
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -30,17 +27,17 @@ export default {
       app: null,
     }
   },
-  async mounted(){
+  async mounted() {
     let response = await this.app.$axios.$get(`/vendors/${this.params.slug}`)
     setTimeout(() => {
       this.vendor = response.data
     }, 500)
   },
-  asyncData({ params, app }){
+  asyncData({ params, app }) {
     return {
       params: params,
-      app: app
+      app: app,
     }
-  }
+  },
 }
 </script>

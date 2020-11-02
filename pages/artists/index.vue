@@ -1,14 +1,7 @@
 <template>
   <v-container fluid>
     <v-row v-if="items.length == 0">
-      <v-col
-        v-for="n in item_count"
-        :key="n"
-        cols="12"
-        sm="6"
-        md="4"
-        lg="3"
-      >
+      <v-col v-for="n in item_count" :key="n" cols="12" sm="6" md="4" lg="3">
         <v-card class="mx-auto" shaped height="320">
           <v-skeleton-loader
             class="mx-auto"
@@ -17,7 +10,6 @@
           ></v-skeleton-loader>
         </v-card>
       </v-col>
-        
     </v-row>
     <v-data-iterator
       v-else
@@ -104,7 +96,7 @@ export default {
       return this.keys.filter((key) => key !== `Name`)
     },
   },
-  async mounted(){
+  async mounted() {
     let response = await this.app.$axios.$get(`/vendors`)
     this.item_count = response.data.length
     setTimeout(() => {
@@ -112,13 +104,13 @@ export default {
     }, 500)
     // http://localhost:8000/api/products/create?family=1
   },
-  asyncData({ params, app }){
+  asyncData({ params, app }) {
     console.log('app below')
     console.log(app)
     return {
       params: params,
-      app: app
+      app: app,
     }
-  }
+  },
 }
 </script>
