@@ -21,7 +21,7 @@
             <v-list-item-content @click="selected()">
               <v-list-item-title>{{ category.name }}</v-list-item-title>
             </v-list-item-content>
-            
+
           </v-list-item>
         </v-list-item-group>
       </v-list> -->
@@ -167,7 +167,7 @@
                 append-icon="mdi-magnify"
                 placeholder="Search"
                 hide-details
-                style="background-color: white"
+                style="background-color: white;"
                 rounded
                 dense
               />
@@ -206,12 +206,10 @@
       <v-spacer />
     </v-app-bar>
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-main>
 
-    <v-footer app>
+    <v-footer app absolute>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>

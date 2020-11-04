@@ -42,7 +42,7 @@ export default {
       return {
         name: 'products-slug',
         params: {
-          slug: this.product.slug,
+          slug: this.product.sku,
         },
       }
     },

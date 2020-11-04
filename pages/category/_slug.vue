@@ -36,6 +36,9 @@
             </v-expansion-panel>
           </v-expansion-panels>
         </div>
+        <div>
+          <h2 class="title mt-2">Featured Artists</h2>
+        </div>
       </v-col>
 
       <v-col cols="12" md="9" lg="9">

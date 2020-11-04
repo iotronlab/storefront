@@ -1,37 +1,44 @@
 <template>
   <v-container fluid>
-    <v-row v-if="items.length == 0">
-      <v-col
-        v-for="n in item_count"
-        :key="n"
-        cols="12"
-        sm="6"
-        md="4"
-        lg="3"
-      >
-        <v-card class="mx-auto" shaped height="320">
-          <v-skeleton-loader
-            class="mx-auto"
-            type="card"
-            max-height="250"
-          ></v-skeleton-loader>
-        </v-card>
-      </v-col>
-        
-    </v-row>
-    <v-data-iterator
-      v-else
-      :items="items"
-      :items-per-page.sync="itemsPerPage"
-      :page="page"
-      :search="search"
-      :sort-by="sortBy.toLowerCase()"
-      :sort-desc="sortDesc"
-      hide-default-footer
-    >
-      <template v-slot:header>
-        <v-toolbar dark color="blue darken-3" class="mb-1">
-          <!-- <v-text-field
+    <span class="title">{{ params.slug }}</span>
+    <span>
+      - {{ items.length }} item
+      <span class="ml-n1" v-if="items.length > 1">s</span>
+    </span>
+    <v-row>
+      <v-col cols="2"> <h3 class="text-overline">Filters</h3></v-col
+      ><v-col cols="10">
+        <v-row v-if="items.length == 0">
+          <v-col
+            v-for="n in item_count"
+            :key="n"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+          >
+            <v-card class="mx-auto" shaped height="320">
+              <v-skeleton-loader
+                class="mx-auto"
+                type="card"
+                max-height="250"
+              ></v-skeleton-loader>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-data-iterator
+          v-else
+          :items="items"
+          :items-per-page.sync="itemsPerPage"
+          :page="page"
+          :search="search"
+          :sort-by="sortBy.toLowerCase()"
+          :sort-desc="sortDesc"
+          hide-default-footer
+        >
+          <template v-slot:header>
+            <v-toolbar dark color="blue darken-3" class="mb-1">
+              <!-- <v-text-field
             v-model="search"
             clearable
             flat
@@ -39,44 +46,62 @@
             hide-details
             label="Search"
           ></v-text-field> -->
-          <v-select
-            v-model="sortBy"
-            flat
-            solo-inverted
-            hide-details
-            :items="keys"
-            label="Sort by"
-          ></v-select>
-          <v-spacer></v-spacer>
-          <template v-if="$vuetify.breakpoint.smAndUp">
-            <v-btn-toggle v-model="sortDesc" mandatory>
-              <v-btn large depressed color="blue" :value="false">
-                <v-icon>mdi-arrow-up</v-icon>
-              </v-btn>
-              <v-btn large depressed color="blue" :value="true">
-                <v-icon>mdi-arrow-down</v-icon>
-              </v-btn>
-            </v-btn-toggle>
+              <v-select
+                v-model="sortBy"
+                flat
+                solo-inverted
+                hide-details
+                :items="keys"
+                label="Sort by"
+              ></v-select>
+              <v-spacer></v-spacer>
+              <template v-if="$vuetify.breakpoint.smAndUp">
+                <v-btn-toggle v-model="sortDesc" mandatory>
+                  <v-btn large depressed color="blue" :value="false">
+                    <v-icon>mdi-arrow-up</v-icon>
+                  </v-btn>
+                  <v-btn large depressed color="blue" :value="true">
+                    <v-icon>mdi-arrow-down</v-icon>
+                  </v-btn>
+                </v-btn-toggle>
+              </template>
+            </v-toolbar>
           </template>
-        </v-toolbar>
-      </template>
-      <template v-slot:default="props">
-        <v-virtual-scroller height="100" item-height="500">
-          <v-row>
-            <v-col
-              v-for="item in props.items"
-              :key="item.name"
-              cols="12"
-              sm="6"
-              md="4"
-              lg="3"
-            >
-              <Product :product="item" />
-            </v-col>
-          </v-row>
-        </v-virtual-scroller>
-      </template>
-    </v-data-iterator>
+          <template v-slot:default="props">
+            <v-virtual-scroller height="100" item-height="500">
+              <v-row>
+                <v-col
+                  v-for="item in props.items"
+                  :key="item.name"
+                  cols="12"
+                  sm="6"
+                  md="4"
+                  lg="3"
+                >
+                  <Product :product="item" />
+                </v-col>
+              </v-row>
+            </v-virtual-scroller>
+          </template> </v-data-iterator></v-col
+    ></v-row>
+
+    <v-app-bar bottom fixed app class="hidden-md-and-up">
+      <v-container class="px-0 py-0">
+        <v-row no-gutters>
+          <v-col> </v-col>
+          <v-col>
+            <v-select
+              class="ml-1"
+              dense
+              placeholder="Sort by"
+              hide-details
+              :items="keys"
+              outlined
+            ></v-select>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-app-bar>
   </v-container>
 </template>
 
@@ -88,7 +113,7 @@ export default {
     Product,
   },
   data() {
-    console.log("loading data")
+    console.log('loading data')
     return {
       params: {},
       app: {},
@@ -109,21 +134,23 @@ export default {
       return this.keys.filter((key) => key !== `Name`)
     },
   },
-  async mounted(){
-    console.log("Mounting data")
-    let response = await this.app.$axios.$get(`/products?category=${this.params.slug}`)
+  async mounted() {
+    console.log('Mounting data')
+    let response = await this.app.$axios.$get(
+      `/products?category=${this.params.slug}`
+    )
     console.log(response)
     this.item_count = response.data.length
     setTimeout(() => {
       this.items = response.data
     }, 500)
   },
-  asyncData({ params, app }){
-    console.log("async func runing")
+  asyncData({ params, app }) {
+    console.log('async func runing')
     return {
       params: params,
-      app: app
+      app: app,
     }
-  }
+  },
 }
 </script>

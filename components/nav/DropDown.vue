@@ -20,10 +20,10 @@
         </v-item>
       </v-item-group>
 
-      <v-col height="100%">
-        <v-window v-model="window" class="elevation-1" vertical>
+      <v-col>
+        <v-window v-model="window" vertical>
           <v-window-item v-for="item in navMenu" :key="item.url">
-            <v-card flat height="100%">
+            <v-card flat>
               <v-card-text>
                 <v-row class="ma-1" align="center">
                   <v-avatar color="grey" class="mr-4"></v-avatar>
