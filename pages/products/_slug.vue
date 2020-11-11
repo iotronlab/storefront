@@ -6,33 +6,47 @@
           <v-img height="500" src="/man.jpg"></v-img>
         </v-col>
         <v-col cols="12" md="6" lg="6">
-          <p class="title">{{product.name}}</p>
+          <p class="title">{{ product.name }}</p>
           <v-divider class="mt-n3 mb-1"></v-divider>
-          <p class="headline">{{product.price}}</p>
+          <p class="headline">{{ product.price }}</p>
           <p v-if="!product.in_stock">Out of Stock</p>
           <v-row>
             <!-- <form action> -->
             <ProductVariation
-              v-for="(variations, type) in product.variations"
-              :type="type"
-              :variations="variations"
-              :key="type"
+              v-for="attributes in product.configurable_attributes.attributes"
+              :type="attributes.label"
+              :attributes="attributes.options"
+              :key="attributes.id"
               @selectType="setType"
-              @input="setVariationId"
-              :disabled="type!=form.type && form.type!=null"
-              :active="form.type != type  ? false : true  "
+              @input="setattributeId"
+              :disabled="type != form.type && form.type != null"
+              :active="form.type != type ? false : true"
               v-model="form.variation"
             />
             <!-- </form> -->
-            <div v-if="form.variation">
+            <!-- <div v-if="form.variation">
               Quantity:
               <select name id v-model="form.quantity">
-                <option :value="x" v-for="x in parseInt(form.variation.stock_count)" :key="x">{{x}}</option>
+                <option
+                  :value="x"
+                  v-for="x in parseInt(form.variation.stock_count)"
+                  :key="x"
+                >
+                  {{ x }}
+                </option>
               </select>
-            </div>
+            </div> -->
           </v-row>
-          {{form}}
-          <p>{{product.description}}</p>
+          {{ 'type Below' }}
+          {{ type }}
+          <br /><br />
+          {{ '=========' }}
+          <br />
+          {{ 'Form below' }}
+          <br /><br />
+
+          {{ form }}
+          <p>{{ product.description }}</p>
           <v-row no-gutters class="hidden-sm-and-down">
             <v-col>
               <v-btn block class="mr-1" color="primary" @click.prevent="add">
@@ -49,14 +63,26 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-rating v-model="rating" color="primary" dense half-increments hover size="25"></v-rating>
+              <v-rating
+                v-model="rating"
+                color="primary"
+                dense
+                half-increments
+                hover
+                size="25"
+              ></v-rating>
             </v-col>
           </v-row>
           <v-app-bar bottom fixed class="hidden-md-and-up">
             <v-container class="px-0 py-0">
               <v-row no-gutters>
                 <v-col>
-                  <v-btn block class="mr-1" color="primary" @click.prevent="add">
+                  <v-btn
+                    block
+                    class="mr-1"
+                    color="primary"
+                    @click.prevent="add"
+                  >
                     Add To Cart
                     <v-icon right>mdi-cart</v-icon>
                   </v-btn>
@@ -101,9 +127,11 @@ export default {
   },
   async asyncData({ params, app }) {
     let response = await app.$axios.$get(`products/${params.slug}`)
-
+    console.log(params)
+    console.log(response)
+    console.log(response.data)
     return {
-      product: response.data,
+      product: response,
     }
   },
   methods: {
@@ -113,21 +141,22 @@ export default {
       // console.log(this.form.type)
     },
     setVariationId(payload) {
+      console.log(payload)
       this.form.type = payload.type
       this.form.variation = payload.variation
-      if (payload.variation.id == undefined) {
-        this.form.id = ''
+      if (payload.variation.slug == undefined) {
+        this.form.slug = ''
       } else {
-        this.form.id = payload.variation.id
+        this.form.slug = payload.variation.slug
       }
-      console.log(this.form.type)
-      console.log(this.form.id)
+      console.log('form type and slug below')
+      console.log(this.form)
     },
     store: 'cart/store',
     add() {
       this.store([
         {
-          id: this.form.variation.id,
+          slug: this.form.variation.slug,
           quantity: this.form.quantity,
         },
       ])

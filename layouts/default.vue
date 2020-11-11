@@ -167,7 +167,7 @@
                 append-icon="mdi-magnify"
                 placeholder="Search"
                 hide-details
-                style="background-color: white;"
+                style="background-color: white"
                 rounded
                 dense
               />
@@ -210,7 +210,27 @@
     </v-main>
 
     <v-footer app absolute>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <!-- <span>&copy; {{ new Date().getFullYear() }}</span> -->
+      <v-container>
+        <v-row>
+          <v-col>
+            <v-icon>mdi-youtube</v-icon>
+            <v-icon>mdi-email</v-icon>
+            <v-icon>mdi-cellphone</v-icon>
+            <v-icon>mdi-instagram</v-icon>
+            <v-icon>mdi-facebook</v-icon>
+            <v-icon>mdi-linkedin</v-icon>
+          </v-col>
+          <v-col>
+            <a href="#">About Us</a><br />
+            <a href="#">Career</a>
+            <!-- <a href="#"></a>
+          <a href="#"></a>
+          <a href="#"></a> -->
+          </v-col>
+          <v-col></v-col>
+        </v-row>
+      </v-container>
     </v-footer>
   </v-app>
 </template>

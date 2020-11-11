@@ -1,12 +1,7 @@
 <template>
-  <v-sheet rounded width="600" height="200" class="ma-1">
-    <v-row align="center" no-gutters>
-      <v-item-group
-        v-model="window"
-        class="shrink mr-6 ml-2"
-        mandatory
-        tag="v-flex"
-      >
+  <v-sheet rounded width="800" class="ma-1">
+    <v-row align="top" no-gutters>
+      <v-item-group v-model="window" class="my-2 mr-6 ml-2" mandatory>
         <v-item
           v-for="item in navMenu"
           :key="item.url"
@@ -25,23 +20,37 @@
           <v-window-item v-for="item in navMenu" :key="item.url">
             <v-card flat>
               <v-card-text>
-                <v-row class="ma-1" align="center">
+                <v-row class="ma-1">
                   <v-avatar color="grey" class="mr-4"></v-avatar>
                   <strong class="title">{{ item.name }}</strong>
                   <v-spacer></v-spacer>
                   <v-btn outlined rounded x-small> see more... </v-btn>
                 </v-row>
-
-                <p>
-                  {{ navMenu }}
-                </p>
+                <v-list dense>
+                  <v-list-item-group>
+                    <v-row>
+                      <v-col
+                        cols="4"
+                        v-for="child in item.children"
+                        :key="child.id"
+                      >
+                        <v-list-item>
+                          <v-list-item-content>
+                            <v-list-item-title
+                              v-text="child.name"
+                            ></v-list-item-title>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-col>
+                    </v-row>
+                  </v-list-item-group>
+                </v-list>
               </v-card-text>
             </v-card>
           </v-window-item>
         </v-window>
-      </v-col>
-    </v-row></v-sheet
-  >
+      </v-col> </v-row
+  ></v-sheet>
 </template>
 <script>
 export default {

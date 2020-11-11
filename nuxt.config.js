@@ -98,7 +98,6 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
-    '@nuxt/content',
     '@nuxtjs/component-cache',
     '@nuxtjs/toast',
   ],

@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters>
+  <v-row no-gutters class="mx-auto">
     <v-col
       class="mb-2"
       cols="12"
@@ -11,19 +11,19 @@
       :key="address.id"
     >
       <p :class="{ 'font-weight-medium': address.id === selectedAddress.id }">
-        {{address.name}}
+        {{ address.name }}
         <br />
-        {{address.address_1}}
+        {{ address.address_1 }}
         <br />
-        {{
-        address.city
-        }}
+        {{ address.city }}
         <br />
-        {{address.postal_code}}
+        {{ address.postal_code }}
         <br />
-        {{address.state.name}}
+        {{ address.state.name }}
       </p>
-      <v-btn class="mb-4" @click.prevent="$emit('click', address)">select</v-btn>
+      <v-btn class="mb-4" @click.prevent="$emit('click', address)"
+        >select</v-btn
+      >
       <v-divider />
     </v-col>
   </v-row>
@@ -33,12 +33,12 @@ export default {
   props: {
     addresses: {
       required: true,
-      type: Array
+      type: Array,
     },
     selectedAddress: {
       required: true,
-      type: Object
-    }
-  }
-};
+      type: Object,
+    },
+  },
+}
 </script>

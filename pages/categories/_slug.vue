@@ -1,12 +1,16 @@
 <template>
   <v-container fluid>
-    <span class="title">{{ params.slug }}</span>
-    <span>
-      - {{ items.length }} item
-      <span class="ml-n1" v-if="items.length > 1">s</span>
-    </span>
+    <v-navigation-drawer absolute right :value="NavState">
+      <FilterProducts :products="products" :min="min" :max="max" />
+    </v-navigation-drawer>
     <v-row>
-      <v-col cols="2"> <h3 class="text-overline">Filters</h3></v-col
+      <v-col cols="2" class="hidden-md-and-down">
+        <span class="title">{{ params.slug }}</span>
+        <span>
+          - {{ items.length }} item
+          <span class="ml-n1" v-if="items.length > 1">s</span>
+        </span>
+        <FilterProducts :products="products" :min="min" :max="max" /></v-col
       ><v-col cols="10">
         <v-row v-if="items.length == 0">
           <v-col
@@ -88,7 +92,7 @@
     <v-app-bar bottom fixed app class="hidden-md-and-up">
       <v-container class="px-0 py-0">
         <v-row no-gutters>
-          <v-col> </v-col>
+          <v-col><v-btn @click="ChangeState">Filter</v-btn> </v-col>
           <v-col>
             <v-select
               class="ml-1"
@@ -107,14 +111,17 @@
 
 <script>
 import Product from '@/components/products/Product'
+import FilterProducts from '@/components/filter/FilterProducts'
 
 export default {
   components: {
     Product,
+    FilterProducts,
   },
   data() {
     console.log('loading data')
     return {
+      state: null,
       params: {},
       app: {},
       itemsPerPageArray: [4, 8, 12],
@@ -127,7 +134,18 @@ export default {
       keys: ['name', 'slug', 'price'],
       items: [],
       item_count: 4,
+      products: null,
+      min: Infinity,
+      max: -1 * Infinity,
+      checkbox: {},
+      NavState: false,
     }
+  },
+  methods: {
+    ChangeState() {
+      this.NavState = this.NavState ? false : true
+      return this.NavState
+    },
   },
   computed: {
     filteredKeys() {
@@ -147,9 +165,25 @@ export default {
   },
   asyncData({ params, app }) {
     console.log('async func runing')
+    let min = Infinity
+    let max = -Infinity
+    let products = []
+    for (let i = 0; i < 10; i++) {
+      let obj = {}
+      obj.category = `Category ${i}`
+      obj.product = `Product ${i}`
+      obj.price = Math.random() * 100
+      // obj.key = i
+      min = Math.min(min, obj.price)
+      max = Math.max(max, obj.price)
+      products.push(obj)
+    }
     return {
       params: params,
       app: app,
+      min: min,
+      max: max,
+      products: products,
     }
   },
 }

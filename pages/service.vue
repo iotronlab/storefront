@@ -20,8 +20,8 @@ export default {
     let auth = null
     await app.$axios
       .post('https://apiv2.shiprocket.in/v1/external/auth/login', {
-        email: 'sarthak.k7189@gmail.com',
-        password: 'Anik@9046',
+        email: 'sarthakkhandelwal_ch@srmuniv.edu.in',
+        password: '904663210',
       })
       .then((res) => {
         auth = res.data

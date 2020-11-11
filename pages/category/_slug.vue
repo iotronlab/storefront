@@ -10,7 +10,7 @@
           <v-expansion-panels
             popout
             class="mt-4"
-            style="border-radius: 0 20px 0 20px;"
+            style="border-radius: 0 20px 0 20px"
           >
             <v-expansion-panel
               v-for="subcategory in category.children"
@@ -40,7 +40,7 @@
           <h2 class="title mt-2">Featured Artists</h2>
         </div>
       </v-col>
-
+      {{ products }}
       <v-col cols="12" md="9" lg="9">
         <h1 class="display-1 accent--text">#featured</h1>
         <v-row>
