@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col lg="4">
+  <v-container fluid class="body-image mt-n12">
+    <v-row no-gutters align="center" justify="center">
+      <v-col lg="3">
         <h1 class="landing-title text-uppercase primary--text text-h3">
           Curated Store for Art
         </h1>
@@ -13,16 +13,19 @@
           crafted for them.
         </h2>
 
-   <v-btn  rounded class="mt-6">Shop</v-btn>
+        <v-btn rounded class="mt-6">Shop</v-btn>
         <v-btn outlined rounded class="mt-6">Learn More</v-btn>
       </v-col>
-      <v-col lg="8">
+      <v-col lg="6">
         <v-img cover src="landing-bg.png"></v-img>
       </v-col>
     </v-row>
     <v-row>
-      <h2 headline class="landing-title">Featured</h2>
-      <DropDown />
+      <h2 headline class="landing-title text-uppercase primary--text text-h6">
+        Featured <span class="overline">This week</span>
+      </h2>
+
+      <v-container height="600"></v-container>
     </v-row>
   </v-container>
 </template>
@@ -36,14 +39,21 @@ export default {
     Logo,
     DropDown,
   },
-  layout: 'landing-page',
+  //layout: 'landing-page',
 }
 </script>
 <style >
 .landing-title {
   line-height: 95%;
-  opacity: 60%;
   outline: none;
+}
+.body-image {
+  background-image: url('/body.png');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
 .v-application.theme--light .landing-title {
   transition: background 0.1s, color 0.1s;

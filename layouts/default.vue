@@ -76,13 +76,13 @@
         </v-list-item>
       </v-list> -->
     </v-navigation-drawer>
-    <v-app-bar fixed dense app flat>
+    <v-app-bar fixed dense app flat style="background: transparent">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <nuxt-link :to="{ name: 'index' }">
-        <v-img src="/butiq.png" contain width="80" />
+        <v-img src="/butiq.png" width="60" />
       </nuxt-link>
 
-      <v-container fluid px-0>
+      <v-container fluid>
         <v-row no-gutters>
           <v-col class="d-flex align-center">
             <!-- nav categories -->
@@ -209,10 +209,10 @@
       <nuxt />
     </v-main>
 
-    <v-footer app absolute>
+    <v-footer app absolute padless>
       <!-- <span>&copy; {{ new Date().getFullYear() }}</span> -->
-      <v-container>
-        <v-row>
+      <v-container fluid class="footer-image pa-1">
+        <v-row no-gutters align="center" >
           <v-col>
             <v-icon>mdi-youtube</v-icon>
             <v-icon>mdi-email</v-icon>
@@ -228,9 +228,11 @@
           <a href="#"></a>
           <a href="#"></a> -->
           </v-col>
-          <v-col></v-col>
-        </v-row>
-      </v-container>
+          </v-row
+        ><v-row no-gutters
+          ><span>&copy; {{ new Date().getFullYear() }}</span></v-row
+        ></v-container
+      >
     </v-footer>
   </v-app>
 </template>
@@ -281,5 +283,14 @@ export default {
 <style>
 .nav-transparent {
   background-color: transparent !important;
+}
+
+.footer-image {
+  background-image: url('/footer.png');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
 </style>
