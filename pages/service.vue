@@ -18,20 +18,30 @@ export default {
   },
   async asyncData({ params, app }) {
     let auth = null
-    await app.$axios
-      .post('https://apiv2.shiprocket.in/v1/external/auth/login', {
-        email: 'sarthakkhandelwal_ch@srmuniv.edu.in',
-        password: '904663210',
+    var myHeaders = new Headers()
+    myHeaders.append('Content-Type', 'application/json')
+
+    var raw = JSON.stringify({
+      email: 'sarthakkhandelwal_ch@srmuniv.edu.in',
+      password: '9046632101',
+    })
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    }
+
+    await fetch(
+      'https://apiv2.shiprocket.in/v1/external/auth/login',
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        auth = result
       })
-      .then((res) => {
-        auth = res.data
-        console.log('Success')
-        console.log(auth)
-      })
-      .catch((err) => {
-        console.log('error')
-        console.log(err)
-      })
+      .catch((error) => console.log('error', error))
     return {
       auth: auth,
     }

@@ -53,9 +53,7 @@
                       >
                       <v-list-item-subtitle
                         >Estimated:
-                        {{
-                          service.estimated_delivery_days
-                        }}
+                        {{ service.estimated_delivery_days }}
                         days</v-list-item-subtitle
                       >
                     </v-list-item-content>
@@ -114,6 +112,7 @@ export default {
           this.canceledOrders.push(response.data)
         })
         .catch(function (error) {
+          console.log('error in component')
           console.log(error)
         })
     },

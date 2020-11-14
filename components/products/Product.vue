@@ -39,17 +39,17 @@ export default {
 
   computed: {
     link() {
-      // let slug =
-      //   this.product.variants.length > 0
-      //     ? this.product.variants[0].sku
-      //     : this.product.sku
+      let slug =
+        this.product.variants.length > 0
+          ? this.product.variants[0].sku
+          : this.product.sku
       // console.log(slug)
       // console.log('slug above')
       // return '#'
       return {
         name: 'products-slug',
         params: {
-          slug: this.product.sku,
+          slug: slug,
         },
       }
     },

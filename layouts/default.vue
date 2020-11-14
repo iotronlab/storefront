@@ -212,7 +212,7 @@
     <v-footer app absolute padless>
       <!-- <span>&copy; {{ new Date().getFullYear() }}</span> -->
       <v-container fluid class="footer-image pa-1">
-        <v-row no-gutters align="center" >
+        <v-row no-gutters align="center">
           <v-col>
             <v-icon>mdi-youtube</v-icon>
             <v-icon>mdi-email</v-icon>
@@ -227,8 +227,7 @@
             <!-- <a href="#"></a>
           <a href="#"></a>
           <a href="#"></a> -->
-          </v-col>
-          </v-row
+          </v-col> </v-row
         ><v-row no-gutters
           ><span>&copy; {{ new Date().getFullYear() }}</span></v-row
         ></v-container
