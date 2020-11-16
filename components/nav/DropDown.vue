@@ -18,7 +18,7 @@
       <v-col>
         <v-window v-model="window" vertical>
           <v-window-item v-for="item in navMenu" :key="item.url">
-            <v-card flat>
+            <v-card flat class="body-image">
               <v-card-text>
                 <v-row class="ma-1">
                   <v-avatar color="grey" class="mr-4"></v-avatar>
@@ -26,15 +26,15 @@
                   <v-spacer></v-spacer>
                   <v-btn outlined rounded x-small> see more... </v-btn>
                 </v-row>
-                <v-list dense>
+                <v-list dense nav style="opacity: 70%">
                   <v-list-item-group>
-                    <v-row>
+                    <v-row no-gutters>
                       <v-col
                         cols="4"
                         v-for="child in item.children"
                         :key="child.id"
                       >
-                        <v-list-item >
+                        <v-list-item>
                           <v-list-item-content>
                             <v-list-item-title
                               v-text="child.name"

@@ -169,14 +169,14 @@ export default {
 
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-     treeShake: true,
+    treeShake: true,
     theme: {
-      dark: false,
+      dark: true,
       themes: {
         dark: {
-          primary: colors.purple.base,
+          primary: colors.purple.accent4,
           accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
+          secondary: colors.purple.lighten1,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,

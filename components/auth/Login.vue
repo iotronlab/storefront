@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn rounded color="primary" dark v-on="on">Login</v-btn>
+      <v-btn small rounded color="primary" dark v-on="on">Login</v-btn>
     </template>
     <template>
       <v-card>
@@ -10,13 +10,13 @@
             <v-col class="d-flex justify-center" md="8" offset-md="2">
               <v-form @submit.prevent="login" id="login-form" method="post">
                 <v-img
-                src="/butiq.png"
-                contain
-                height="120"
-                width="120"
-                max-width="120"
-                class="mx-auto"
-              />
+                  src="/butiq.png"
+                  contain
+                  height="120"
+                  width="120"
+                  max-width="120"
+                  class="mx-auto"
+                />
 
                 <v-text-field
                   prepend-icon="mdi-email"
@@ -40,7 +40,14 @@
                 ></v-text-field>
                 {{ message }}
                 <div class="d-flex justify-center">
-                  <v-btn color="primary" rounded outlined type="submit" class="mt-4">LogIn</v-btn>
+                  <v-btn
+                    color="primary"
+                    rounded
+                    outlined
+                    type="submit"
+                    class="mt-4"
+                    >LogIn</v-btn
+                  >
                 </div>
 
                 <br />
@@ -78,16 +85,18 @@
             <v-btn
               text
               x-small
-              :to="{path: '/auth/register-reset', query: {type: 'new'}}"
-              @click="dialog=false"
-            >Create an account</v-btn>
+              :to="{ path: '/auth/register-reset', query: { type: 'new' } }"
+              @click="dialog = false"
+              >Create an account</v-btn
+            >
 
             <v-btn
               text
               x-small
-              :to="{path: '/auth/register-reset', query: {type: 'reset'}}"
-              @click="dialog=false"
-            >Forgot password</v-btn>
+              :to="{ path: '/auth/register-reset', query: { type: 'reset' } }"
+              @click="dialog = false"
+              >Forgot password</v-btn
+            >
           </v-row>
         </v-container>
       </v-card>

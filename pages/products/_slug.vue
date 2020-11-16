@@ -3,13 +3,23 @@
     <v-container fluid>
       <v-row>
         <v-col cols="12" md="6" lg="6">
-          <v-img height="500" src="/man.jpg"></v-img>
+          <ProductImage />
         </v-col>
         <v-col cols="12" md="6" lg="6">
-          <p class="title">{{ product.name }}</p>
-          <v-divider class="mt-n3 mb-1"></v-divider>
-          <p class="headline">{{ product.price }}</p>
+          <h4 class="text-h6">{{ product.product.name }}</h4>
+          <v-divider class="mb-1"></v-divider>
+          <h3 class="text-h5">{{ product.product.price }}</h3>
           <p v-if="!product.in_stock">Out of Stock</p>
+          <h5 class="text-h6">Artist Name</h5>
+          <v-rating
+            v-model="rating"
+            color="primary"
+            dense
+            half-increments
+            hover
+            small
+            size="25"
+          ></v-rating>
           <v-row>
             <!-- <form action> -->
             <ProductVariation
@@ -64,16 +74,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
-              <v-rating
-                v-model="rating"
-                color="primary"
-                dense
-                half-increments
-                hover
-                size="25"
-              ></v-rating>
-            </v-col>
+            <v-col> </v-col>
           </v-row>
           <v-app-bar bottom fixed class="hidden-md-and-up">
             <v-container class="px-0 py-0">

@@ -3,6 +3,9 @@
 // The variables you want to modify
 // $font-size-root: 20px;
 
-$material-light: ('background':#e0e0e0);
+$material-light: (
+  'background': #e0e0e0,
+);
 
-$heading-font-family:'Montserrat', sans-serif;
+$heading-font-family: 'Montserrat', sans-serif;
+$card-elevation: 0;

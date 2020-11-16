@@ -1,33 +1,55 @@
 <template>
-  <v-container fluid class="body-image mt-n12">
-    <v-row no-gutters align="center" justify="center">
-      <v-col lg="3">
-        <h1 class="landing-title text-uppercase primary--text text-h3">
-          Curated Store for Art
-        </h1>
+  <section class="mb-1">
+    <v-container fluid class="mt-n12 body-image">
+      <v-row no-gutters class="mt-12" align="center" justify="center">
+        <v-col lg="3">
+          <h1 class="landing-title text-uppercase primary--text text-h3">
+            Curated Store for Art
+          </h1>
 
-        <h2 class="subtitle-2 text--secondary mt-4">
-          A citizen's initiative to revive the Indian economy post the covid
-          pandemic 2020, by empowering artists, creator of crafts, and boutiques
-          at the grassroot level, to showcase their creations on a platform
-          crafted for them.
-        </h2>
+          <h2 class="subtitle-2 text--secondary mt-4">
+            A citizen's initiative to revive the Indian economy post the covid
+            pandemic 2020, by empowering artists, creator of crafts, and
+            boutiques at the grassroot level, to showcase their creations on a
+            platform crafted for them.
+          </h2>
 
-        <v-btn rounded class="mt-6">Shop</v-btn>
-        <v-btn outlined rounded class="mt-6">Learn More</v-btn>
-      </v-col>
-      <v-col lg="6">
-        <v-img cover src="landing-bg.png"></v-img>
-      </v-col>
-    </v-row>
-    <v-row>
-      <h2 headline class="landing-title text-uppercase primary--text text-h6">
-        Featured <span class="overline">This week</span>
+          <v-btn rounded class="mt-6">Shop</v-btn>
+          <v-btn outlined rounded class="mt-6">Learn More</v-btn>
+        </v-col>
+        <v-col lg="6">
+          <v-img cover src="landing-bg.png"></v-img>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-row no-gutters class="pa-2 text-right">
+      <h2
+        class="landing-title text-uppercase primary--text text-h5 mx-auto mt-4"
+      >
+        Featured Artworks
+        <p class="overline">This week</p>
       </h2>
 
       <v-container height="600"></v-container>
     </v-row>
-  </v-container>
+    <v-row no-gutters class="pa-2 text-right">
+      <h2
+        class="landing-title text-uppercase primary--text text-h5 mx-auto mt-4"
+      >
+        Featured Artists
+        <p class="overline">This week</p>
+      </h2>
+
+      <v-container height="600"></v-container>
+    </v-row>
+    <v-row no-gutters>
+      <h2 class="landing-title text-uppercase primary--text text-h5 mx-auto">
+        Discover
+        <p class="overline">This week</p>
+      </h2>
+      <v-card height="400" />
+    </v-row>
+  </section>
 </template>
 
 <script>

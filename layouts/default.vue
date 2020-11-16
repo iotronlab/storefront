@@ -3,83 +3,11 @@
     <v-navigation-drawer v-model="drawer" temporary fixed app>
       <!-- {{ categories }} -->
       <NavDrawer :items="categories" v-if="categories.length > 0" />
-
-      <!-- {{ categories }}
-      <v-list flat>
-        <v-subheader>REPORTS</v-subheader>
-        {{ selectedItem }}
-
-        <v-list-item-group v-model="selectedItem" color="primary">
-          <v-list-item
-            :value="category"
-            v-for="(category, i) in categories"
-            :key="i"
-          >
-            <v-list-item-icon>
-              <v-icon src="/icon.png"></v-icon>
-            </v-list-item-icon>
-            <v-list-item-content @click="selected()">
-              <v-list-item-title>{{ category.name }}</v-list-item-title>
-            </v-list-item-content>
-
-          </v-list-item>
-        </v-list-item-group>
-      </v-list> -->
-      <!-- <v-list avatar shaped>
-        <v-list-group v-for="category in categories" :key="category.id">
-          {{ category }}
-          <v-list-item>
-            <v-list-item-avatar>
-              <v-img src="/icon.png"></v-img>
-            </v-list-item-avatar>
-            <v-list-item-title></v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            no-action
-            sub-group
-            v-for="subcategory in category.children"
-            :key="subcategory.id"
-            @click="selected(subcategory)"
-          >
-            {{ selectedItem }}
-            <NavDrawer :items="selectedItem" v-if="selectedItem" />
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>{{ subcategory.name }}</v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              link
-              v-for="subchildren in subcategory.children"
-              :key="subchildren.id"
-              :to="{
-                name: 'categories-slug',
-                params: { slug: subchildren.slug },
-              }"
-            >
-              <v-list-item-title>{{ subchildren.name }}</v-list-item-title>
-              <v-list-item-icon>
-                <v-icon></v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-item>
-        </v-list-group>
-        <v-divider />
-
-        <v-list-item>
-          <v-switch
-            v-model="$vuetify.theme.dark"
-            color="primary"
-            label="Dark"
-          ></v-switch>
-        </v-list-item>
-      </v-list> -->
     </v-navigation-drawer>
-    <v-app-bar fixed dense app flat style="background: transparent">
+    <v-app-bar id="nav" fixed dense app flat class="nav-transparent">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <nuxt-link :to="{ name: 'index' }">
-        <v-img src="/butiq.png" width="60" />
+        <v-img src="/butiq.png" width="70" />
       </nuxt-link>
 
       <v-container fluid>
@@ -108,53 +36,12 @@
                         rounded
                         v-on="on"
                         color="primary"
-                        >{{ category.name }}</v-btn
+                        class="font-weight-bold"
                       >
+                        {{ category.name }}
+                      </v-btn>
                     </template>
                     <DropDown :navMenu="category.children" />
-                    <!-- <v-card width="600px" height="300px">
-                      <v-row class="mx-2">
-                        <v-col
-                          cols="4"
-                          v-for="subcategory in category.children"
-                          :key="subcategory.id"
-                        >
-                          <v-row>
-                            <v-list flat dense height="30px" rounded>
-                              <v-list-item
-                                :to="{
-                                  name: 'categories-slug',
-                                  params: { slug: subcategory.slug },
-                                }"
-                              >
-                                <v-list-item-title
-                                  class="primary--text overline"
-                                  >{{ subcategory.name }}</v-list-item-title
-                                >
-                              </v-list-item>
-                            </v-list>
-                          </v-row>
-
-                          <v-row
-                            v-for="subchildren in subcategory.children"
-                            :key="subchildren.id"
-                          >
-                            <v-list flat dense height="30px" rounded>
-                              <v-list-item
-                                :to="{
-                                  name: 'categories-slug',
-                                  params: { slug: subchildren.slug },
-                                }"
-                              >
-                                <v-list-item-subtitle class="overline">{{
-                                  subchildren.name
-                                }}</v-list-item-subtitle>
-                              </v-list-item>
-                            </v-list>
-                          </v-row>
-                        </v-col>
-                      </v-row>
-                    </v-card> -->
                   </v-menu>
                 </v-col>
               </v-col>
@@ -165,9 +52,10 @@
             <v-col class="hidden-sm-and-down mx-2">
               <v-text-field
                 append-icon="mdi-magnify"
-                placeholder="Search"
+                placeholder="find artworks, artists, art forms..."
+                filled
+                color="secondary"
                 hide-details
-                style="background-color: white"
                 rounded
                 dense
               />
@@ -209,29 +97,9 @@
       <nuxt />
     </v-main>
 
-    <v-footer app absolute padless>
+    <v-footer app absolute padless max-height="950">
       <!-- <span>&copy; {{ new Date().getFullYear() }}</span> -->
-      <v-container fluid class="footer-image pa-1">
-        <v-row no-gutters align="center">
-          <v-col>
-            <v-icon>mdi-youtube</v-icon>
-            <v-icon>mdi-email</v-icon>
-            <v-icon>mdi-cellphone</v-icon>
-            <v-icon>mdi-instagram</v-icon>
-            <v-icon>mdi-facebook</v-icon>
-            <v-icon>mdi-linkedin</v-icon>
-          </v-col>
-          <v-col>
-            <a href="#">About Us</a><br />
-            <a href="#">Career</a>
-            <!-- <a href="#"></a>
-          <a href="#"></a>
-          <a href="#"></a> -->
-          </v-col> </v-row
-        ><v-row no-gutters
-          ><span>&copy; {{ new Date().getFullYear() }}</span></v-row
-        ></v-container
-      >
+      <Footer />
     </v-footer>
   </v-app>
 </template>
@@ -251,9 +119,21 @@ export default {
       selectedItem: null,
     }
   },
-  mounted() {
+  created() {
     this.initialize()
   },
+  mounted() {
+    let myNav = document.getElementById('nav')
+    window.onscroll = function () {
+      'use strict'
+      if (document.body.scrollTop >= 200) {
+        myNav.classList.add('nav-transparent')
+      } else {
+        myNav.classList.remove('nav-transparent')
+      }
+    }
+  },
+
   computed: {
     ...mapGetters({
       categories: 'categories',
@@ -285,11 +165,9 @@ export default {
 }
 
 .footer-image {
-  background-image: url('/footer.png');
-  height: 100%;
+  background-image: url('/body.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
 }
 </style>
