@@ -76,6 +76,51 @@
             </v-toolbar>
           </template> -->
         <template>
+          <div>
+            <v-container class="max-width">
+              <v-row>
+                <!-- {{ 'page: ' + page + 'total pages: ' + pages }} -->
+                <v-col
+                  v-for="n in item_count"
+                  v-if="items.length == 0"
+                  :key="n"
+                  cols="12"
+                  sm="6"
+                  md="4"
+                  lg="3"
+                >
+                  <v-card class="mx-auto" shaped height="320">
+                    <v-skeleton-loader
+                      class="mx-auto"
+                      type="card"
+                      max-height="250"
+                    ></v-skeleton-loader>
+                  </v-card>
+                </v-col>
+                <v-col
+                  v-for="item in items"
+                  :key="item.name"
+                  cols="12"
+                  sm="6"
+                  md="4"
+                  lg="3"
+                >
+                  <Product :product="item" />
+                </v-col>
+              </v-row>
+              <v-pagination
+                v-model="page"
+                class="my-4"
+                :length="pages"
+                circle
+                @next="fetech_products(`?page=${page}`)"
+                @previous="fetech_products(`?page=${page}`)"
+                @input="fetech_products(`?page=${page}`)"
+              ></v-pagination>
+            </v-container>
+          </div>
+        </template>
+        <!-- <template>
           <v-virtual-scroller height="100" item-height="500">
             <v-row>
               <v-col
@@ -108,7 +153,7 @@
               <Observer @intersect="intersected" />
             </v-row>
           </v-virtual-scroller>
-        </template>
+        </template> -->
         <!-- </v-data-iterator> -->
       </v-col></v-row
     >
@@ -137,13 +182,13 @@
 import { mapGetters, mapActions, mapMutations, mapState } from 'vuex'
 import Product from '@/components/products/Product'
 import FilterProducts from '@/components/filter/FilterProducts'
-import Observer from '~/components/Observe/Observe'
+// import Observer from '~/components/Observe/Observe'
 
 export default {
   components: {
     Product,
     FilterProducts,
-    Observer,
+    // Observer,
   },
   data() {
     return {
@@ -167,35 +212,27 @@ export default {
       filtered: [],
       filter_options: null,
       page: 1,
-      next: null,
-      scrolling: false,
+      // next: null,
+      // scrolling: false,
+      pages: null,
     }
   },
   methods: {
     ChangeState() {
-      console.log('in change state')
-      console.log(this.NavState)
-
       this.NavState = this.NavState ? false : true
-      console.log(this.NavState)
       return this.NavState
     },
     async fetech_products(query = '') {
       let response = null
-      // console.log('query below')
-      // console.log(query)
       response = await this.app.$axios.$get(`/products` + query)
       this.item_count = response.data.length
-      // console.log('Data')
-      // console.log(response)
-      this.next = response.links.next
+      this.pages = Math.ceil(response.meta.total / response.meta.per_page)
       setTimeout(() => {
         this.items = response.data
       }, 500)
       this.$router.push({ path: this.$route.path, query: { page: this.page } })
-      console.log('in fetch data ')
-      console.log(this.$route)
     },
+
     filter_products(filtered) {
       this.filtered = filtered
       let query = ''
@@ -207,30 +244,30 @@ export default {
       }
       this.fetech_products(query)
     },
-    async intersected() {
-      if (!this.next) return
-      // console.log(`next: ${this.next}`)
-      const res = await fetch(this.next)
-      this.page++
-      const response = await res.json()
-      const items = response.data
-      this.next = response.links.next
-      // console.log(`old: ${this.items.length} new`)
-      // console.log(items)
-      console.log(items.length)
-      this.item_count = items.length
-      this.scrolling = true
-      setTimeout(() => {
-        this.scrolling = false
-        this.items = [...this.items, ...items]
-      }, 2000)
-      this.$router.push({ path: this.$route.path, query: { page: this.page } })
-      // this.$route.query.page = String(this.page)
-      console.log('route below')
-      console.log(this.$route)
-      // this.items = [...this.items, ...items]
-      console.log(`total: ${this.items.length}`)
-    },
+    // async intersected() {
+    //   if (!this.next) return
+    //   // console.log(`next: ${this.next}`)
+    //   const res = await fetch(this.next)
+    //   this.page++
+    //   const response = await res.json()
+    //   const items = response.data
+    //   this.next = response.links.next
+    //   // console.log(`old: ${this.items.length} new`)
+    //   // console.log(items)
+    //   console.log(items.length)
+    //   this.item_count = items.length
+    //   this.scrolling = true
+    //   setTimeout(() => {
+    //     this.scrolling = false
+    //     this.items = [...this.items, ...items]
+    //   }, 2000)
+    //   this.$router.push({ path: this.$route.path, query: { page: this.page } })
+    //   // this.$route.query.page = String(this.page)
+    //   console.log('route below')
+    //   console.log(this.$route)
+    //   // this.items = [...this.items, ...items]
+    //   console.log(`total: ${this.items.length}`)
+    // },
   },
   computed: {
     ...mapGetters({
