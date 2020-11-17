@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto" max-width="500">
     <v-card-title class="title font-weight-regular justify-space-between">
-      <span>{{ currentTitle }}</span>
+      <span>{{ pageName }}</span>
       <v-avatar
         color="primary lighten-1"
         class="subheading white--text"
@@ -61,7 +61,9 @@ export default {
   data: () => ({
     step: 1,
   }),
-
+  props: {
+    pageName: { required: true, type: String },
+  },
   computed: {
     currentTitle() {
       switch (this.step) {
