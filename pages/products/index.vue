@@ -77,8 +77,8 @@
           </template> -->
         <template>
           <div>
-            <v-container class="max-width">
-              <v-row>
+            <v-container class="max-width" fluid>
+              <v-row no-gutters>
                 <!-- {{ 'page: ' + page + 'total pages: ' + pages }} -->
                 <v-col
                   v-for="n in item_count"
@@ -113,9 +113,10 @@
                 class="my-4"
                 :length="pages"
                 circle
-                @next="fetech_products(`?page=${page}`)"
-                @previous="fetech_products(`?page=${page}`)"
-                @input="fetech_products(`?page=${page}`)"
+                :value="page"
+                @next="updateQuery()"
+                @previous="updateQuery()"
+                @input="updateQuery()"
               ></v-pagination>
             </v-container>
           </div>
@@ -185,6 +186,7 @@ import FilterProducts from '@/components/filter/FilterProducts'
 // import Observer from '~/components/Observe/Observe'
 
 export default {
+  // watchQuery: ['page'],
   components: {
     Product,
     FilterProducts,
@@ -222,15 +224,12 @@ export default {
       this.NavState = this.NavState ? false : true
       return this.NavState
     },
-    async fetech_products(query = '') {
-      let response = null
-      response = await this.app.$axios.$get(`/products` + query)
-      this.item_count = response.data.length
-      this.pages = Math.ceil(response.meta.total / response.meta.per_page)
-      setTimeout(() => {
-        this.items = response.data
-      }, 500)
-      this.$router.push({ path: this.$route.path, query: { page: this.page } })
+    async updateQuery() {
+      console.log('in Update Query')
+      console.log(this.$route)
+      this.$router.push({ query: { page: this.page } })
+      this.$route.query.page = this.page
+      console.log(this.$route.query)
     },
 
     filter_products(filtered) {
@@ -240,9 +239,9 @@ export default {
         for (let i = 0; i < filtered.length; i++) {
           query = query + filtered[i] + ','
         }
-        query = '?category=' + query.slice(0, query.length - 1)
+        query = query.slice(0, query.length - 1)
       }
-      this.fetech_products(query)
+      this.$router.push({ path: this.$route.path, query: { category: query } })
     },
     // async intersected() {
     //   if (!this.next) return
@@ -273,23 +272,37 @@ export default {
     ...mapGetters({
       categories: 'categories',
     }),
-    // filteredKeys() {
-    //   return this.keys.filter((key) => key !== `Name`)
-    // },
   },
-  created() {
-    // this.page = this.$route.query.page != undefined ? this.$route.query.page : 1
-    // console.log('in computed and page: ' + this.page)
-    this.fetech_products('?page=' + this.page)
+  watch: {
+    '$route.query': '$fetch',
+  },
+  async fetch() {
+    let response = null
+    console.log('in fetch and route: ')
+    console.log(this.$route)
+    let key = Object.keys(this.$route.query)[0]
+    let value = Object.values(this.$route.query)[0]
+    console.log(key + ' ' + value)
+    response = await this.app.$axios.$get(`/products?` + key + '=' + value)
+    console.log(response.data)
+    this.item_count = response.data.length
+    this.pages = Math.ceil(response.meta.total / response.meta.per_page)
+    setTimeout(() => {
+      this.items = response.data
+    }, 500)
   },
   asyncData({ params, app, query }) {
-    let page = null
-    page = query.page != undefined ? query.page : 1
-    console.log('qsyncData: ' + page)
+    // let page = null
+    // page = query.page != undefined ? Number(query.page) : 1
+    if (query.page === undefined) {
+      console.log('in query')
+      query.page = 1
+    }
+    console.log('asyncData: ')
+    console.log(query)
     return {
       params: params,
       app: app,
-      page: page,
     }
   },
 }
