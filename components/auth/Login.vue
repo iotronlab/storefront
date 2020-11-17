@@ -85,7 +85,7 @@
             <v-btn
               text
               x-small
-              :to="{ path: '/auth/register-reset', query: { type: 'new' } }"
+              :to="{ path: '/verify/register', query: { type: 'new' } }"
               @click="dialog = false"
               >Create an account</v-btn
             >
@@ -93,7 +93,7 @@
             <v-btn
               text
               x-small
-              :to="{ path: '/auth/register-reset', query: { type: 'reset' } }"
+              :to="{ path: '/verify/reset', query: { type: 'reset' } }"
               @click="dialog = false"
               >Forgot password</v-btn
             >

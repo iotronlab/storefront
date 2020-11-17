@@ -8,12 +8,15 @@
         <section>
           <v-divider class="my-2" />
           <p class="caption">find us on</p>
-          <v-row no-gutters justify="space-around" class="my-4"
-            ><v-icon>mdi-youtube</v-icon>
-            <v-icon>mdi-instagram</v-icon>
-            <v-icon>mdi-facebook</v-icon>
-            <v-icon>mdi-linkedin</v-icon></v-row
-          >
+          <v-row no-gutters justify="space-around" class="my-4">
+            <v-btn
+              v-for="social in socialLinks"
+              :key="social.url"
+              icon
+              class="nufab"
+              ><v-icon>{{ social.icon }}</v-icon></v-btn
+            >
+          </v-row>
           <v-divider class="my-2" />
           <v-row no-gutters justify="space-around">
             <p class="caption">
@@ -122,7 +125,24 @@ export default {
         { name: 'Cancellation and Return', url: 'Privacy Policy' },
         { name: 'Report Infringement', url: '' },
       ],
+      socialLinks: [
+        { icon: 'mdi-facebook', url: '' },
+        { icon: 'mdi-youtube', url: '' },
+        { icon: 'mdi-instagram', url: '' },
+        { icon: 'mdi-linkedin', url: 'Privacy Policy' },
+      ],
     }
   },
 }
 </script>
+<style scoped>
+.v-application.theme--light .nufab {
+  box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.5) !important;
+}
+
+.v-application.theme--dark .nufab {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7),
+    -5px -5px 10px rgba(255, 255, 255, 0.1);
+}
+</style>
