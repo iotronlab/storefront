@@ -1,16 +1,22 @@
 <template>
   <v-container>
     <v-row>
-      <v-item-group v-model="window" class="shrink mr-6" mandatory tag="v-flex">
-        <v-item v-for="(link, i) in helpLinks" :key="i">
+      <v-item-group
+        v-model="window"
+        class="shrink mr-6 hidden-md-and-down"
+        mandatory
+        tag="v-flex"
+      >
+        <!-- {{ window }}
+        {{ $route.hash }} -->
+        <v-item
+          v-for="(link, key) in helpLinks"
+          :key="key"
+          v-slot="{ active, toggle }"
+        >
           <div>
-            <v-btn
-              :input-value="window == i"
-              @click="updateRouter()"
-              text
-              small
-            >
-              {{ link }}
+            <v-btn :input-value="active" @click="toggle" text small>
+              <nuxt-link :to="'#' + link"> {{ link }}</nuxt-link>
             </v-btn>
           </div>
         </v-item>
@@ -18,7 +24,7 @@
 
       <v-col>
         <v-window v-model="window" class="elevation-1" vertical>
-          <v-window-item :id="link" v-for="(link, i) in helpLinks" :key="i">
+          <v-window-item :id="link" v-for="(link, key) in helpLinks" :key="key">
             <v-card flat>
               <v-card-text>
                 <v-row class="mb-4" align="center">
@@ -64,20 +70,20 @@
           </v-window-item>
         </v-window>
         <v-card>
-          <v-card-actions class="justify-space-between">
-            <v-btn text @click="prev">
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-item-group v-model="window" class="text-center" mandatory>
-              <v-item v-for="(n, i) in length" :key="`btn-${i}`">
-                <v-btn :input-value="window == i" icon @click="updateRouter()">
-                  <v-icon>mdi-record</v-icon>
+          <v-card-actions class="justify-space-between hidden-md-and-up">
+            <v-item-group v-model="window" class="justify-center" mandatory>
+              <v-item
+                v-for="(link, key) in helpLinks"
+                :key="`${key}`"
+                v-slot="{ active, toggle }"
+              >
+                <v-btn :input-value="active" icon @click="toggle">
+                  <nuxt-link :to="'#' + link"
+                    ><v-icon>mdi-record</v-icon></nuxt-link
+                  >
                 </v-btn>
               </v-item>
             </v-item-group>
-            <v-btn text @click="next">
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -95,29 +101,25 @@ export default {
         3: 'Cancellation and Return',
         4: 'Report Infringement',
       },
-      length: 5,
+      hash_to_key: {
+        '#FAQ': 0,
+        '#Payment': 1,
+        '#Shipping': 2,
+        '#Cancellation%20and%20Return': 3,
+        '#Report%20Infringement': 4,
+      },
       window: 0,
     }
   },
   watch: {
-    '$route.hash': '',
+    '$route.hash': 'updateTab',
   },
   methods: {
-    next() {
-      this.window = this.window + 1 === this.length ? 0 : this.window + 1
-      this.updateRouter()
-    },
-    prev() {
-      this.window = this.window - 1 < 0 ? this.length - 1 : this.window - 1
-      this.updateRouter()
-    },
-    updateRouter() {
-      console.log('button clicked: ' + this.window)
-      this.$router.push({
-        name: this.$route.name,
-        hash: `#${this.helpLinks[this.window]}`,
-      })
-      console.log(this.$route.hash)
+    updateTab() {
+      let hash = this.$route.hash
+      if (hash != '#' + this.helpLinks[this.window]) {
+        this.window = this.hash_to_key[hash]
+      }
     },
   },
 }

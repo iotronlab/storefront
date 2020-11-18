@@ -34,7 +34,7 @@
                         v-for="child in item.children"
                         :key="child.id"
                       >
-                        <v-list-item>
+                        <v-list-item :to="'/category/' + child.slug">
                           <v-list-item-content>
                             <v-list-item-title
                               v-text="child.name"

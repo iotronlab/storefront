@@ -1,5 +1,5 @@
 <template>
-  <v-list avatar shaped>
+  <v-list avatar shaped nav>
     <v-btn icon small v-if="stack.length > 1">
       <v-icon @click="back"> mdi-chevron-left </v-icon>
     </v-btn>
@@ -18,7 +18,6 @@
         v-for="category in stack[stack.length - 1]"
         :key="category.id"
         @click="clickedItem(category)"
-        :disabled="!category.children || !category.children.length > 0"
       >
         <!-- <v-list-item-avatar>
           <v-img src="/icon.png"></v-img>
@@ -96,7 +95,11 @@ export default {
   },
   methods: {
     clickedItem(item) {
-      this.stack.push(item.children)
+      if (!item.children || !item.children.length > 0) {
+        this.$router.push(`/category/${item.slug}`)
+      } else {
+        this.stack.push(item.children)
+      }
     },
     back() {
       this.stack.pop()

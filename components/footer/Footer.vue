@@ -104,12 +104,12 @@ export default {
   data() {
     return {
       internalLinks: [
-        { name: 'About US', url: '' },
-        { name: 'Artistic Network', url: 'Privacy Policy' },
-        { name: 'Careers', url: '' },
-        { name: 'Blog', url: '' },
-        { name: 'Partnership Program', url: '' },
-        { name: 'Contact US', url: '' },
+        { name: 'About US', url: '/about-us' },
+        { name: 'Artistic Network', url: '/about-us#network' },
+        { name: 'Careers', url: '/about-us#careers' },
+        { name: 'Blog', url: '/about-us#blog' },
+        { name: 'Partnership Program', url: '/about-us#programs' },
+        { name: 'Contact US', url: '/about-us#contact-us' },
       ],
       policies: [
         { name: 'Cancellation and Return Policy', url: '' },
@@ -119,11 +119,17 @@ export default {
         { name: 'Sitemap', url: '' },
       ],
       helpLinks: [
-        { name: 'FAQ', url: '' },
-        { name: 'Payment', url: '' },
-        { name: 'Shipping', url: '' },
-        { name: 'Cancellation and Return', url: 'Privacy Policy' },
-        { name: 'Report Infringement', url: '' },
+        { name: 'FAQ', url: '/help-centre#FAQ' },
+        { name: 'Payment', url: '/help-centre#Payment' },
+        { name: 'Shipping', url: '/help-centre#Shipping' },
+        {
+          name: 'Cancellation and Return',
+          url: '/help-centre#Cancellation%20and%20Return',
+        },
+        {
+          name: 'Report Infringement',
+          url: '/help-centre#Report%20Infringement',
+        },
       ],
       socialLinks: [
         { icon: 'mdi-facebook', url: '' },

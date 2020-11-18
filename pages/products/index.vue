@@ -80,22 +80,24 @@
             <v-container class="max-width" fluid>
               <v-row no-gutters>
                 <!-- {{ 'page: ' + page + 'total pages: ' + pages }} -->
+
                 <v-col
                   v-for="n in item_count"
-                  v-if="items.length == 0"
                   :key="n"
                   cols="12"
                   sm="6"
                   md="4"
                   lg="3"
                 >
-                  <v-card class="mx-auto" shaped height="320">
-                    <v-skeleton-loader
-                      class="mx-auto"
-                      type="card"
-                      max-height="250"
-                    ></v-skeleton-loader>
-                  </v-card>
+                  <div v-if="items.length == 0">
+                    <v-card class="mx-auto" shaped height="320">
+                      <v-skeleton-loader
+                        class="mx-auto"
+                        type="card"
+                        max-height="250"
+                      ></v-skeleton-loader>
+                    </v-card>
+                  </div>
                 </v-col>
                 <v-col
                   v-for="item in items"
@@ -276,6 +278,11 @@ export default {
   watch: {
     '$route.query': '$fetch',
   },
+  mounted() {
+    if (this.$route.query.page === undefined) {
+      this.$route.query.page = 1
+    }
+  },
   async fetch() {
     let response = null
     console.log('in fetch and route: ')
@@ -291,15 +298,7 @@ export default {
       this.items = response.data
     }, 500)
   },
-  asyncData({ params, app, query }) {
-    // let page = null
-    // page = query.page != undefined ? Number(query.page) : 1
-    if (query.page === undefined) {
-      console.log('in query')
-      query.page = 1
-    }
-    console.log('asyncData: ')
-    console.log(query)
+  asyncData({ params, app }) {
     return {
       params: params,
       app: app,

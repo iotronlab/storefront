@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ get_path }}
     <Verify :pageName="getName" />
   </div>
 </template>
