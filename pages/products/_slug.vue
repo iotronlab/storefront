@@ -10,7 +10,9 @@
           <v-divider class="mb-1"></v-divider>
           <h3 class="text-h5">{{ product.price }}</h3>
           <p v-if="!product.in_stock">Out of Stock</p>
-          <h5 class="text-h6">Artist Name</h5>
+          <nuxt-link :to="'/artists/' + product.vendor.slug">
+            <h5 class="text-h6">{{ product.vendor.name }}</h5>
+          </nuxt-link>
           <v-rating
             v-model="rating"
             color="primary"

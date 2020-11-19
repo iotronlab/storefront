@@ -1,37 +1,32 @@
 <template>
   <v-container fluid>
     <!-- Right filter nav -->
-    <v-navigation-drawer
-      absolute
-      right
-      :value="NavState"
-      class="hidden-md-and-up"
-    >
+    <v-navigation-drawer absolute right :value="NavState">
       <FilterProducts
         :options="categories"
         :min="min"
         :max="max"
         @input="filter_products"
       />
-      {{ 'filtered below' }}
-      {{ filtered }}
+      <!-- {{ 'filtered below' }}
+      {{ filtered }} -->
     </v-navigation-drawer>
     <!-- Left filter nav -->
-    <v-row>
+    <v-row no-gutters>
       <v-col cols="2" class="hidden-md-and-down">
-        <span class="title">{{ params.slug }}</span>
+        <!-- <span class="title">{{ params.slug }}</span>
         <span>
           - {{ items.length }} item
           <span class="ml-n1" v-if="items.length > 1">s</span>
-        </span>
+        </span> -->
         <FilterProducts
           :options="categories"
           :min="min"
           :max="max"
           @input="filter_products"
         />
-        {{ 'filtered below' }}
-        {{ filtered }}
+        <!-- {{ 'filtered below' }}
+        {{ filtered }} -->
       </v-col>
       <v-col cols="10">
         <!-- <v-data-iterator
@@ -90,11 +85,16 @@
                   lg="3"
                 >
                   <div v-if="items.length == 0">
-                    <v-card class="mx-auto" shaped height="320">
+                    <v-card
+                      class="mx-auto px-2 py-2 my-2"
+                      rounded
+                      height="350"
+                      width="250"
+                    >
                       <v-skeleton-loader
                         class="mx-auto"
                         type="card"
-                        max-height="250"
+                        height="350"
                       ></v-skeleton-loader>
                     </v-card>
                   </div>

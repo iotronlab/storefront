@@ -17,7 +17,7 @@
     <!-- <v-list-item>
       <v-slider :min="min" :max="max"></v-slider>
     </v-list-item> -->
-    {{ checkbox }}
+    <!-- {{ checkbox }} -->
   </v-expansion-panels>
 </template>
 

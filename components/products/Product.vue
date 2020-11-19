@@ -10,16 +10,15 @@
           <v-btn icon color="primary" large>
             <v-icon>mdi-bookmark</v-icon> </v-btn
           ><v-spacer />
-          <!-- <v-badge
+          <v-badge
             color="deep-purple accent-4"
             content="Featured"
             :value="product.featured"
             offset-y="30"
             offset-x="70"
           >
-          </v-badge -->
-          ></v-row
-        >
+          </v-badge>
+        </v-row>
       </v-img>
     </nuxt-link>
     <v-card-title class="text-subtitle-2">{{ product.name }}</v-card-title>
