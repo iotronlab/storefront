@@ -50,6 +50,12 @@
         <Discover
       /></v-col>
     </v-row>
+    <v-row no-gutters class="pa-10">
+      <v-col><div>Total ratings</div></v-col>
+      <v-col cols="12" lg="6" md="8" sm="12">
+        <Reviews :reviews="reviews" />
+      </v-col>
+    </v-row>
   </section>
 </template>
 
@@ -57,12 +63,73 @@
 import Discover from '~/components/landing/Discover.vue'
 import Logo from '~/components/Logo.vue'
 import DropDown from '~/components/nav/DropDown'
+import Reviews from '~/components/reviews/Reviews'
 
 export default {
   components: {
     Logo,
     DropDown,
-    Discover,
+    Reviews,
+  },
+  data() {
+    return {
+      reviews: [
+        {
+          img:
+            'https://cdn.singulart.com/artworks/pictures/cropped/522/892/carousel/892_a46fd52bec84f777f49a959a9ab3fa8e.jpeg',
+          rating: 5,
+          title: 'April',
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
+          name: 'Philip',
+        },
+        {
+          img:
+            'https://cdn.singulart.com/artworks/pictures/cropped/206/1177/carousel/1177_9c1b46bcad4da7d0a817e8dd82add5c5.jpeg',
+          rating: 4,
+          title: 'LA FEMME AU BALCON DE SAIGON - VIETNAM',
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+          name: 'Alexander',
+        },
+        {
+          img:
+            'https://cdn.singulart.com/artworks/pictures/cropped/4195/12125/carousel/serie_12125_c8613d5bbe38ce2543afb96205ef1d6a.jpeg',
+          rating: 5,
+          title: 'Late Evening Light Through Trees',
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+          name: 'John',
+        },
+        {
+          img:
+            'https://cdn.singulart.com/artworks/pictures/cropped/63/148/carousel/148_ca275018367f4dd7a63a72a43899fc67.jpeg',
+          rating: 5,
+          title: 'La libre envolée... (2015)',
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+          name: 'Cario',
+        },
+        {
+          img:
+            'https://cdn.singulart.com/artworks/pictures/cropped/522/892/carousel/892_a46fd52bec84f777f49a959a9ab3fa8e.jpeg',
+          rating: 5,
+          title: 'April',
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+          name: 'Philip',
+        },
+        {
+          img:
+            'https://cdn.singulart.com/artworks/pictures/cropped/86/56/carousel/serie_56_e53f4d145a958ef8c8e2a348dfccd99b.jpeg',
+          rating: 5,
+          title: 'April',
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
+          name: 'Philip',
+        },
+      ],
+    }
   },
   //layout: 'landing-page',
 }

@@ -6,9 +6,9 @@
           <ProductImage />
         </v-col>
         <v-col cols="12" md="6" lg="6">
-          <h4 class="text-h6">{{ product.product.name }}</h4>
+          <h4 class="text-h6">{{ product.name }}</h4>
           <v-divider class="mb-1"></v-divider>
-          <h3 class="text-h5">{{ product.product.price }}</h3>
+          <h3 class="text-h5">{{ product.price }}</h3>
           <p v-if="!product.in_stock">Out of Stock</p>
           <h5 class="text-h6">Artist Name</h5>
           <v-rating
@@ -20,7 +20,7 @@
             small
             size="25"
           ></v-rating>
-          <v-row>
+          <v-row v-if="root_attribute">
             <!-- <form action> -->
             <!--   <ProductVariation
               v-for="attribute in product.configurable_attributes.attributes"
@@ -49,16 +49,31 @@
               </select>
             </div> -->
           </v-row>
-          {{ 'type Below' }}
+          <v-row v-else>
+            <v-row
+              class="px-5 py-5"
+              v-for="[attribute, val] in Object.entries(product.attributes)"
+              :key="attribute"
+              no-gutters
+            >
+              <v-chip-group mandatory v-if="val">
+                <h3>{{ attribute }}</h3>
+                <br />
+                <v-chip>{{ val }}</v-chip>
+              </v-chip-group>
+              <v-divider class="mb-1"></v-divider>
+              <br />
+            </v-row>
+          </v-row>
+          <!-- {{ 'type Below' }}
           {{ type }}
           <br /><br />
           {{ '=========' }}
           <br />
           {{ 'Form below' }}
           <br /><br />
-
           {{ form }}
-          <p>{{ product.description }}</p>
+          <p>{{ product.description }}</p> -->
           <v-row no-gutters class="hidden-sm-and-down">
             <v-col>
               <v-btn block class="mr-1" color="primary" @click.prevent="add">
@@ -121,8 +136,9 @@ export default {
         type: null,
         quantity: 1,
       },
-      root_attribute: null,
+      configurations: null,
       auth: null,
+      rating: null,
     }
   },
   // watch: {
@@ -162,19 +178,19 @@ export default {
       .catch((error) => console.log('error', error))
 
     let response = await app.$axios.$get(`products/${params.slug}`)
-    let attributes = response.configurable_attributes.attributes
-    let root_attribute = null
-    if (attributes.length > 0) {
-      root_attribute = {}
-      root_attribute.code = attributes[0].code
-      root_attribute.id = response.product[attributes[0].code]
-      root_attribute.available_variations = attributes[0].options[0].products
+    console.log('in product slug: ')
+    console.log(response)
+    let configurable = response.attributes
+    let configurations = null
+    if (configurable.length > 0) {
+      configurations = {}
+      configurations.code = attributes[0].code
+      configurations.id = response.product[attributes[0].code]
+      configurations.available_variations = attributes[0].options[0].products
     }
-    console.log('root_attribute below')
-    console.log(root_attribute)
     return {
-      product: response,
-      root_attribute: root_attribute,
+      product: response.product,
+      configurations: configurations,
       auth: auth,
     }
   },

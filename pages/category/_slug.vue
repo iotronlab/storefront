@@ -54,7 +54,10 @@
         >
         <v-row no-gutters>
           <v-carousel cycle hide-delimiters show-arrows-on-hover height="100%">
-            <v-carousel-item>
+            <v-carousel-item
+              v-for="(n, i) in Math.ceil(total / columns)"
+              :key="n"
+            >
               <v-row
                 no-gutters
                 class="fill-height"
@@ -62,13 +65,14 @@
                 justify="center"
               >
                 <v-col
-                  v-for="product in products"
+                  v-for="product in products.slice(i, columns + i)"
                   :key="product.id"
                   class="d-flex child-flex"
                   cols="12"
                   md="6"
                   lg="3"
                   sm="6"
+                  xs="12"
                 >
                   <Product :product="product" />
                 </v-col>
@@ -90,11 +94,13 @@ export default {
     let response = await app.$axios.$get(`/products?category=${params.slug}`)
 
     console.log(params.slug)
-
+    console.log(response.data.length)
+    // let total = response.data.length
     // this.title = params.slug
     return {
       products: response.data,
       slug: params.slug,
+      total: response.data.length,
     }
   },
   data() {
@@ -102,7 +108,7 @@ export default {
       cardTitle: 'Casual Wear',
       desp: '70% - 80%',
       products: [],
-      slides: 3,
+      total: null,
     }
   },
   components: {
@@ -114,6 +120,20 @@ export default {
     }),
     category() {
       return this.categories.find((el) => el.slug === this.slug)
+    },
+    columns() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 1
+        case 'sm':
+          return 2
+        case 'md':
+          return 2
+        case 'lg':
+          return 4
+        case 'xl':
+          return 4
+      }
     },
   },
 }
