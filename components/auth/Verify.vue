@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="500">
+  <v-card class="mx-auto" max-width="600">
     <v-card-title class="title font-weight-regular justify-space-between">
       <span>{{ pageName }}</span>
       <v-avatar
@@ -13,9 +13,12 @@
     <v-window v-model="step">
       <v-window-item :value="1">
         <v-card-text>
-          <v-text-field label="Email"></v-text-field>
+          <v-text-field
+            label="Email"
+            placeholder="Enter your email"
+          ></v-text-field>
           <span class="caption grey--text text--darken-1">
-            This is the email you will use to login to your Vuetify account
+            You will be recieving an OTP on this email for verification.
           </span>
         </v-card-text>
       </v-window-item>

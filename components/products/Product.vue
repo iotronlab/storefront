@@ -47,10 +47,9 @@ export default {
 
   computed: {
     link() {
-      let slug =
-        this.product.variants.length > 0
-          ? this.product.variants[0].sku
-          : this.product.sku
+      let slug = (this.product.variants = null
+        ? this.product.variants[0].sku
+        : this.product.sku)
       // console.log(slug)
       // console.log('slug above')
       // return '#'

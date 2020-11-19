@@ -42,17 +42,19 @@
 
       <v-container height="600"></v-container>
     </v-row>
-    <v-row no-gutters>
-      <h2 class="landing-title text-uppercase primary--text text-h5 mx-auto">
-        Discover
-        <p class="overline">This week</p>
-      </h2>
-      <v-card height="400" />
+    <v-row no-gutters justify="center" align="center">
+      <v-col class="text-center" lg="10">
+        <h2 class="landing-title text-uppercase primary--text text-h5">
+          Discover
+        </h2>
+        <Discover
+      /></v-col>
     </v-row>
   </section>
 </template>
 
 <script>
+import Discover from '~/components/landing/Discover.vue'
 import Logo from '~/components/Logo.vue'
 import DropDown from '~/components/nav/DropDown'
 
@@ -60,6 +62,7 @@ export default {
   components: {
     Logo,
     DropDown,
+    Discover,
   },
   //layout: 'landing-page',
 }

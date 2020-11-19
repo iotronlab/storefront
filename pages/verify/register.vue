@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-container>
     <Verify :pageName="getName" />
-  </div>
+  </v-container>
 </template>
 
 <script>

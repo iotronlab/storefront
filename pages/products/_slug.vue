@@ -22,7 +22,7 @@
           ></v-rating>
           <v-row>
             <!-- <form action> -->
-            <ProductVariation
+            <!--   <ProductVariation
               v-for="attribute in product.configurable_attributes.attributes"
               :type="attribute.label"
               :options="attribute.options"
@@ -34,7 +34,7 @@
               :disabled="type != form.type && form.type != null"
               :active="form.type != type ? false : true"
               v-model="form"
-            />
+            />-->
             <!-- </form> -->
             <!-- <div v-if="form.variation">
               Quantity:
