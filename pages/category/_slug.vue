@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="pa-0">
+  <v-container fluid class="pa-0" v-if="!$fetchState.pending">
     <v-img height="200px" :src="require('@/assets/img/dress.jpg')"></v-img>
     <v-divider class="my-2" />
     <v-row no-gutters justify="center">
@@ -90,24 +90,21 @@ import { mapGetters } from 'vuex'
 import Product from '@/components/products/Product'
 
 export default {
-  async asyncData({ params, app, store }) {
-    let response = await app.$axios.$get(`/products?category=${params.slug}`)
-
-    console.log(params.slug)
-    console.log(response.data.length)
-    // let total = response.data.length
-    // this.title = params.slug
-    return {
-      products: response.data,
-      slug: params.slug,
-      total: response.data.length,
-    }
+  async fetch() {
+    let response = await this.$axios.$get(
+      `/products?category=${this.$route.params.slug}`
+    )
+    this.products = response.data
+    this.slug = this.$route.params.slug
+    this.total = response.data.length
   },
   data() {
     return {
       cardTitle: 'Casual Wear',
       desp: '70% - 80%',
       products: [],
+      total: null,
+      slug: null,
       total: null,
     }
   },

@@ -86,13 +86,16 @@
                 >
                   <div v-if="items.length == 0">
                     <v-card
-                      class="mx-auto px-2 py-2 my-2"
+                      class="mx-auto px-3 py-2 my-2"
                       rounded
                       height="350"
-                      width="250"
+                      width="300"
+                      max-width="250"
                     >
                       <v-skeleton-loader
-                        class="mx-auto"
+                        width="240"
+                        max-width="300"
+                        class="pr-2"
                         type="card"
                         height="350"
                       ></v-skeleton-loader>

@@ -23,21 +23,19 @@ export default {
   data() {
     return {
       vendor: null,
-      params: null,
-      app: null,
     }
   },
   async mounted() {
-    let response = await this.app.$axios.$get(`/vendors/${this.params.slug}`)
+    let response = await this.$axios.$get(`/vendors/${this.$route.params.slug}`)
     setTimeout(() => {
       this.vendor = response.data
     }, 500)
   },
-  asyncData({ params, app }) {
-    return {
-      params: params,
-      app: app,
-    }
-  },
+  // asyncData({ params, app }) {
+  //   return {
+  //     params: params,
+  //     app: app,
+  //   }
+  // },
 }
 </script>

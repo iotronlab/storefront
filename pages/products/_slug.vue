@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto">
+  <v-card class="mx-auto" v-if="!$fetchState.pending">
     <v-container fluid>
       <v-row>
         <v-col cols="12" md="6" lg="6">
@@ -22,7 +22,7 @@
             small
             size="25"
           ></v-rating>
-          <v-row v-if="root_attribute">
+          <v-row v-if="configurations">
             <!-- <form action> -->
             <!--   <ProductVariation
               v-for="attribute in product.configurable_attributes.attributes"
@@ -58,8 +58,8 @@
               :key="attribute"
               no-gutters
             >
+              <h3 v-if="val">{{ attribute }}</h3>
               <v-chip-group mandatory v-if="val">
-                <h3>{{ attribute }}</h3>
                 <br />
                 <v-chip>{{ val }}</v-chip>
               </v-chip-group>
@@ -90,14 +90,11 @@
               </v-btn>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row no-gutters>
             <v-col> </v-col>
           </v-row>
           <v-app-bar bottom fixed class="hidden-md-and-up">
             <v-container class="px-0 py-0">
-              <v-row>
-                <availablility :token="auth.token" />
-              </v-row>
               <v-row no-gutters>
                 <v-col>
                   <v-btn
@@ -128,11 +125,11 @@
 <script>
 import { mapActions } from 'vuex'
 import ProductVariation from '@/components/products/ProductVariation'
-import availablility from '@/components/availability'
+// import availablility from '@/components/availability'
 export default {
   data() {
     return {
-      product: null,
+      product: {},
       form: {
         variation: null,
         type: null,
@@ -150,9 +147,9 @@ export default {
   // },
   components: {
     ProductVariation,
-    availablility,
+    // availablility,
   },
-  async asyncData({ params, app }) {
+  async fetch() {
     let auth = null
     var myHeaders = new Headers()
     myHeaders.append('Content-Type', 'application/json')
@@ -179,9 +176,7 @@ export default {
       })
       .catch((error) => console.log('error', error))
 
-    let response = await app.$axios.$get(`products/${params.slug}`)
-    console.log('in product slug: ')
-    console.log(response)
+    let response = await this.$axios.$get(`products/${this.$route.params.slug}`)
     let configurable = response.attributes
     let configurations = null
     if (configurable.length > 0) {
@@ -190,11 +185,9 @@ export default {
       configurations.id = response.product[attributes[0].code]
       configurations.available_variations = attributes[0].options[0].products
     }
-    return {
-      product: response.product,
-      configurations: configurations,
-      auth: auth,
-    }
+    this.product = response.product
+    this.configurations = configurations
+    this.auth = auth
   },
   methods: {
     ...mapActions('cart', ['addToCart']),

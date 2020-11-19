@@ -77,8 +77,6 @@ export default {
   components: { ProfileCard },
   data() {
     return {
-      params: {},
-      app: {},
       itemsPerPageArray: [4, 8, 12],
       search: '',
       filter: {},
@@ -97,20 +95,20 @@ export default {
     },
   },
   async mounted() {
-    let response = await this.app.$axios.$get(`/vendors`)
+    let response = await this.$axios.$get(`/vendors`)
     this.item_count = response.data.length
     setTimeout(() => {
       this.items = response.data
     }, 500)
     // http://localhost:8000/api/products/create?family=1
   },
-  asyncData({ params, app }) {
-    console.log('app below')
-    console.log(app)
-    return {
-      params: params,
-      app: app,
-    }
-  },
+  // asyncData({ params, app }) {
+  //   console.log('app below')
+  //   console.log(app)
+  //   return {
+  //     params: params,
+  //     app: app,
+  //   }
+  // },
 }
 </script>
