@@ -10,41 +10,38 @@
         <v-img src="/butiq.png" width="70" />
       </nuxt-link>
 
-      <v-container fluid>
-        <v-row no-gutters>
-          <v-col class="d-flex align-center">
+      <v-container fluid class="pa-0">
+        <v-row no-gutters class="pa-0">
+          <v-col class="d-flex align-center hidden-sm-and-down">
             <!-- nav categories -->
-            <v-col class="hidden-sm-and-down">
-              <v-col class="d-flex align-center">
-                <v-col v-for="category in categories" :key="category.slug">
-                  <v-menu
-                    open-on-hover
-                    :close-on-content-click="false"
-                    class="hidden-sm-and-down"
-                    bottom
-                    offset-y
+
+            <v-col v-for="category in categories" :key="category.slug">
+              <v-menu
+                open-on-hover
+                :close-on-content-click="false"
+                class="hidden-sm-and-down"
+                bottom
+                offset-y
+              >
+                <template v-slot:activator="{ on }">
+                  <!--slug in name:'category-slug' is taking the value of slug defined in "params: { slug: category.slug, name: category}" -->
+                  <v-btn
+                    :to="{
+                      name: 'category-slug',
+                      params: { slug: category.slug },
+                    }"
+                    text
+                    small
+                    rounded
+                    v-on="on"
+                    color="primary"
+                    class="font-weight-bold"
                   >
-                    <template v-slot:activator="{ on }">
-                      <!--slug in name:'category-slug' is taking the value of slug defined in "params: { slug: category.slug, name: category}" -->
-                      <v-btn
-                        :to="{
-                          name: 'category-slug',
-                          params: { slug: category.slug },
-                        }"
-                        text
-                        small
-                        rounded
-                        v-on="on"
-                        color="primary"
-                        class="font-weight-bold"
-                      >
-                        {{ category.name }}
-                      </v-btn>
-                    </template>
-                    <DropDown :navMenu="category.children" />
-                  </v-menu>
-                </v-col>
-              </v-col>
+                    {{ category.name }}
+                  </v-btn>
+                </template>
+                <DropDown :navMenu="category.children" />
+              </v-menu>
             </v-col>
           </v-col>
 

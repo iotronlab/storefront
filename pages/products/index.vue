@@ -1,34 +1,14 @@
 <template>
-  <v-container fluid>
-    <!-- Right filter nav -->
-    <v-navigation-drawer absolute right :value="NavState">
-      <FilterProducts
-        :options="categories"
-        :min="min"
-        :max="max"
-        @input="filter_products"
-      />
-      <!-- {{ 'filtered below' }}
-      {{ filtered }} -->
-    </v-navigation-drawer>
-    <!-- Left filter nav -->
-    <v-row no-gutters>
-      <v-col cols="2" class="hidden-md-and-down">
-        <!-- <span class="title">{{ params.slug }}</span>
-        <span>
-          - {{ items.length }} item
-          <span class="ml-n1" v-if="items.length > 1">s</span>
-        </span> -->
-        <FilterProducts
-          :options="categories"
-          :min="min"
-          :max="max"
-          @input="filter_products"
-        />
-        <!-- {{ 'filtered below' }}
-        {{ filtered }} -->
-      </v-col>
-      <v-col cols="10">
+  <v-container fluid class="overflow-hidden" style="position: relative">
+    <!--  filter  -->
+    <v-row no-gutters align="center" justify="center">
+      <v-btn color="primary" dark @click.stop="showFilter = !showFilter"> Filters </v-btn>
+      <v-btn color="primary" outlined dark @click.stop="drawer = !drawer">
+        Sort by
+      </v-btn>
+    </v-row>
+    <v-row no-gutters justify="center">
+      <v-col cols="12" lg="10">
         <!-- <v-data-iterator
           v-else
           :items="items"
@@ -72,7 +52,7 @@
           </template> -->
         <template>
           <div>
-            <v-container class="max-width" fluid>
+            <v-container fluid>
               <v-row no-gutters>
                 <!-- {{ 'page: ' + page + 'total pages: ' + pages }} -->
 
@@ -161,26 +141,37 @@
           </v-virtual-scroller>
         </template> -->
         <!-- </v-data-iterator> -->
-      </v-col></v-row
-    >
 
-    <v-app-bar bottom fixed app class="hidden-md-and-up">
-      <v-container class="px-0 py-0">
-        <v-row no-gutters>
-          <v-col><v-btn @click="ChangeState">Filter</v-btn> </v-col>
-          <v-col>
-            <v-select
-              class="ml-1"
-              dense
-              placeholder="Sort by"
-              hide-details
-              :items="keys"
-              outlined
-            ></v-select>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-app-bar>
+        <!-- <v-app-bar bottom fixed app class="hidden-md-and-up">
+          <v-container fluid>
+            <v-row no-gutters>
+              <v-col><v-btn @click="ChangeState">Filter</v-btn> </v-col>
+              <v-col>
+                <v-select
+                  class="ml-1"
+                  dense
+                  placeholder="Sort by"
+                  hide-details
+                  :items="keys"
+                  outlined
+                ></v-select>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-app-bar> --></v-col
+      ></v-row
+    >
+    <!-- Right filter nav -->
+    <v-navigation-drawer temporary absolute right v-model="model">
+      <FilterProducts
+        :options="categories"
+        :min="min"
+        :max="max"
+        @input="filter_products"
+      />
+      <!-- {{ 'filtered below' }}
+      {{ filtered }} -->
+    </v-navigation-drawer>
   </v-container>
 </template>
 
@@ -222,6 +213,7 @@ export default {
       // next: null,
       // scrolling: false,
       pages: null,
+      showFilter: false,
     }
   },
   methods: {
