@@ -2,7 +2,9 @@
   <v-container fluid class="overflow-hidden" style="position: relative">
     <!--  filter  -->
     <v-row no-gutters align="center" justify="center">
-      <v-btn color="primary" dark @click.stop="showFilter = !showFilter"> Filters </v-btn>
+      <v-btn color="primary" dark @click.stop="showFilter = !showFilter">
+        Filters
+      </v-btn>
       <v-btn color="primary" outlined dark @click.stop="drawer = !drawer">
         Sort by
       </v-btn>
@@ -162,7 +164,7 @@
       ></v-row
     >
     <!-- Right filter nav -->
-    <v-navigation-drawer temporary absolute right v-model="model">
+    <v-navigation-drawer temporary absolute right v-model="showFilter">
       <FilterProducts
         :options="categories"
         :min="min"

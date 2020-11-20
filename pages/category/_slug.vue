@@ -54,9 +54,6 @@
             </v-expansion-panel>
           </v-expansion-panels>
         </div>
-        <div>
-          <h2 class="title mt-2">Featured Artists</h2>
-        </div>
       </v-col>
 
       <v-col cols="12" md="8" lg="8">
@@ -68,7 +65,7 @@
         <v-row no-gutters>
           <v-carousel cycle hide-delimiters show-arrows-on-hover height="100%">
             <v-carousel-item
-              v-for="(n, i) in Math.ceil(total / columns)"
+              v-for="(n, i) in Math.ceil(totalProducts / columns)"
               :key="n"
             >
               <v-row
@@ -93,6 +90,40 @@
             </v-carousel-item>
           </v-carousel>
         </v-row>
+        <v-divider dark class="py-5"></v-divider>
+        <v-row no-gutters align="center" justify="center">
+          <h3 class="text-h4 mx-auto mb-2">#top5 featured</h3>
+
+          <v-btn outlined small>see all results</v-btn></v-row
+        >
+        <v-row no-gutters>
+          <v-carousel cycle hide-delimiters show-arrows-on-hover height="100%">
+            <v-carousel-item
+              v-for="(n, i) in Math.ceil(totalVendors / columns)"
+              :key="n"
+            >
+              <v-row
+                no-gutters
+                class="fill-height"
+                align="center"
+                justify="center"
+              >
+                <v-col
+                  v-for="vendor in vendors.slice(i, columns + i)"
+                  :key="vendor.id"
+                  class="d-flex child-flex"
+                  cols="12"
+                  md="6"
+                  lg="3"
+                  sm="6"
+                  xs="12"
+                >
+                  <ProfileCard :vendor="vendor" />
+                </v-col>
+              </v-row>
+            </v-carousel-item>
+          </v-carousel>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -100,6 +131,7 @@
 
 <script>
 import Product from '@/components/products/Product'
+import ProfileCard from '@/components/artist/ProfileCard'
 
 export default {
   async fetch() {
@@ -109,7 +141,9 @@ export default {
         console.log(res)
         this.category = res.data
         this.products = this.category.products
-        this.total = this.products.length
+        this.totalProducts = this.products.length
+        this.vendors = res.data.artists
+        this.totalVendors = this.vendors.length
       })
       .catch((err) => {
         console.log(err)
@@ -123,13 +157,15 @@ export default {
       desp: '70% - 80%',
       products: [],
       category: {},
-      total: null,
+      totalProducts: null,
       slug: null,
-      total: null,
+      totalVendors: null,
+      vendors: null,
     }
   },
   components: {
     Product,
+    ProfileCard,
   },
   computed: {
     columns() {

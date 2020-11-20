@@ -1,17 +1,30 @@
 <template>
-  <v-container>
-    <v-row no-gutters class="section" id="about-us">
+  <v-container fluid>
+    <v-row
+      no-gutters
+      v-intersect="{
+        handler: onIntersect,
+        options: {
+          threshold: [0, 0.5, 1.0],
+        },
+      }"
+      id="about-us"
+    >
       <v-col>
         <v-img src="/aboutus.png" />
         <h2 headline class="landing-title mt-4" align="center">About Us</h2>
       </v-col>
     </v-row>
-    <!-- <v-row no-gutters class="section" id="join-us">
-      <h2 headline class="landing-title mt-4" align="center">
-        Join Our Network
-      </h2>
-    </v-row> -->
-    <v-row no-gutters class="section" id="contack-us">
+    <v-row
+      no-gutters
+      v-intersect="{
+        handler: onIntersect,
+        options: {
+          threshold: [0, 0.5, 1.0],
+        },
+      }"
+      id="contack-us"
+    >
       <v-col md="6">
         <v-img src="/contactus.png" />
       </v-col>
@@ -48,30 +61,98 @@
         </v-card>
       </v-col>
     </v-row>
-    <!-- <v-row no-gutters class="section" id="about-us">
-      <h1>About us</h1>
-      <textarea class="section" cols="100" rows="50" v-model="test"></textarea>
-    </v-row> -->
-    <v-row no-gutters class="section" id="network">
+    <v-row
+      no-gutters
+      v-intersect="{
+        handler: onIntersect,
+        options: {
+          threshold: [0, 0.5, 1.0],
+        },
+      }"
+      id="network"
+    >
       <h1>Network</h1>
-      <textarea class="section" cols="100" rows="50" v-model="test"></textarea>
+      <textarea
+        v-intersect="{
+          handler: onIntersect,
+          options: {
+            threshold: [0, 0.5, 1.0],
+          },
+        }"
+        cols="100"
+        rows="50"
+        v-model="test"
+      ></textarea>
     </v-row>
-    <v-row no-gutters class="section" id="careers">
+    <v-row
+      no-gutters
+      v-intersect="{
+        handler: onIntersect,
+        options: {
+          threshold: [0, 0.5, 1.0],
+        },
+      }"
+      id="careers"
+    >
       <h1>Careers</h1>
-      <textarea class="section" cols="100" rows="50" v-model="test"></textarea>
+      <textarea
+        v-intersect="{
+          handler: onIntersect,
+          options: {
+            threshold: [0, 0.5, 1.0],
+          },
+        }"
+        cols="100"
+        rows="50"
+        v-model="test"
+      ></textarea>
     </v-row>
-    <v-row no-gutters class="section" id="blog">
+    <v-row
+      no-gutters
+      v-intersect="{
+        handler: onIntersect,
+        options: {
+          threshold: [0, 0.5, 1.0],
+        },
+      }"
+      id="blog"
+    >
       <h1>Blog</h1>
-      <textarea class="section" cols="100" rows="50" v-model="test"></textarea>
+      <textarea
+        v-intersect="{
+          handler: onIntersect,
+          options: {
+            threshold: [0, 0.5, 1.0],
+          },
+        }"
+        cols="100"
+        rows="50"
+        v-model="test"
+      ></textarea>
     </v-row>
-    <v-row no-gutters class="section" id="program">
+    <v-row
+      no-gutters
+      v-intersect="{
+        handler: onIntersect,
+        options: {
+          threshold: [0, 0.5, 1.0],
+        },
+      }"
+      id="program"
+    >
       <h1>Program</h1>
-      <textarea class="section" cols="100" rows="50" v-model="test"></textarea>
+      <textarea
+        v-intersect="{
+          handler: onIntersect,
+          options: {
+            threshold: [0, 0.5, 1.0],
+          },
+        }"
+        cols="100"
+        rows="50"
+        v-model="test"
+      ></textarea>
     </v-row>
-    <!-- <v-row no-gutters class="section" id="contact-us">
-      <h1>Contact us</h1>
-      <textarea class="section" cols="100" rows="50" v-model="test"></textarea>
-    </v-row> -->
   </v-container>
 </template>
 <script>
@@ -88,55 +169,14 @@ export default {
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt minima fugit ex tempora? Eius id pariatur porro cupiditate beatae est vero voluptate officiis iste quisquam omnis, iure maxime voluptatibus accusantium!',
     }
   },
-  mounted() {
-    this.observeSections()
-  },
   methods: {
-    async submitForm() {
-      await this.$axios
-        .$post('contactform', {
-          name: this.name,
-          email: this.email,
-          contact: this.contact,
-          address: this.address,
-          portfolio: this.portfolio,
+    onIntersect(entries, observer) {
+      console.log(entries[0].target.id)
+      console.log(entries[0].intersectionRatio >= 0.5)
+      if (entries[0].intersectionRatio >= 0.5) {
+        this.$router.push({
+          hash: `#${entries[0].target.id}`,
         })
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    },
-    observeSections() {
-      try {
-        this.sectionObserver.disconnect()
-      } catch (error) {}
-
-      const options = {
-        rootMargin: '0px 0px',
-        threshold: 0,
-      }
-      this.sectionObserver = new IntersectionObserver(
-        this.sectionObserverHandler,
-        options
-      )
-
-      // Observe each section
-      const sections = document.querySelectorAll('.section')
-      sections.forEach((section) => {
-        this.sectionObserver.observe(section)
-      })
-    },
-    sectionObserverHandler(entries) {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          const sectionId = entry.target.id
-          // Push sectionId to router here
-          this.$router.push({ name: this.$route.name, hash: `#${sectionId}` })
-          console.log(window.history)
-          console.log(this.$route.hash)
-        }
       }
     },
   },

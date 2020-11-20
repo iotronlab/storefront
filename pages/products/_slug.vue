@@ -14,13 +14,14 @@
             <h5 class="text-h6">{{ product.vendor.name }}</h5>
           </nuxt-link>
           <v-rating
-            v-model="rating"
+            :value="product.vendor.rating"
             color="primary"
             dense
             half-increments
             hover
             small
             size="25"
+            readonly
           ></v-rating>
           <v-row v-if="configurations">
             <!-- <form action> -->
@@ -179,7 +180,7 @@ export default {
     let response = await this.$axios.$get(`products/${this.$route.params.slug}`)
     let configurable = response.attributes
     let configurations = null
-    if (configurable.length > 0) {
+    if (configurable && configurable.length > 0) {
       configurations = {}
       configurations.code = attributes[0].code
       configurations.id = response.product[attributes[0].code]

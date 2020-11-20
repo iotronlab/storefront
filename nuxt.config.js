@@ -73,6 +73,9 @@ export default {
   plugins: [
     {
       src: '~/plugins/vee-validate.js',
+    },
+    {
+      src: '~/plugins/css_escape.js'
     }
   ],
   /*
