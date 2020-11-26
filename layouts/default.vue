@@ -12,39 +12,40 @@
 
       <v-container fluid class="pa-0">
         <v-row no-gutters class="pa-0">
-          <v-col class="d-flex align-center hidden-sm-and-down">
-            <!-- nav categories -->
+          <section class="hidden-sm-and-down">
+            <v-col class="d-flex align-center">
+              <!-- nav categories -->
 
-            <v-col v-for="category in categories" :key="category.slug">
-              <v-menu
-                open-on-hover
-                :close-on-content-click="false"
-                class="hidden-sm-and-down"
-                bottom
-                offset-y
-              >
-                <template v-slot:activator="{ on }">
-                  <!--slug in name:'category-slug' is taking the value of slug defined in "params: { slug: category.slug, name: category}" -->
-                  <v-btn
-                    :to="{
-                      name: 'category-slug',
-                      params: { slug: category.slug },
-                    }"
-                    text
-                    small
-                    rounded
-                    v-on="on"
-                    color="primary"
-                    class="font-weight-bold"
-                  >
-                    {{ category.name }}
-                  </v-btn>
-                </template>
-                <DropDown :navMenu="category.children" />
-              </v-menu>
+              <v-col v-for="category in categories" :key="category.slug">
+                <v-menu
+                  open-on-hover
+                  :close-on-content-click="false"
+                  class="hidden-sm-and-down"
+                  bottom
+                  offset-y
+                >
+                  <template v-slot:activator="{ on }">
+                    <!--slug in name:'category-slug' is taking the value of slug defined in "params: { slug: category.slug, name: category}" -->
+                    <v-btn
+                      :to="{
+                        name: 'category-slug',
+                        params: { slug: category.slug },
+                      }"
+                      text
+                      small
+                      rounded
+                      v-on="on"
+                      color="secondary"
+                      class="font-weight-bold"
+                    >
+                      {{ category.name }}
+                    </v-btn>
+                  </template>
+                  <DropDown :navMenu="category.children" />
+                </v-menu>
+              </v-col>
             </v-col>
-          </v-col>
-
+          </section>
           <v-col class="d-flex justify-end align-center">
             <v-col class="hidden-sm-and-down mx-2">
               <v-text-field
@@ -94,7 +95,7 @@
       <nuxt />
     </v-main>
 
-    <v-footer app absolute padless max-height="950">
+    <v-footer app absolute padless>
       <!-- <span>&copy; {{ new Date().getFullYear() }}</span> -->
       <Footer />
     </v-footer>

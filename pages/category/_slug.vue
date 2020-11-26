@@ -3,15 +3,18 @@
     <v-img height="200px" :src="require('@/assets/img/dress.jpg')"></v-img>
     <v-divider class="my-2" />
     <v-row no-gutters justify="center">
-      <v-col cols="12" md="3" lg="3">
-        <h3 class="text-h6">{{ category.name }}</h3>
-        <p>
+      <v-col cols="12" md="3" lg="3" class="px-4">
+        <h3 class="text-h6 text--primary">{{ category.name }}</h3>
+        <p class="text--secondary">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, cum
           iusto. A temporibus quas at eius vero iusto incidunt eos dolorum
           minima illo ea quis veniam, repellendus deleniti culpa sunt.
         </p>
-        <h1 class="overline">Sub categories</h1>
-        <div v-if="category">
+        <h4 class="overline" v-if="category.children.length > 1">
+          Sub categories
+        </h4>
+
+        <div v-if="category.children.length > 1">
           <v-expansion-panels
             popout
             class="mt-4"
@@ -57,72 +60,73 @@
       </v-col>
 
       <v-col cols="12" md="8" lg="8">
-        <v-row no-gutters align="center" justify="center">
-          <h3 class="text-h4 mx-auto mb-2">#top5 featured</h3>
+        <v-row no-gutters align="center" justify="space-between" class="px-4">
+          <h3 class="text-h6 my-2 landing-title primary--text text-uppercase">
+            #featured
+          </h3>
 
-          <v-btn outlined small>see all results</v-btn></v-row
+          <v-btn
+            outlined
+            small
+            rounded
+            :to="{
+              name: 'products',
+            }"
+            >see all results</v-btn
+          ></v-row
         >
         <v-row no-gutters>
-          <v-carousel cycle hide-delimiters show-arrows-on-hover height="100%">
-            <v-carousel-item
+          <!-- <v-carousel-item
               v-for="(n, i) in Math.ceil(totalProducts / columns)"
               :key="n"
-            >
-              <v-row
-                no-gutters
-                class="fill-height"
-                align="center"
-                justify="center"
+            > -->
+          <v-col
+            cols="12"
+            class="fill-height"
+            v-for="(products, artists) in productData"
+            :key="artists"
+            ><v-row no-gutters>
+              <MiniProfile :vendor="products[0].vendor"
+            /></v-row>
+            <v-divider />
+            <!-- v-for="product in products.slice(i, columns + i)" -->
+            <v-row no-gutters>
+              <v-col
+                v-for="product in products"
+                :key="product.sku"
+                class="d-flex child-flex"
+                cols="12"
+                md="6"
+                lg="3"
+                sm="6"
+                xs="12"
               >
-                <v-col
-                  v-for="product in products.slice(i, columns + i)"
-                  :key="product.id"
-                  class="d-flex child-flex"
-                  cols="12"
-                  md="6"
-                  lg="3"
-                  sm="6"
-                  xs="12"
-                >
-                  <Product :product="product" />
-                </v-col>
-              </v-row>
-            </v-carousel-item>
-          </v-carousel>
+                <Product :product="product" /> </v-col
+            ></v-row>
+          </v-col>
         </v-row>
         <v-divider dark class="py-5"></v-divider>
-        <v-row no-gutters align="center" justify="center">
-          <h3 class="text-h4 mx-auto mb-2">#top5 featured</h3>
 
-          <v-btn outlined small>see all results</v-btn></v-row
-        >
         <v-row no-gutters>
-          <v-carousel cycle hide-delimiters show-arrows-on-hover height="100%">
-            <v-carousel-item
+          <!-- <v-carousel-item
               v-for="(n, i) in Math.ceil(totalVendors / columns)"
               :key="n"
+            > -->
+          <v-row no-gutters class="fill-height" align="center" justify="center">
+            <!-- v-for="vendor in vendors.slice(i, columns + i)" -->
+            <!-- <v-col
+              v-for="vendor in vendors"
+              :key="vendor.id"
+              class="d-flex child-flex"
+              cols="12"
+              md="6"
+              lg="3"
+              sm="6"
+              xs="12"
             >
-              <v-row
-                no-gutters
-                class="fill-height"
-                align="center"
-                justify="center"
-              >
-                <v-col
-                  v-for="vendor in vendors.slice(i, columns + i)"
-                  :key="vendor.id"
-                  class="d-flex child-flex"
-                  cols="12"
-                  md="6"
-                  lg="3"
-                  sm="6"
-                  xs="12"
-                >
-                  <ProfileCard :vendor="vendor" />
-                </v-col>
-              </v-row>
-            </v-carousel-item>
-          </v-carousel>
+
+            </v-col> -->
+          </v-row>
         </v-row>
       </v-col>
     </v-row>
@@ -130,9 +134,6 @@
 </template>
 
 <script>
-import Product from '@/components/products/Product'
-import ProfileCard from '@/components/artist/ProfileCard'
-
 export default {
   async fetch() {
     await this.$axios
@@ -140,10 +141,10 @@ export default {
       .then((res) => {
         console.log(res)
         this.category = res.data
-        this.products = this.category.products
-        this.totalProducts = this.products.length
-        this.vendors = res.data.artists
-        this.totalVendors = this.vendors.length
+        this.productData = this.category.products
+        // this.totalProducts = this.products.length
+        // this.vendors = res.data.artists
+        // this.totalVendors = this.vendors.length
       })
       .catch((err) => {
         console.log(err)
@@ -155,7 +156,7 @@ export default {
     return {
       cardTitle: 'Casual Wear',
       desp: '70% - 80%',
-      products: [],
+      productData: {},
       category: {},
       totalProducts: null,
       slug: null,
@@ -163,10 +164,7 @@ export default {
       vendors: null,
     }
   },
-  components: {
-    Product,
-    ProfileCard,
-  },
+
   computed: {
     columns() {
       switch (this.$vuetify.breakpoint.name) {

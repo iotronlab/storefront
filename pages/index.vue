@@ -27,7 +27,7 @@
         class="landing-title text-uppercase primary--text text-h5 mx-auto mt-4"
       >
         Featured Artworks
-        <p class="overline">This week</p>
+        <p class="overline secondary--text">This week</p>
       </h2>
 
       <v-container height="600"></v-container>
@@ -37,7 +37,7 @@
         class="landing-title text-uppercase primary--text text-h5 mx-auto mt-4"
       >
         Featured Artists
-        <p class="overline">This week</p>
+        <p class="overline secondary--text">This week</p>
       </h2>
 
       <v-container height="600"></v-container>
@@ -50,8 +50,7 @@
         <Discover
       /></v-col>
     </v-row>
-    <v-row no-gutters class="pa-10">
-      <v-col><div>Total ratings</div></v-col>
+    <v-row no-gutters class="pa-10" justify="center">
       <v-col cols="12" lg="6" md="8" sm="12">
         <Reviews :reviews="reviews" />
       </v-col>

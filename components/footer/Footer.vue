@@ -10,8 +10,8 @@
           <p class="caption">find us on</p>
           <v-row no-gutters justify="space-around" class="my-4">
             <v-btn
-              v-for="social in socialLinks"
-              :key="social.url"
+              v-for="(social, i) in socialLinks"
+              :key="i"
               icon
               class="nufab"
               ><v-icon>{{ social.icon }}</v-icon></v-btn
@@ -36,8 +36,8 @@
           v-for="(internalLink, i) in internalLinks"
           :key="i"
           :to="internalLink.url"
-          >{{ internalLink.name }}<br />
-        </nuxt-link>
+          >{{ internalLink.name }}<br
+        /></nuxt-link>
       </v-col>
 
       <v-col lg="2" cols="6" md="3" class="pa-2">

@@ -8,7 +8,7 @@
       </v-col>
     </v-row>
     <v-row v-else>
-      <ProfileCard :vendor="vendor" />
+      <MiniProfile :vendor="vendor" />
     </v-row>
     <v-row>
       <h2>All art by {{ vendor.name }}</h2>
@@ -38,16 +38,10 @@
 </template>
 
 <script>
-import ProfileCard from '@/components/artist/ProfileCard'
 import Product from '@/components/products/Product'
 import Reviews from '@/components/reviews/Reviews'
 
 export default {
-  components: {
-    ProfileCard,
-    Product,
-    Reviews,
-  },
   data() {
     return {
       vendor: null,

@@ -1,37 +1,12 @@
 import colors from 'vuetify/es5/util/colors'
 import axios from 'axios'
-const dynamicRoutes = async () => {
-  const routesForCategories = axios
-    .get('http://localhost:8000/api/categories')
-    .then((res) => {
-      return res.data.map((category) => {
-        return {
-          route: `/category/${category.slug}`,
-          payload: category,
-        }
-      })
-    })
-
-  const routesForProducts = axios
-    .get('http://localhost:8000/api/products')
-    .then((res) => {
-      return res.data.map((product) => {
-        return {
-          route: `/products/${product.slug}`,
-          payload: product,
-        }
-      })
-    })
-  const routes = routesForCategories.concat(routesForProducts)
-  return routes
-}
 
 export default {
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
-  mode: 'spa',
+  ssr: false,
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -74,9 +49,7 @@ export default {
     {
       src: '~/plugins/vee-validate.js',
     },
-    {
-      src: '~/plugins/css_escape.js'
-    }
+
   ],
   /*
    ** Auto import components
@@ -91,13 +64,14 @@ export default {
     '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
     '@aceforth/nuxt-optimized-images',
+    '@nuxtjs/pwa',
   ],
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    ['@nuxtjs/axios', { anotherOption: true }],
     '@nuxtjs/auth',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
@@ -114,6 +88,7 @@ export default {
    */
   axios: {
     baseURL: 'http://localhost:8000/api',
+   // browserBaseURL: 'http://api.butiq.store/api'
   },
   // auth module config
   auth: {
@@ -166,9 +141,7 @@ export default {
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
-  generate: {
-    routes: dynamicRoutes,
-  },
+
 
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
@@ -177,9 +150,9 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.purple.accent4,
+          primary: '#8a34c9',
           accent: colors.grey.darken3,
-          secondary: colors.purple.lighten1,
+          secondary: '#BB86FC',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
@@ -188,7 +161,7 @@ export default {
         light: {
           primary: colors.purple.base,
           accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
+          secondary: colors.purple.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,

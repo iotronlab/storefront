@@ -72,17 +72,6 @@
       id="network"
     >
       <h1>Network</h1>
-      <textarea
-        v-intersect="{
-          handler: onIntersect,
-          options: {
-            threshold: [0, 0.5, 1.0],
-          },
-        }"
-        cols="100"
-        rows="50"
-        v-model="test"
-      ></textarea>
     </v-row>
     <v-row
       no-gutters
@@ -95,17 +84,6 @@
       id="careers"
     >
       <h1>Careers</h1>
-      <textarea
-        v-intersect="{
-          handler: onIntersect,
-          options: {
-            threshold: [0, 0.5, 1.0],
-          },
-        }"
-        cols="100"
-        rows="50"
-        v-model="test"
-      ></textarea>
     </v-row>
     <v-row
       no-gutters
@@ -118,17 +96,6 @@
       id="blog"
     >
       <h1>Blog</h1>
-      <textarea
-        v-intersect="{
-          handler: onIntersect,
-          options: {
-            threshold: [0, 0.5, 1.0],
-          },
-        }"
-        cols="100"
-        rows="50"
-        v-model="test"
-      ></textarea>
     </v-row>
     <v-row
       no-gutters
@@ -140,18 +107,7 @@
       }"
       id="program"
     >
-      <h1>Program</h1>
-      <textarea
-        v-intersect="{
-          handler: onIntersect,
-          options: {
-            threshold: [0, 0.5, 1.0],
-          },
-        }"
-        cols="100"
-        rows="50"
-        v-model="test"
-      ></textarea>
+      <h1>Partnership Program</h1>
     </v-row>
   </v-container>
 </template>
@@ -170,15 +126,15 @@ export default {
     }
   },
   methods: {
-    onIntersect(entries, observer) {
-      console.log(entries[0].target.id)
-      console.log(entries[0].intersectionRatio >= 0.5)
-      if (entries[0].intersectionRatio >= 0.5) {
-        this.$router.push({
-          hash: `#${entries[0].target.id}`,
-        })
-      }
-    },
+    // onIntersect(entries, observer) {
+    //   console.log(entries[0].target.id)
+    //   console.log(entries[0].intersectionRatio >= 0.5)
+    //   if (entries[0].intersectionRatio >= 0.5) {
+    //     this.$router.push({
+    //       hash: `#${entries[0].target.id}`,
+    //     })
+    //   }
+    // },
   },
 }
 </script>

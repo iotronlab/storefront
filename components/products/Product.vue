@@ -7,8 +7,7 @@
         :aspect-ratio="3 / 4"
       >
         <v-row no-gutters>
-          <v-btn icon color="primary" large>
-            <v-icon>mdi-bookmark</v-icon> </v-btn
+          <v-btn icon color="primary" large> <v-icon>mdi-heart</v-icon> </v-btn
           ><v-spacer />
           <v-badge
             color="deep-purple accent-4"
@@ -21,18 +20,27 @@
         </v-row>
       </v-img>
     </nuxt-link>
-    <v-card-title class="text-subtitle-2">{{ product.name }}</v-card-title>
-    <v-card-subtitle class="pb-1">Artist Name</v-card-subtitle>
-
-    <v-card-subtitle class="subtitle-2 pt-0">{{
-      product.price
-    }}</v-card-subtitle>
-    <v-card-actions class="pa-1">
-      <ProductPreview />
-      <v-btn small outlined>
-        Add to cart <v-icon right> mdi-cart-plus</v-icon></v-btn
-      ></v-card-actions
-    >
+    <v-row>
+      <v-col>
+        <h4 class="text-subtitle-2">{{ product.name }}</h4>
+        <h5 class="text-caption py-0">
+          by
+          <nuxt-link :to="vendorLink" class="secondary--text">{{
+            product.vendor.name
+          }}</nuxt-link>
+        </h5>
+        <h4 class="text-subtitle-2">{{ product.price }}</h4></v-col
+      ><v-col align="end">
+        <v-chip small class="mb-2 caption">{{
+          product.in_stock ? 'in stock' : 'sold'
+        }}</v-chip
+        ><ProductPreview /> </v-col
+    ></v-row>
+    <!-- <v-row no-gutters>
+      <v-btn small outlined
+        >Add to cart<v-icon right small>mdi-cart-plus</v-icon></v-btn
+      ></v-row
+    > -->
   </v-container>
 </template>
 
@@ -57,6 +65,22 @@ export default {
       // return '#'
       return {
         name: 'products-slug',
+        params: {
+          slug: slug,
+        },
+      }
+    },
+    vendorLink() {
+      let slug = this.product.vendor.slug
+      // let slug =
+      //   this.product.variants.length > 0
+      //     ? this.product.variants[0].sku
+      //     : this.product.sku
+      // console.log(slug)
+      // console.log('slug above')
+      // return '#'
+      return {
+        name: 'artists-slug',
         params: {
           slug: slug,
         },

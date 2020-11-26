@@ -63,7 +63,6 @@
               md="4"
               lg="3"
             >
-              <ProfileCard :vendor="item" />
             </v-col>
           </v-row>
         </v-virtual-scroller>
@@ -72,9 +71,7 @@
   </v-container>
 </template>
 <script>
-import ProfileCard from '@/components/artist/ProfileCard'
 export default {
-  components: { ProfileCard },
   data() {
     return {
       itemsPerPageArray: [4, 8, 12],
