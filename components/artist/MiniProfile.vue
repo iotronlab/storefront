@@ -13,7 +13,7 @@
         <v-col cols="7">
           <h5 class="text-body-1">{{ vendor.name }}</h5>
           <p class="overline">1k subscribers</p>
-          <v-btn color="primary" @click.prevent="">Follow</v-btn></v-col
+          <v-btn color="secondary" @click.prevent="">Follow</v-btn></v-col
         >
       </v-row>
     </v-sheet>

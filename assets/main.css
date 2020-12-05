@@ -1,0 +1,42 @@
+.nav-transparent {
+  background-color: transparent !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+.footer-image {
+  background-image: url('/body.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.landing-title {
+  line-height: 95%;
+  outline: none;
+  text-transform: uppercase;
+}
+.body-image {
+  background-image: url('/body.png');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.v-application.theme--light .landing-title {
+  transition: background 0.1s, color 0.1s;
+  text-shadow: -5px -3px 8px rgb(163, 177, 198, 0.6),
+    6px 2px 12px rgba(255, 255, 255, 0.5);
+}
+.v-application.theme--dark .landing-title {
+  transition: background 0.1s, color 0.1s;
+  text-shadow: -5px -3px 8px rgba(0, 0, 0, 0.7),
+    6px 2px 12px rgba(255, 255, 255, 0.1);
+}

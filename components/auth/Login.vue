@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn small rounded color="primary" dark v-on="on">Login</v-btn>
+      <v-btn small rounded color="secondary" dark v-on="on">Login</v-btn>
     </template>
     <template>
       <v-card>

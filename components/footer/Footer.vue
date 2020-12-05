@@ -31,35 +31,28 @@
       <v-col lg="2" cols="6" md="3" class="pa-2">
         <p class="caption">About</p>
 
-        <nuxt-link
-          class="text-decoration-none subtitle-2"
+        <p
+          class="subtitle-2 mb-1"
           v-for="(internalLink, i) in internalLinks"
           :key="i"
-          :to="internalLink.url"
-          >{{ internalLink.name }}<br
-        /></nuxt-link>
+        >
+          <nuxt-link :to="internalLink.url"
+            >{{ internalLink.name }}<br
+          /></nuxt-link>
+        </p>
       </v-col>
 
       <v-col lg="2" cols="6" md="3" class="pa-2">
         <p class="caption">Help and Support</p>
-        <nuxt-link
-          class="text-decoration-none subtitle-2"
-          v-for="(helpLink, i) in helpLinks"
-          :key="i"
-          :to="helpLink.url"
-          >{{ helpLink.name }}<br />
-        </nuxt-link>
+        <p class="subtitle-2 mb-1" v-for="(helpLink, i) in helpLinks" :key="i">
+          <nuxt-link :to="helpLink.url">{{ helpLink.name }}<br /> </nuxt-link>
+        </p>
       </v-col>
       <v-col lg="2" cols="6" md="3" class="pa-2">
         <p class="caption">Policies</p>
-
-        <nuxt-link
-          class="text-decoration-none subtitle-2"
-          v-for="(policy, i) in policies"
-          :key="i"
-          :to="policy.url"
-          >{{ policy.name }}<br />
-        </nuxt-link>
+        <p class="subtitle-2 mb-1" v-for="(policy, i) in policies" :key="i">
+          <nuxt-link :to="policy.url">{{ policy.name }}<br /> </nuxt-link>
+        </p>
       </v-col>
       <v-col lg="2" cols="6" md="3" class="pa-2">
         <p class="caption">Payment Methods</p>

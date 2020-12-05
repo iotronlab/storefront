@@ -7,6 +7,9 @@ export const getters = {
   categories(state) {
     return state.categories
   },
+  getCategory: (state) => (slug) => {
+    return state.categories.find((category) => category.slug === slug)
+  },
   snackbar(state) {
     return state.snackbar
   },
@@ -36,10 +39,7 @@ export const actions = {
         console.log(err)
       })
   },
-  setSnackbar({
-    commit,
-    snackbar
-  }) {
+  setSnackbar({ commit, snackbar }) {
     snackbar.showing = true
     commit('SET_SNACKBAR', snackbar)
     console.log(snackbar)

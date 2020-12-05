@@ -25,7 +25,7 @@
         <h4 class="text-subtitle-2">{{ product.name }}</h4>
         <h5 class="text-caption py-0">
           by
-          <nuxt-link :to="vendorLink" class="secondary--text">{{
+          <nuxt-link :to="vendorLink" class="primary--text">{{
             product.vendor.name
           }}</nuxt-link>
         </h5>

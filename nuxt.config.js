@@ -17,30 +17,30 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: process.env.npm_package_name + ' - curated store for art',
+    title: process.env.npm_package_name || 'artistic',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
+        content: process.env.npm_package_description || 'curated store for art',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
     script: [
       {
-        hid: "rzpay",
-        src: "https://checkout.razorpay.com/v1/checkout.js",
+        hid: 'rzpay',
+        src: 'https://checkout.razorpay.com/v1/checkout.js',
         defer: true,
-      }
-    ]
+      },
+    ],
   },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~/assets/main.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -49,7 +49,6 @@ export default {
     {
       src: '~/plugins/vee-validate.js',
     },
-
   ],
   /*
    ** Auto import components
@@ -88,7 +87,7 @@ export default {
    */
   axios: {
     baseURL: 'http://localhost:8000/api',
-   // browserBaseURL: 'http://api.butiq.store/api'
+    // browserBaseURL: 'http://api.butiq.store/api'
   },
   // auth module config
   auth: {
@@ -142,7 +141,6 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
 
-
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
@@ -150,18 +148,18 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: '#8a34c9',
+          primary: '#bb86fc',
           accent: colors.grey.darken3,
-          secondary: '#BB86FC',
+          secondary: '#8a34c9',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
         },
         light: {
-          primary: colors.purple.base,
+          primary: colors.purple.darken3,
           accent: colors.grey.darken3,
-          secondary: colors.purple.darken3,
+          secondary: colors.purple.base,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
@@ -175,8 +173,6 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
-    transpile: [
-      "vee-validate/dist/rules"
-    ],
+    transpile: ['vee-validate/dist/rules'],
   },
 }

@@ -1,44 +1,108 @@
 <template>
-  <v-expansion-panels>
-    <v-expansion-panel>
-      <v-expansion-panel-header>Categories</v-expansion-panel-header>
-      <v-expansion-panel-content v-for="option in options" :key="option.id">
-        <v-list-item dense @click="clicked()">
+  <v-container fluid class="pa-0">
+    <!-- featured and new filter -->
+    <v-row no-gutters justify="space-around" class="mb-2">
+      <v-checkbox
+        v-model="filters"
+        label="Featured"
+        value="featured"
+        hide-details=""
+      ></v-checkbox>
+      <v-checkbox
+        hide-details=""
+        v-model="filters"
+        label="Newest"
+        value="new"
+      ></v-checkbox
+    ></v-row>
+    <!-- price filter -->
+    <v-row no-gutters class="px-4 mb-2">
+      <v-range-slider
+        :hint="'price range: ( ' + priceRange[0] + ' - ' + priceRange[1] + ' )'"
+        v-model="priceRange"
+        thumb-label
+        persistent-hint
+        :max="maxPrice"
+        min="0"
+      ></v-range-slider>
+    </v-row>
+    <v-expansion-panels accordion>
+      <v-expansion-panel>
+        <v-expansion-panel-header class="pa-2"
+          >Categories
+        </v-expansion-panel-header>
+        <v-expansion-panel-content class="pa-0 mt-n4">
           <v-checkbox
             v-model="checkbox"
+            v-for="option in categories"
+            :key="option.id"
+            class="py-0"
             :value="option.slug"
             :label="option.name"
             type="checkbox"
-            required
+            hide-details
           ></v-checkbox>
-        </v-list-item>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-    <!-- <v-list-item>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+
+      <!-- <v-list-item>
       <v-slider :min="min" :max="max"></v-slider>
     </v-list-item> -->
-    <!-- {{ checkbox }} -->
-  </v-expansion-panels>
+      <!-- {{ checkbox }} -->
+    </v-expansion-panels>
+    <v-expansion-panels accordion>
+      <v-expansion-panel v-for="option in filterOptions" :key="option.id">
+        <v-expansion-panel-header class="pa-2"
+          >{{ option.admin_name }}
+        </v-expansion-panel-header>
+        <v-expansion-panel-content class="pa-0 mt-n4">
+          <v-checkbox
+            v-model="checkbox"
+            v-for="option in option.options"
+            :key="option.id"
+            class="py-0"
+            :value="option"
+            :label="option.admin_name"
+            type="checkbox"
+            hide-details
+          ></v-checkbox>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+
+      <!-- <v-list-item>
+      <v-slider :min="min" :max="max"></v-slider>
+    </v-list-item> -->
+      <!-- {{ checkbox }} -->
+    </v-expansion-panels></v-container
+  >
 </template>
 
 <script>
-import { max } from 'vee-validate/dist/rules'
+import { mapGetters } from 'vuex'
 export default {
   props: {
-    options: {
+    categories: {
       required: true,
       type: Array,
     },
-    min: {
+    maxPrice: {
       required: true,
+      type: undefined,
     },
-    max: {
-      required: true,
+    filterOptions: {
+      required: false,
+      type: Array,
     },
+
+    // max: {
+    //   required: true,
+    // },
   },
   data() {
     return {
       checkbox: [],
+      priceRange: [0, this.maxPrice],
+      filters: [],
     }
   },
   methods: {

@@ -1,10 +1,19 @@
 <template>
   <v-container fluid class="pa-0" v-if="!$fetchState.pending">
-    <v-img height="200px" :src="require('@/assets/img/dress.jpg')"></v-img>
+    <v-img
+      :src="require('@/assets/img/dress.jpg')"
+      max-height="200"
+      dark
+      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+      class="pa-4 align-end"
+    >
+      <h3 class="text-h6" style="text-shadow: 2px 2px purple">
+        {{ category.name }}
+      </h3>
+    </v-img>
     <v-divider class="my-2" />
     <v-row no-gutters justify="center">
       <v-col cols="12" md="3" lg="3" class="px-4">
-        <h3 class="text-h6 text--primary">{{ category.name }}</h3>
         <p class="text--secondary">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, cum
           iusto. A temporibus quas at eius vero iusto incidunt eos dolorum
@@ -14,7 +23,7 @@
           Sub categories
         </h4>
 
-        <div v-if="category.children.length > 1">
+        <div v-if="category.children.length > 1" class="mb-2">
           <v-expansion-panels
             popout
             class="mt-4"
@@ -61,7 +70,7 @@
 
       <v-col cols="12" md="8" lg="8">
         <v-row no-gutters align="center" justify="space-between" class="px-4">
-          <h3 class="text-h6 my-2 landing-title primary--text text-uppercase">
+          <h3 class="text-h6 my-2 landing-title secondary--text text-uppercase">
             #featured
           </h3>
 
@@ -71,6 +80,7 @@
             rounded
             :to="{
               name: 'products',
+              query: { category: category.slug },
             }"
             >see all results</v-btn
           ></v-row

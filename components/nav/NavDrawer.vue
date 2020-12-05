@@ -1,19 +1,21 @@
 <template>
-  <v-list avatar shaped nav>
-    <v-btn icon small v-if="stack.length > 1">
-      <v-icon @click="back"> mdi-chevron-left </v-icon>
-    </v-btn>
-    <v-list-item>
-      <v-list-item-avatar>
-        <v-img src="/icon.png"></v-img>
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="title">
-          {{ stack[stack.length - 1].name }}
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list avatar shaped>
+  <v-container fluid class="px-0">
+    <v-row no-gutters
+      ><v-col cols="4">
+        <v-slide-x-transition>
+          <v-btn small text v-if="stack.length > 1" @click="back">
+            <v-icon> mdi-chevron-left </v-icon> back
+          </v-btn>
+        </v-slide-x-transition>
+      </v-col>
+
+      <v-col cols="8">
+        <p class="text-subtitle-2">Welcome, {{ 'User' || auth.user }}</p>
+        <nuxt-link to="/" class="text-subtitle-2">Sign in</nuxt-link>
+      </v-col></v-row
+    >
+
+    <v-list shaped dense nav>
       <v-list-item
         v-for="category in stack[stack.length - 1]"
         :key="category.id"
@@ -22,19 +24,21 @@
         <!-- <v-list-item-avatar>
           <v-img src="/icon.png"></v-img>
         </v-list-item-avatar> -->
-        <v-list-item-title>{{ category.name }}</v-list-item-title>
+
+        <v-slide-x-transition>
+          <v-list-item-title>{{ category.name }}</v-list-item-title>
+        </v-slide-x-transition>
       </v-list-item>
       <v-divider />
-
-      <v-list-item>
-        <v-switch
-          v-model="$vuetify.theme.dark"
-          color="primary"
-          label="Dark"
-        ></v-switch>
-      </v-list-item>
     </v-list>
-  </v-list>
+    <v-list-item>
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        color="primary"
+        label="Dark"
+      ></v-switch>
+    </v-list-item>
+  </v-container>
 
   <!-- <div>
     <v-card width="256" class="overflow-hidden">

@@ -24,7 +24,14 @@
                   <v-avatar color="grey" class="mr-4"></v-avatar>
                   <strong class="title">{{ item.name }}</strong>
                   <v-spacer></v-spacer>
-                  <v-btn outlined rounded x-small> see more... </v-btn>
+                  <v-btn
+                    outlined
+                    rounded
+                    x-small
+                    :to="'/category/' + item.slug"
+                  >
+                    see more...
+                  </v-btn>
                 </v-row>
                 <v-list dense nav style="opacity: 70%">
                   <v-list-item-group>

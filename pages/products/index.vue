@@ -1,221 +1,136 @@
 <template>
-  <v-container fluid class="overflow-hidden" style="position: relative">
-    <!--  filter  -->
-    <v-row no-gutters align="center" justify="center">
-      <v-btn color="primary" dark @click.stop="showFilter = !showFilter">
-        Filters
-      </v-btn>
-      <v-btn color="primary" outlined dark @click.stop="drawer = !drawer">
-        Sort by
-      </v-btn>
-    </v-row>
-    <v-row no-gutters justify="center">
-      <v-col cols="12" lg="10">
-        <!-- <v-data-iterator
-          v-else
-          :items="items"
-          :items-per-page.sync="itemsPerPage"
-          :page="page"
-          :search="search"
-          :sort-by="sortBy.toLowerCase()"
-          :sort-desc="sortDesc"
-          hide-default-footer
+  <v-container fluid class="overflow-hidden pa-0" style="position: relative">
+    <v-container v-if="$fetchState.pending">
+      <v-row no-gutters>
+        <v-col v-for="n in item_count" :key="n" cols="12" sm="6" md="4" lg="3">
+          <v-skeleton-loader
+            class="pa-2"
+            type="card"
+          ></v-skeleton-loader> </v-col
+      ></v-row>
+    </v-container>
+    <v-container v-if="$fetchState.error"
+      >There was an error fetching data. Go
+      <nuxt-link to="/">Home</nuxt-link></v-container
+    >
+    <section v-if="!$fetchState.pending">
+      <v-row no-gutters align="center" justify="center">
+        <v-col cols="4">
+          showing ({{ pageData.from }} - {{ pageData.to }}) of
+          {{ pageData.total }} result<span v-if="pageData.total > 1"
+            >s</span
+          ></v-col
         >
-          <template v-slot:header>
-            <v-toolbar dark color="blue darken-3" class="mb-1">
-              <v-text-field
-            v-model="search"
-            clearable
+        <v-col cols="6">
+          <!--  filters  -->
+          <v-app-bar
             flat
-            solo-inverted
-            hide-details
-            label="Search"
-          ></v-text-field>
-              <v-select
-                v-model="sortBy"
-                flat
-                solo-inverted
-                hide-details
-                :items="keys"
-                label="Sort by"
-              ></v-select>
-              <v-spacer></v-spacer>
-              <template v-if="$vuetify.breakpoint.smAndUp">
-                <v-btn-toggle v-model="sortDesc" mandatory>
-                  <v-btn large depressed color="blue" :value="false">
-                    <v-icon>mdi-arrow-up</v-icon>
-                  </v-btn>
-                  <v-btn large depressed color="blue" :value="true">
-                    <v-icon>mdi-arrow-down</v-icon>
-                  </v-btn>
-                </v-btn-toggle>
-              </template>
-            </v-toolbar>
-          </template> -->
-        <template>
-          <div>
-            <v-container fluid>
-              <v-row no-gutters>
-                <!-- {{ 'page: ' + page + 'total pages: ' + pages }} -->
-
-                <v-col
-                  v-for="n in item_count"
-                  :key="n"
-                  cols="12"
-                  sm="6"
-                  md="4"
-                  lg="3"
-                >
-                  <div v-if="items.length == 0">
-                    <v-card
-                      class="mx-auto px-3 py-2 my-2"
-                      rounded
-                      height="350"
-                      width="300"
-                      max-width="250"
-                    >
-                      <v-skeleton-loader
-                        width="240"
-                        max-width="300"
-                        class="pr-2"
-                        type="card"
-                        height="350"
-                      ></v-skeleton-loader>
-                    </v-card>
-                  </div>
-                </v-col>
-                <v-col
-                  v-for="item in items"
-                  :key="item.name"
-                  cols="12"
-                  sm="6"
-                  md="4"
-                  lg="3"
-                >
-                  <Product :product="item" />
-                </v-col>
-              </v-row>
-              <v-pagination
-                v-model="page"
-                class="my-4"
-                :length="pages"
-                circle
-                :value="page"
-                @next="updateQuery()"
-                @previous="updateQuery()"
-                @input="updateQuery()"
-              ></v-pagination>
-            </v-container>
-          </div>
-        </template>
-        <!-- <template>
-          <v-virtual-scroller height="100" item-height="500">
-            <v-row>
-              <v-col
-                v-for="item in items"
-                :key="item.name"
-                cols="12"
-                sm="6"
-                md="4"
-                lg="3"
-              >
-                <Product :product="item" />
-              </v-col>
-              <v-col
-                v-for="n in item_count"
-                v-if="items.length == 0 || scrolling"
-                :key="n"
-                cols="12"
-                sm="6"
-                md="4"
-                lg="3"
-              >
-                <v-card class="mx-auto" shaped height="320">
-                  <v-skeleton-loader
-                    class="mx-auto"
-                    type="card"
-                    max-height="250"
-                  ></v-skeleton-loader>
-                </v-card>
-              </v-col>
-              <Observer @intersect="intersected" />
-            </v-row>
-          </v-virtual-scroller>
-        </template> -->
-        <!-- </v-data-iterator> -->
-
-        <!-- <v-app-bar bottom fixed app class="hidden-md-and-up">
-          <v-container fluid>
+            :fixed="$vuetify.breakpoint.mdAndDown"
+            :bottom="$vuetify.breakpoint.mdAndDown"
+          >
             <v-row no-gutters>
-              <v-col><v-btn @click="ChangeState">Filter</v-btn> </v-col>
-              <v-col>
+              <v-col cols="5">
+                <v-btn
+                  color="secondary"
+                  dark
+                  block
+                  @click.stop="showFilter = !showFilter"
+                >
+                  Filters
+                </v-btn>
+              </v-col>
+              <v-col cols="7">
                 <v-select
                   class="ml-1"
                   dense
                   placeholder="Sort by"
                   hide-details
-                  :items="keys"
                   outlined
                 ></v-select>
               </v-col>
-            </v-row>
-          </v-container>
-        </v-app-bar> --></v-col
-      ></v-row
-    >
-    <!-- Right filter nav -->
-    <v-navigation-drawer temporary absolute right v-model="showFilter">
-      <FilterProducts
-        :options="categories"
-        :min="min"
-        :max="max"
-        @input="filter_products"
-      />
-      <!-- {{ 'filtered below' }}
+            </v-row> </v-app-bar
+        ></v-col>
+      </v-row>
+      <v-row no-gutters justify="center">
+        <v-col cols="12" lg="10">
+          <template>
+            <div>
+              <v-container fluid>
+                <v-row no-gutters>
+                  <!-- {{ 'page: ' + page + 'total pages: ' + pages }} -->
+
+                  <v-col
+                    v-for="item in products"
+                    :key="item.name"
+                    cols="12"
+                    sm="6"
+                    md="4"
+                    lg="3"
+                  >
+                    <Product :product="item" />
+                  </v-col>
+                </v-row>
+                <v-pagination
+                  v-model="pageData.current_page"
+                  class="my-4"
+                  :length="pageData.last_page"
+                  circle
+                  :value="page"
+                  @next="updateQuery()"
+                  @previous="updateQuery()"
+                  @input="updateQuery()"
+                ></v-pagination>
+              </v-container>
+            </div>
+          </template> </v-col
+      ></v-row>
+      <!-- Right filter nav -->
+      <v-navigation-drawer temporary absolute right v-model="showFilter">
+        <v-col>
+          <p>0 filters selected</p>
+          <v-row no-gutters
+            ><v-btn>Apply</v-btn><v-btn>Reset</v-btn></v-row
+          ></v-col
+        >
+        <FilterProducts
+          :categories="categories"
+          :maxPrice="maxPrice"
+          :filterOptions="filterOptions"
+          @input="filter_products"
+        />
+        <!-- {{ 'filtered below' }}
       {{ filtered }} -->
-    </v-navigation-drawer>
+      </v-navigation-drawer>
+    </section>
   </v-container>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations, mapState } from 'vuex'
-import Product from '@/components/products/Product'
-import FilterProducts from '@/components/filter/FilterProducts'
-// import Observer from '~/components/Observe/Observe'
 
 export default {
   // watchQuery: ['page'],
-  components: {
-    Product,
-    FilterProducts,
-    // Observer,
-  },
+
   data() {
     return {
-      state: null,
-      params: {},
-      app: {},
-      // itemsPerPageArray: [4, 8, 12],
-      // search: '',
-      // filter: {},
-      // sortDesc: false,
-      // page: 1,
-      // itemsPerPage: 10,
-      // sortBy: 'name',
-      // keys: ['name', 'slug', 'price'],
-      items: [],
+      categories: [],
+      pageData: null,
+      products: [],
       item_count: 4,
-      min: Infinity,
-      max: -1 * Infinity,
+
+      maxPrice: 2000,
+      priceRange: [0, 100],
+      currentPage: 1,
+      totalPages: Number,
       checkbox: {},
-      NavState: false,
-      filtered: [],
+
+      filterOptions: [],
       filter_options: null,
-      page: 1,
+
       // next: null,
       // scrolling: false,
-      pages: null,
-      showFilter: false,
+      page: null,
+      showFilter: true,
     }
   },
   methods: {
@@ -268,38 +183,37 @@ export default {
     // },
   },
   computed: {
-    ...mapGetters({
-      categories: 'categories',
-    }),
+    // ...mapGetters({
+    //   categories: 'categories',
+    // }),
   },
   watch: {
-    '$route.query': '$fetch',
+    // '$route.query': '$fetch',
   },
   mounted() {
-    if (this.$route.query.page === undefined) {
-      this.$route.query.page = 1
-    }
+    // if (this.$route.query.page === undefined) {
+    //   this.$route.query.page = 1
+    // }
   },
   async fetch() {
-    let response = null
-    console.log('in fetch and route: ')
     console.log(this.$route)
     let key = Object.keys(this.$route.query)[0]
     let value = Object.values(this.$route.query)[0]
     console.log(key + ' ' + value)
-    response = await this.app.$axios.$get(`/products?` + key + '=' + value)
-    console.log(response.data)
-    this.item_count = response.data.length
-    this.pages = Math.ceil(response.meta.total / response.meta.per_page)
-    setTimeout(() => {
-      this.items = response.data
-    }, 500)
-  },
-  asyncData({ params, app }) {
-    return {
-      params: params,
-      app: app,
-    }
+    await this.$axios
+      .$get(`/products?` + key + '=' + value)
+      .then((response) => {
+        console.log(response)
+        this.categories = response.category_children
+        this.pageData = response.meta
+        this.maxPrice = Math.ceil(response.max_price / 100)
+        this.filterOptions = response.filterable_attributes
+        this.item_count = response.data.length
+
+        setTimeout(() => {
+          this.products = response.data
+        }, 500)
+      })
   },
 }
 </script>

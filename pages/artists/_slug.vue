@@ -11,7 +11,7 @@
       <MiniProfile :vendor="vendor" />
     </v-row>
     <v-row>
-      <h2>All art by {{ vendor.name }}</h2>
+      <h2 class="text-h6 text--primary">All art by {{ vendor.name }}</h2>
       <v-carousel cycle hide-delimiters show-arrows-on-hover height="100%">
         <v-carousel-item v-for="(n, i) in Math.ceil(total / columns)" :key="n">
           <v-row no-gutters class="fill-height" align="center" justify="center">

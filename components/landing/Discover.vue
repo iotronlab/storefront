@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="mx-auto">
+  <v-container fluid>
     <v-slide-group
       v-model="selectedCategory"
       class="pa-1"
@@ -25,11 +25,15 @@
             <v-img
               :src="category.slug + `.jpg`"
               height="100%"
-              gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+              gradient="to top, rgba(0,0,0,.1), rgba(0,0,0,.6)"
             >
-              <h5 class="overline pa-2" style="line-height: 100%">
+              <h5
+                class="overline pa-2"
+                style="text-shadow: 2px 2px purple; line-height: 100%"
+              >
                 {{ category.name }}
               </h5>
+              <v-btn outlined x-small rounded>view all</v-btn>
               <v-scale-transition>
                 <v-icon
                   v-if="active"
@@ -48,11 +52,11 @@
         <v-tabs
           show-arrows
           v-model="selectedSubCategory"
-          color="secondary"
+          color="primary"
           :vertical="$vuetify.breakpoint.mdAndUp"
           background-color="transparent"
         >
-          <v-tabs-slider color="secondary"></v-tabs-slider>
+          <v-tabs-slider color="primary"></v-tabs-slider>
           <v-tab
             v-for="children in selectedCategory"
             :key="children.slug"
@@ -89,37 +93,38 @@
                         threshold: 0.5,
                       }"
                       transition="scale-transition"
-                    >
-                      <v-img
-                        :src="`https://picsum.photos/500/300`"
-                        :lazy-src="`https://picsum.photos/10/6`"
-                        aspect-ratio="1"
-                        dark
-                        class="rounded"
-                        gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
-                        ><v-row
-                          class="fill-height ma-0"
-                          no-gutters
-                          align="center"
-                          justify="center"
-                        >
-                          <template v-slot:placeholder>
-                            <v-row
-                              class="fill-height ma-0"
-                              align="center"
-                              justify="center"
-                              no-gutters
-                            >
-                              <v-progress-circular
-                                indeterminate
-                                color="grey lighten-5"
-                              ></v-progress-circular>
-                            </v-row>
-                          </template>
-                          <h4 class="overline">{{ subchild.name }}</h4></v-row
-                        >
-                        <p>p text</p>
-                      </v-img></v-lazy
+                      ><nuxt-link link :to="'/category/' + subchild.slug">
+                        <v-img
+                          :src="`https://picsum.photos/500/300`"
+                          :lazy-src="`https://picsum.photos/10/6`"
+                          aspect-ratio="1"
+                          dark
+                          class="rounded"
+                          gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+                          ><v-row
+                            class="fill-height ma-0"
+                            no-gutters
+                            align="center"
+                            justify="center"
+                          >
+                            <template v-slot:placeholder>
+                              <v-row
+                                class="fill-height ma-0"
+                                align="center"
+                                justify="center"
+                                no-gutters
+                              >
+                                <v-progress-circular
+                                  indeterminate
+                                  color="grey lighten-5"
+                                ></v-progress-circular>
+                              </v-row>
+                            </template>
+                            <h4 class="overline">{{ subchild.name }}</h4></v-row
+                          >
+                          <p>p text</p>
+                        </v-img></nuxt-link
+                      ></v-lazy
                     >
                   </v-col></v-row
                 ></v-col

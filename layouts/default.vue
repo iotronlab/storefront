@@ -1,18 +1,17 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer v-model="drawer" temporary fixed app>
       <!-- {{ categories }} -->
       <NavDrawer :items="categories" v-if="categories.length > 0" />
     </v-navigation-drawer>
-    <v-app-bar id="nav" fixed dense app flat class="nav-transparent">
+    <v-app-bar id="nav" fixed app flat class="nav-transparent">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <nuxt-link :to="{ name: 'index' }">
-        <v-img src="/butiq.png" width="70" />
+        <v-img src="/butiq.png" width="85" />
       </nuxt-link>
-
       <v-container fluid class="pa-0">
-        <v-row no-gutters class="pa-0">
-          <section class="hidden-sm-and-down">
+        <v-row no-gutters class="pa-0" align="center">
+          <v-col class="hidden-sm-and-down">
             <v-col class="d-flex align-center">
               <!-- nav categories -->
 
@@ -35,7 +34,7 @@
                       small
                       rounded
                       v-on="on"
-                      color="secondary"
+                      color="primary"
                       class="font-weight-bold"
                     >
                       {{ category.name }}
@@ -44,15 +43,21 @@
                   <DropDown :navMenu="category.children" />
                 </v-menu>
               </v-col>
+              <v-col
+                ><v-btn text small color="primary" class="font-weight-bold"
+                  >Custom Art</v-btn
+                ></v-col
+              >
             </v-col>
-          </section>
+          </v-col>
+
           <v-col class="d-flex justify-end align-center">
             <v-col class="hidden-sm-and-down mx-2">
               <v-text-field
                 append-icon="mdi-magnify"
                 placeholder="find artworks, artists, art forms..."
                 filled
-                color="secondary"
+                color="primary"
                 hide-details
                 rounded
                 dense
@@ -68,7 +73,7 @@
             <div v-if="$auth.loggedIn" class="hidden-sm-and-down mr-2">
               <v-menu bottom offset-y>
                 <template v-slot:activator="{ on }">
-                  <v-btn color="primary" dark v-on="on" icon>
+                  <v-btn color="secondary" dark v-on="on" icon>
                     <v-icon>mdi-account</v-icon>
                   </v-btn>
                 </template>
@@ -89,16 +94,12 @@
           </v-col>
         </v-row>
       </v-container>
-      <v-spacer />
     </v-app-bar>
     <v-main>
       <nuxt />
     </v-main>
 
-    <v-footer app absolute padless>
-      <!-- <span>&copy; {{ new Date().getFullYear() }}</span> -->
-      <Footer />
-    </v-footer>
+    <LazyFooter />
   </v-app>
 </template>
 
@@ -147,7 +148,6 @@ export default {
   methods: {
     ...mapActions(['updateNavMenu']),
     async initialize() {
-      console.log('initial')
       await this.updateNavMenu()
     },
     selected(item) {
@@ -156,16 +156,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.nav-transparent {
-  background-color: transparent !important;
-}
-
-.footer-image {
-  background-image: url('/body.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-</style>

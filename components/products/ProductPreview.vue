@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="290">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" small rounded dark v-bind="attrs" v-on="on"
+      <v-btn color="secondary" small rounded dark v-bind="attrs" v-on="on"
         ><v-icon left small>mdi-eye</v-icon>Preview</v-btn
       >
     </template>

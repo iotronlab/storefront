@@ -15,8 +15,14 @@
           v-slot="{ active, toggle }"
         >
           <div>
-            <v-btn :input-value="active" @click="toggle" text small>
-              <nuxt-link :to="'#' + link"> {{ link }}</nuxt-link>
+            <v-btn
+              :input-value="active"
+              @click="toggle"
+              text
+              small
+              :to="'#' + link"
+            >
+              {{ link }}
             </v-btn>
           </div>
         </v-item>
