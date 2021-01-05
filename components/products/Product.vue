@@ -1,24 +1,23 @@
 <template>
   <v-container fluid>
     <nuxt-link :to="link">
-      <v-img
-        class="mx-auto rounded-lg"
-        src="https://bulma.io/images/placeholders/320x480.png"
-        :aspect-ratio="3 / 4"
-      >
-        <v-row no-gutters>
-          <v-btn icon color="primary" large> <v-icon>mdi-heart</v-icon> </v-btn
-          ><v-spacer />
-          <v-badge
-            color="deep-purple accent-4"
-            content="Featured"
-            :value="product.featured"
-            offset-y="30"
-            offset-x="70"
-          >
-          </v-badge>
-        </v-row>
-      </v-img>
+      <v-container fluid class="woodframe">
+        <v-img src="/landing.jpg" height="200">
+          <v-row no-gutters>
+            <v-btn icon color="primary" large>
+              <v-icon>mdi-heart</v-icon> </v-btn
+            ><v-spacer />
+            <v-badge
+              color="deep-purple accent-4"
+              content="Featured"
+              :value="product.featured"
+              offset-y="30"
+              offset-x="70"
+            >
+            </v-badge>
+          </v-row>
+        </v-img>
+      </v-container>
     </nuxt-link>
     <v-row>
       <v-col>
@@ -99,6 +98,13 @@ export default {
   transition: background 0.1s, color 0.1s;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7),
     -5px -5px 10px rgba(255, 255, 255, 0.1);
+}
+.woodframe {
+  border-image: url('/frame.jpg') 30 repeat;
+  -o-border-image: url('/frame.jpg') 30 repeat;
+  -moz-border-image: url('/frame.jpg') 30 repeat;
+  -webkit-border-image: url('/frame.jpg') 100 repeat;
+  border-width: 20px;
 }
 </style>
 

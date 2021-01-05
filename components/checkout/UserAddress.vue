@@ -1,42 +1,10 @@
 <template>
-  <v-container fluid class="pa-2">
+  <v-container fluid>
     <p>Addresses below</p>
-    <template v-if="selecting">
-      <UserAddressSelect
-        :addresses="addresses"
-        :selectedAddress="selectedAddress"
-        @click="addressSelected"
-      />
-    </template>
-    <template v-else-if="creating">
+    {{ selectedAddress }}
+  
+    <template v-if="creating">
       <UserAddressCreate @cancel="creating = false" @created="created" />
-    </template>
-    <template v-else>
-      <template v-if="selectedAddress">
-        <p>
-          {{ selectedAddress.name }}
-          <br />
-          {{ selectedAddress.address_1 }}
-          <br />
-          {{ selectedAddress.city }}
-          <br />
-          {{ selectedAddress.postal_code }}
-          <br />
-          {{ selectedAddress.state.name }}
-        </p>
-        <v-btn
-          class="ma-1"
-          color="purple darken-1"
-          @click.prevent="selecting = true"
-          >Change</v-btn
-        >
-        <v-btn
-          class="ma-1"
-          color="green darken-3"
-          @click.prevent="creating = true"
-          >Add</v-btn
-        >
-      </template>
     </template>
   </v-container>
 </template>

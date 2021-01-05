@@ -19,11 +19,9 @@
           iusto. A temporibus quas at eius vero iusto incidunt eos dolorum
           minima illo ea quis veniam, repellendus deleniti culpa sunt.
         </p>
-        <h4 class="overline" v-if="category.children.length > 1">
-          Sub categories
-        </h4>
+        <h4 class="overline" v-if="category.children">Sub categories</h4>
 
-        <div v-if="category.children.length > 1" class="mb-2">
+        <div v-if="category.children" class="mb-2">
           <v-expansion-panels
             popout
             class="mt-4"
@@ -32,11 +30,11 @@
             <v-expansion-panel
               v-for="subcategory in category.children"
               :key="subcategory.id"
-              :readonly="!subcategory.children.length > 0"
+              :readonly="subcategory.children == null"
             >
               <v-expansion-panel-header
                 class="primary--text"
-                :hide-actions="!subcategory.children.length > 0"
+                :hide-actions="subcategory.children == null"
               >
                 <h5>
                   <nuxt-link

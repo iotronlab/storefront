@@ -77,7 +77,27 @@ export default {
     '@nuxtjs/component-cache',
     '@nuxtjs/toast',
   ],
-
+  toast: {
+    position: 'top-center',
+    duration: 4000,
+    theme: 'bubble',
+    action: {
+      text: 'Close',
+      onClick: (e, toastObject) => {
+        toastObject.goAway(0)
+      },
+    },
+    register: [
+      // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error',
+        },
+      },
+    ],
+  },
   optimizedImages: {
     optimizeImages: true,
   },
@@ -153,8 +173,8 @@ export default {
           secondary: '#8a34c9',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
+          error: colors.deepOrange.darken4,
+          success: colors.green.accent4,
         },
         light: {
           primary: colors.purple.darken3,
@@ -162,8 +182,8 @@ export default {
           secondary: colors.purple.base,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
+          error: colors.deepOrange.darken4,
+          success: colors.green.accent4,
         },
       },
     },
@@ -173,6 +193,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
+    analyze: {
+      analyzerMode: 'static',
+    },
     transpile: ['vee-validate/dist/rules'],
   },
 }

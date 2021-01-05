@@ -2,16 +2,16 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" temporary fixed app>
       <!-- {{ categories }} -->
-      <NavDrawer :items="categories" v-if="categories.length > 0" />
+      <LazyNavDrawer :items="categories" v-if="categories.length > 0" />
     </v-navigation-drawer>
     <v-app-bar id="nav" fixed app flat class="nav-transparent">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <nuxt-link :to="{ name: 'index' }">
-        <v-img src="/butiq.png" width="85" />
+        <v-img src="/logo.png" alt="artistic logo" width="85" />
       </nuxt-link>
       <v-container fluid class="pa-0">
         <v-row no-gutters class="pa-0" align="center">
-          <v-col class="hidden-sm-and-down">
+          <v-col class="hidden-md-and-down">
             <v-col class="d-flex align-center">
               <!-- nav categories -->
 
@@ -66,7 +66,8 @@
 
             <!-- Account button -->
             <span class="mx-2" v-if="$auth.loggedIn == false">
-              <Login />
+              <!-- <Login /> -->
+              <v-btn rounded color="secondary" to="/auth/login">Sign in</v-btn>
             </span>
 
             <!-- Account button -->
@@ -83,7 +84,7 @@
 
             <!-- Cart button -->
             <div v-if="$auth.loggedIn == true">
-              <v-badge overlap>
+              <v-badge overlap color="secondary">
                 <span slot="badge">{{ cartCount }}</span>
                 <v-btn :to="{ name: 'cart' }" rounded outlined color="primary">
                   Cart
@@ -137,7 +138,7 @@ export default {
     ...mapGetters({
       categories: 'categories',
       //cartProducts: "cart/products",
-      // cartCount: "cart/cartCount"
+      cartCount: 'cart/cartCount',
       // authenticated: "user/getAuthentication"
     }),
     ...mapState({

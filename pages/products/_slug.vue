@@ -9,7 +9,7 @@
         <v-divider class="mb-1"></v-divider>
         <v-row no-gutters>
           <span class="text-overline">price</span>&nbsp;
-          <h3 class="text-h5 secondary--text">
+          <h3 class="text-h5 primary--text">
             {{ product.price }}
           </h3></v-row
         >
@@ -75,7 +75,7 @@
           >
             <h6 class="text-overline" v-if="val">{{ attribute }}</h6>
             &nbsp;
-            <v-chip v-if="val" outlined color="secondary">{{ val }}</v-chip>
+            <v-chip v-if="val" outlined color="primary">{{ val }}</v-chip>
           </v-row>
         </v-row>
         <!-- {{ 'type Below' }}
@@ -101,9 +101,9 @@
             </v-btn>
           </v-col>
         </v-row>
-        <v-row no-gutters>
-          <v-col> </v-col>
-        </v-row>
+        <LazyDeliveryChecker />
+
+        <LazyProductComments />
         <v-app-bar bottom fixed class="hidden-md-and-up">
           <v-container class="px-0 py-0">
             <v-row no-gutters>

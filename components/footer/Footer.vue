@@ -2,7 +2,7 @@
   <v-container fluid class="footer-image">
     <v-row no-gutters justify="center">
       <v-col lg="3" cols="12" class="text-center pa-2">
-        <v-img src="/butiq.png" contain height="80" class="mb-4" />
+        <v-img src="/logo.png" contain height="80" class="mb-4" />
         <v-btn small rounded>Join our network</v-btn>
 
         <section>

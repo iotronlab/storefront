@@ -1,11 +1,18 @@
 <template>
-  <section class="mb-1">
+  <section>
     <v-container fluid class="body-image" style="margin-top: -60px">
-      <v-row no-gutters class="mt-12" align="center" justify="center">
-        <v-col lg="3">
+      <v-row class="mt-12" align="center" justify="center">
+        <v-col lg="3" class="text-center">
           <h1 class="landing-title text-uppercase secondary--text text-h3">
             Curated Store for Art
           </h1>
+          <v-row no-gutters class="mt-4" justify="center">
+            <v-btn rounded small class="mr-2">Shop</v-btn>
+            <v-btn outlined rounded small>Learn More</v-btn></v-row
+          >
+        </v-col>
+        <v-col lg="8">
+          <v-img cover src="landing-img.png"></v-img>
 
           <h2 class="text-subtitle-2 text--secondary mt-4">
             A citizen's initiative to revive the Indian economy post the covid
@@ -13,12 +20,6 @@
             boutiques at the grassroot level, to showcase their creations on a
             platform crafted for them.
           </h2>
-
-          <v-btn rounded class="mt-6">Shop</v-btn>
-          <v-btn outlined rounded class="mt-6">Learn More</v-btn>
-        </v-col>
-        <v-col lg="6">
-          <v-img cover src="landing-bg.png"></v-img>
         </v-col>
       </v-row>
     </v-container>

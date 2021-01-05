@@ -11,7 +11,7 @@
 
       <v-col cols="8">
         <p class="text-subtitle-2">Welcome, {{ 'User' || auth.user }}</p>
-        <nuxt-link to="/" class="text-subtitle-2">Sign in</nuxt-link>
+        <!-- <nuxt-link to="/" class="text-subtitle-2">Sign in</nuxt-link> -->
       </v-col></v-row
     >
 
@@ -25,9 +25,7 @@
           <v-img src="/icon.png"></v-img>
         </v-list-item-avatar> -->
 
-        <v-slide-x-transition>
-          <v-list-item-title>{{ category.name }}</v-list-item-title>
-        </v-slide-x-transition>
+        <v-list-item-title>{{ category.name }}</v-list-item-title>
       </v-list-item>
       <v-divider />
     </v-list>
@@ -99,7 +97,7 @@ export default {
   },
   methods: {
     clickedItem(item) {
-      if (!item.children || !item.children.length > 0) {
+      if (item.children == null) {
         this.$router.push(`/category/${item.slug}`)
       } else {
         this.stack.push(item.children)

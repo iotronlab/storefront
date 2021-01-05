@@ -1,11 +1,15 @@
 export const state = () => ({
   categories: [],
   snackbars: [],
+  shippingToken: null,
 })
 
 export const getters = {
   categories(state) {
     return state.categories
+  },
+  shippingToken(state) {
+    return state.shippingToken
   },
   getCategory: (state) => (slug) => {
     return state.categories.find((category) => category.slug === slug)
@@ -18,6 +22,9 @@ export const getters = {
 export const mutations = {
   SET_CATEGORIES(state, categories) {
     state.categories = categories
+  },
+  SET_SHIPPING_TOKEN(state, shippingToken) {
+    state.shippingToken = shippingToken
   },
   SET_SNACKBAR(state, snackbar) {
     snackbar.showing = true
@@ -34,11 +41,22 @@ export const actions = {
       .$get('/categories')
       .then((res) => {
         commit('SET_CATEGORIES', res.data)
+        commit('SET_SHIPPING_TOKEN', res.shipping_token)
       })
       .catch((err) => {
         console.log(err)
       })
   },
+  // async getShippingToken({ commit }) {
+  //   await this.$axios
+  //     .$get('/')
+  //     .then((res) => {
+  //       commit('SET_SHIPPING_TOKEN', res.shipping_token)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // },
   setSnackbar({ commit, snackbar }) {
     snackbar.showing = true
     commit('SET_SNACKBAR', snackbar)
