@@ -6,13 +6,6 @@
           <h1 class="landing-title text-uppercase secondary--text text-h3">
             Curated Store for Art
           </h1>
-          <v-row no-gutters class="mt-4" justify="center">
-            <v-btn rounded small class="mr-2">Shop</v-btn>
-            <v-btn outlined rounded small>Learn More</v-btn></v-row
-          >
-        </v-col>
-        <v-col lg="8">
-          <v-img cover src="landing-img.png"></v-img>
 
           <h2 class="text-subtitle-2 text--secondary mt-4">
             A citizen's initiative to revive the Indian economy post the covid
@@ -20,6 +13,16 @@
             boutiques at the grassroot level, to showcase their creations on a
             platform crafted for them.
           </h2>
+          <v-row no-gutters class="mt-4" justify="center">
+            <v-btn rounded small class="mr-2" color="secondary">Shop</v-btn>
+            <v-btn outlined rounded small color="accent"
+              >Learn More</v-btn
+            ></v-row
+          >
+        </v-col>
+        <v-col lg="8">
+          <!-- <v-img cover src="landing-img.png"></v-img> -->
+          <Trending />
         </v-col>
       </v-row>
     </v-container>

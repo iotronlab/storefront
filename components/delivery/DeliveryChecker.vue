@@ -41,65 +41,65 @@
             <div class="py-3">Saved Address</div>
           </v-sheet>
         </v-bottom-sheet>
-      </v-row>
-    </v-form><v-slide-y-transition>
-    <v-sheet v-if="submitted" class="pa-0" elevation="4" rounded>
-      <v-row no-gutters justify="center">
-        <v-btn-toggle v-model="courierSort" mandatory rounded class="mt-2">
-          <v-btn small text @click="recommendedCourier">recommended</v-btn>
-          <v-btn small text @click="fastestCourier">fastest</v-btn>
-          <v-btn small text @click="cheapestCourier">cheapest</v-btn>
-        </v-btn-toggle></v-row
-      >
-      <v-slide-group v-model="selectedCourier" class="pa-0" show-arrows>
-        <v-slide-item
-          class="ma-1"
-          v-for="(service, i) in couriers"
-          :key="i"
-          v-slot:default="{ active, toggle }"
-          :value="service"
+      </v-row> </v-form
+    ><v-slide-y-transition>
+      <v-sheet v-if="submitted" class="pa-0" elevation="4" rounded>
+        <v-row no-gutters justify="center">
+          <v-btn-toggle v-model="courierSort" mandatory rounded class="mt-2">
+            <v-btn small text @click="recommendedCourier">recommended</v-btn>
+            <v-btn small text @click="fastestCourier">fastest</v-btn>
+            <v-btn small text @click="cheapestCourier">cheapest</v-btn>
+          </v-btn-toggle></v-row
         >
-          <v-card
-            :color="active ? 'primary' : 'grey lighten-1'"
-            height="140"
-            width="170"
-            @click="toggle"
+        <v-slide-group v-model="selectedCourier" class="pa-0" show-arrows>
+          <v-slide-item
+            class="ma-1"
+            v-for="(service, i) in couriers"
+            :key="i"
+            v-slot:default="{ active, toggle }"
+            :value="service"
           >
-            <v-row
-              no-gutters
-              class="fill-height"
-              align="center"
-              justify="center"
+            <v-card
+              :color="active ? 'primary' : 'grey lighten-1'"
+              height="140"
+              width="170"
+              @click="toggle"
             >
-              <v-card
-                width="100%"
-                outlined
-                class="text-center text-caption py-1"
+              <v-row
+                no-gutters
+                class="fill-height"
+                align="center"
+                justify="center"
               >
-                <p class="mb-1">
-                  {{ service.courier_name }}<br />
-                  Rate: ₹ {{ service.rate }}<br />
-                  ETD: {{ service.etd }}<br />
-                  Estimated: {{ service.estimated_delivery_days }}
-                  days
-                </p>
+                <v-card
+                  width="100%"
+                  outlined
+                  class="text-center text-caption py-1"
+                >
+                  <p class="mb-1">
+                    {{ service.courier_name }}<br />
+                    Rate: ₹ {{ service.rate }}<br />
+                    ETD: {{ service.etd }}<br />
+                    Estimated: {{ service.estimated_delivery_days }}
+                    days
+                  </p>
 
-                <v-row no-gutters justify="center">
-                  ({{ service.rating }})<v-rating
-                    :value="service.rating"
-                    color="yellow accent-4"
-                    dense
-                    half-increments
-                    readonly
-                    size="18"
-                  ></v-rating
-                ></v-row>
-              </v-card>
-            </v-row>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
-    </v-sheet></v-slide-y-transition>
+                  <v-row no-gutters justify="center">
+                    ({{ service.rating }})<v-rating
+                      :value="service.rating"
+                      color="yellow accent-4"
+                      dense
+                      half-increments
+                      readonly
+                      size="18"
+                    ></v-rating
+                  ></v-row>
+                </v-card>
+              </v-row>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group> </v-sheet
+    ></v-slide-y-transition>
   </v-container>
 </template>
 <script>
@@ -114,8 +114,8 @@ export default {
       sheet: false,
       submitted: false,
       valid: true,
-      pincode1: 281001,
-      pincode2: 281001,
+      pincode1: 411002,
+      pincode2: 411002,
       endPoint: null,
       pinRules: [
         (v) => !!v || 'Name is required',
@@ -125,6 +125,9 @@ export default {
       services: {},
       couriers: [],
     }
+  },
+  created() {
+    this.$store.dispatch('getShippingToken')
   },
   computed: {
     ...mapGetters({

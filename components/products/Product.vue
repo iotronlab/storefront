@@ -1,11 +1,10 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="pa-0">
     <nuxt-link :to="link">
       <v-container fluid class="woodframe">
-        <v-img src="/landing.jpg" height="200">
+        <v-img src="/landing.jpg" class="img" contain>
           <v-row no-gutters>
-            <v-btn icon color="primary" large>
-              <v-icon>mdi-heart</v-icon> </v-btn
+            <v-btn icon color="primary"> <v-icon>mdi-heart</v-icon> </v-btn
             ><v-spacer />
             <v-badge
               color="deep-purple accent-4"
@@ -15,24 +14,25 @@
               offset-x="70"
             >
             </v-badge>
-          </v-row>
-        </v-img>
-      </v-container>
+          </v-row> </v-img
+      ></v-container>
     </nuxt-link>
-    <v-row>
-      <v-col>
+    <v-row no-gutters class="mt-2" style="flex-wrap: nowrap">
+      <v-col class="flex-grow-1 flex-shrink-0">
         <h4 class="text-subtitle-2">{{ product.name }}</h4>
         <h5 class="text-caption py-0">
           by
           <nuxt-link :to="vendorLink" class="primary--text">{{
-            product.vendor.name
+            product.vendor.display_name
           }}</nuxt-link>
         </h5>
         <h4 class="text-subtitle-2">{{ product.price }}</h4></v-col
-      ><v-col align="end">
-        <v-chip small class="mb-2 caption">{{
-          product.in_stock ? 'in stock' : 'sold'
-        }}</v-chip
+      ><v-col class="flex-grow-0 flex-shrink-1" align="end">
+        <v-chip
+          small
+          :color="product.in_stock ? 'success' : ''"
+          class="mb-2 caption"
+          >{{ product.in_stock ? 'in stock' : 'sold' }}</v-chip
         ><ProductPreview /> </v-col
     ></v-row>
     <!-- <v-row no-gutters>
@@ -70,7 +70,7 @@ export default {
       }
     },
     vendorLink() {
-      let slug = this.product.vendor.slug
+      let url = this.product.vendor.url
       // let slug =
       //   this.product.variants.length > 0
       //     ? this.product.variants[0].sku
@@ -79,9 +79,9 @@ export default {
       // console.log('slug above')
       // return '#'
       return {
-        name: 'artists-slug',
+        name: 'artists-url',
         params: {
-          slug: slug,
+          url: url,
         },
       }
     },
@@ -100,11 +100,50 @@ export default {
     -5px -5px 10px rgba(255, 255, 255, 0.1);
 }
 .woodframe {
-  border-image: url('/frame.jpg') 30 repeat;
-  -o-border-image: url('/frame.jpg') 30 repeat;
-  -moz-border-image: url('/frame.jpg') 30 repeat;
-  -webkit-border-image: url('/frame.jpg') 100 repeat;
-  border-width: 20px;
+  background-color: #ddc;
+  border: solid 8px #eee;
+  border-bottom-color: #fff;
+  border-left-color: #eee;
+  border-radius: 2px;
+  border-right-color: #eee;
+  border-top-color: #ddd;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25) inset,
+    0 5px 10px 5px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  display: inline-block;
+
+  padding: 5px;
+  position: relative;
+  text-align: center;
 }
+.img {
+  border: solid 2px;
+  border-bottom-color: #ffe;
+  border-left-color: #eed;
+  border-right-color: #eed;
+  border-top-color: #ccb;
+  max-height: 100%;
+  max-width: 100%;
+}
+/* .frame:before {
+  border-radius: 2px;
+  bottom: -2vmin;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25) inset;
+  content: '';
+  left: -2vmin;
+  position: absolute;
+  right: -2vmin;
+  top: -2vmin;
+}
+.frame:after {
+  border-radius: 2px;
+  bottom: -2.5vmin;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
+  content: '';
+  left: -2.5vmin;
+  position: absolute;
+  right: -2.5vmin;
+  top: -2.5vmin;
+} */
 </style>
 

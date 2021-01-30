@@ -97,8 +97,9 @@ export default {
   },
   methods: {
     clickedItem(item) {
-      if (item.children == null) {
-        this.$router.push(`/category/${item.slug}`)
+      if (item.children == null || item.children.length == 0) {
+        //  console.log(item.children.length)
+        this.$router.push(`/category/${item.url}`)
       } else {
         this.stack.push(item.children)
       }

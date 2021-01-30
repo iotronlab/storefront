@@ -2,54 +2,6 @@
   <v-app dark>
     <v-navigation-drawer v-model="drawer" temporary fixed app hidden-md-and-up>
       <NavDrawer :items="categories" v-if="categories.length > 0" />
-
-      <!-- <v-list avatar shaped>
-        <v-list-group v-for="category in categories" :key="category.id">
-          <template v-slot:activator>
-            <v-list-item-avatar>
-              <v-img src="/icon.png"></v-img>
-            </v-list-item-avatar>
-            <v-list-item-title>{{ category.name }}</v-list-item-title>
-          </template>
-
-          <v-list-group
-            no-action
-            sub-group
-            v-for="subcategory in category.children"
-            :key="subcategory.id"
-          >
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>{{ subcategory.name }}</v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              link
-              v-for="subchildren in subcategory.children"
-              :key="subchildren.id"
-              :to="{
-                name: 'categories-slug',
-                params: { slug: subchildren.slug },
-              }"
-            >
-              <v-list-item-title>{{ subchildren.name }}</v-list-item-title>
-              <v-list-item-icon>
-                <v-icon></v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-group>
-        </v-list-group>
-        <v-divider />
-
-        <v-list-item>
-          <v-switch
-            v-model="$vuetify.theme.dark"
-            color="primary"
-            label="Dark"
-          ></v-switch>
-        </v-list-item>
-      </v-list> -->
     </v-navigation-drawer>
     <v-app-bar fixed dense app flat>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -83,49 +35,6 @@
                       >
                     </template>
                     <DropDown :navMenu="category.children" />
-                    <!--     <v-card width="600px" height="300px">
-                      <v-row class="mx-2">
-                        <v-col
-                          cols="4"
-                          v-for="subcategory in category.children"
-                          :key="subcategory.id"
-                        >
-                          <v-row>
-                            <v-list flat dense height="30px" rounded>
-                              <v-list-item
-                                :to="{
-                                  name: 'categories-slug',
-                                  params: { slug: subcategory.slug },
-                                }"
-                              >
-                                <v-list-item-title
-                                  class="primary--text overline"
-                                  >{{ subcategory.name }}</v-list-item-title
-                                >
-                              </v-list-item>
-                            </v-list>
-                          </v-row>
-
-                          <v-row
-                            v-for="subchildren in subcategory.children"
-                            :key="subchildren.id"
-                          >
-                            <v-list flat dense height="30px" rounded>
-                              <v-list-item
-                                :to="{
-                                  name: 'categories-slug',
-                                  params: { slug: subchildren.slug },
-                                }"
-                              >
-                                <v-list-item-subtitle class="overline">{{
-                                  subchildren.name
-                                }}</v-list-item-subtitle>
-                              </v-list-item>
-                            </v-list>
-                          </v-row>
-                        </v-col>
-                      </v-row>
-                    </v-card>-->
                   </v-menu>
                 </v-col>
               </v-col>

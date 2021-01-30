@@ -36,27 +36,28 @@ export const mutations = {
 }
 
 export const actions = {
-  async updateNavMenu({ commit }) {
+  async updateNavMenu({ commit, dispatch }) {
     await this.$axios
       .$get('/categories')
       .then((res) => {
         commit('SET_CATEGORIES', res.data)
-        commit('SET_SHIPPING_TOKEN', res.shipping_token)
+        //  commit('SET_SHIPPING_TOKEN', res.shipping_token)
       })
       .catch((err) => {
         console.log(err)
       })
   },
-  // async getShippingToken({ commit }) {
-  //   await this.$axios
-  //     .$get('/')
-  //     .then((res) => {
-  //       commit('SET_SHIPPING_TOKEN', res.shipping_token)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // },
+  async getShippingToken({ commit }) {
+    await this.$axios
+      .$get('/shipping')
+      .then((res) => {
+        commit('SET_SHIPPING_TOKEN', res.token)
+        console.log(res.token)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
   setSnackbar({ commit, snackbar }) {
     snackbar.showing = true
     commit('SET_SNACKBAR', snackbar)

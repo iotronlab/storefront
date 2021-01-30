@@ -15,7 +15,7 @@
             <v-col class="d-flex align-center">
               <!-- nav categories -->
 
-              <v-col v-for="category in categories" :key="category.slug">
+              <v-col v-for="category in categories" :key="category.url">
                 <v-menu
                   open-on-hover
                   :close-on-content-click="false"
@@ -24,11 +24,11 @@
                   offset-y
                 >
                   <template v-slot:activator="{ on }">
-                    <!--slug in name:'category-slug' is taking the value of slug defined in "params: { slug: category.slug, name: category}" -->
+                    <!--url in name:'category-url' is taking the value of url defined in "params: { url: category.url, name: category}" -->
                     <v-btn
                       :to="{
-                        name: 'category-slug',
-                        params: { slug: category.slug },
+                        name: 'category-url',
+                        params: { url: category.url },
                       }"
                       text
                       small

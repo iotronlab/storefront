@@ -49,6 +49,7 @@ export default {
     {
       src: '~/plugins/vee-validate.js',
     },
+    // { src: '~/plugins/masonry.js' },
   ],
   /*
    ** Auto import components
@@ -60,7 +61,7 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module',
+    //'@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
     '@aceforth/nuxt-optimized-images',
     '@nuxtjs/pwa',
@@ -169,8 +170,9 @@ export default {
       themes: {
         dark: {
           primary: '#bb86fc',
-          accent: colors.grey.darken3,
-          secondary: '#8a34c9',
+          // primary: '#9665d3',
+          accent: '#daa520',
+          secondary: '#7851a9',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.darken4,
@@ -178,8 +180,8 @@ export default {
         },
         light: {
           primary: colors.purple.darken3,
-          accent: colors.grey.darken3,
-          secondary: colors.purple.base,
+          accent: '#b08f26',
+          secondary: '#7851a9',
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.darken4,

@@ -10,7 +10,7 @@
       <v-row no-gutters class="fill-height" align="center" justify="center">
         <v-slide-item
           v-for="category in categories"
-          :key="category.slug"
+          :key="category.url"
           v-slot="{ active, toggle }"
           :value="category.children"
         >
@@ -23,7 +23,7 @@
             dark
           >
             <v-img
-              :src="category.slug + `.jpg`"
+              :src="category.url + `.jpg`"
               height="100%"
               gradient="to top, rgba(0,0,0,.1), rgba(0,0,0,.6)"
             >
@@ -59,7 +59,7 @@
           <v-tabs-slider color="primary"></v-tabs-slider>
           <v-tab
             v-for="children in selectedCategory"
-            :key="children.slug"
+            :key="children.url"
             class="px-2"
           >
             {{ children.name }}
@@ -67,7 +67,7 @@
 
           <v-tab-item
             v-for="children in selectedCategory"
-            :key="children.slug"
+            :key="children.url"
             transition="fade-transition"
             reverse-transition="fade-transition"
           >
@@ -80,7 +80,7 @@
                 <v-row no-gutters>
                   <v-col
                     v-for="subchild in children.children"
-                    :key="subchild.slug"
+                    :key="subchild.url"
                     class="d-flex child-flex pa-1"
                     cols="6"
                     lg="3"
@@ -93,20 +93,27 @@
                         threshold: 0.5,
                       }"
                       transition="scale-transition"
-                      ><nuxt-link link :to="'/category/' + subchild.slug">
+                      ><nuxt-link link :to="'/category/' + subchild.url">
                         <v-img
-                          :src="`https://picsum.photos/500/300`"
-                          :lazy-src="`https://picsum.photos/10/6`"
+                          :src="
+                            subchild.image_path
+                              ? subchild.image_path
+                              : require('@/assets/img/default-profile.png')
+                          "
+                          :lazy-src="
+                            require('@/assets/img/default-profile.png')
+                          "
                           aspect-ratio="1"
                           dark
                           class="rounded"
-                          gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+                          gradient="to bottom, rgba(0, 0, 0, 0.4) 0%, transparent 72px"
                           ><v-row
-                            class="fill-height ma-0"
+                            class="fill-height"
                             no-gutters
-                            align="center"
+                            align="start"
                             justify="center"
                           >
+                            <h4 class="text-button">{{ subchild.name }}</h4>
                             <template v-slot:placeholder>
                               <v-row
                                 class="fill-height ma-0"
@@ -120,17 +127,10 @@
                                 ></v-progress-circular>
                               </v-row>
                             </template>
-                            <h4 class="overline">{{ subchild.name }}</h4></v-row
-                          >
-                          <p>p text</p>
-                        </v-img></nuxt-link
-                      ></v-lazy
-                    >
-                  </v-col></v-row
-                ></v-col
-              >
-            </v-row></v-tab-item
-          >
+                          </v-row> </v-img></nuxt-link
+                    ></v-lazy> </v-col></v-row
+              ></v-col> </v-row
+          ></v-tab-item>
         </v-tabs>
       </v-container>
     </v-expand-transition>
@@ -138,12 +138,14 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import VueMasonryWall from 'vue-masonry-wall'
 export default {
   data: () => ({
     isLazyLoading: false,
     selectedCategory: null,
     selectedSubCategory: null,
   }),
+  components: { VueMasonryWall },
   computed: {
     ...mapGetters({
       categories: 'categories',

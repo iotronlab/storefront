@@ -37,7 +37,7 @@
             v-for="option in categories"
             :key="option.id"
             class="py-0"
-            :value="option.slug"
+            :value="option.url"
             :label="option.name"
             type="checkbox"
             hide-details

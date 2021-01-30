@@ -24,12 +24,7 @@
                   <v-avatar color="grey" class="mr-4"></v-avatar>
                   <strong class="title">{{ item.name }}</strong>
                   <v-spacer></v-spacer>
-                  <v-btn
-                    outlined
-                    rounded
-                    x-small
-                    :to="'/category/' + item.slug"
-                  >
+                  <v-btn outlined rounded x-small :to="'/category/' + item.url">
                     see more...
                   </v-btn>
                 </v-row>
@@ -41,7 +36,7 @@
                         v-for="child in item.children"
                         :key="child.id"
                       >
-                        <v-list-item :to="'/category/' + child.slug">
+                        <v-list-item :to="'/category/' + child.url">
                           <v-list-item-content>
                             <v-list-item-title
                               v-text="child.name"
