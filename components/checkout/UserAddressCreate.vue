@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <ValidationObserver ref="observer" v-slot="{ validate, reset }">
+    <ValidationObserver ref="observer" v-slot="{}">
       <form action="#" @submit.prevent="store">
         <ValidationProvider
           v-slot="{ errors }"

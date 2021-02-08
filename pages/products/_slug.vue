@@ -2,16 +2,23 @@
   <v-container fluid v-if="!$fetchState.pending">
     <v-row justify="center">
       <v-col cols="12" md="6" lg="6">
-        <ProductImage />
+        <ProductImage :images="product.images" />
       </v-col>
       <v-col cols="12" md="5" lg="5">
         <h4 class="text-h6 text--primary">{{ product.name }}</h4>
         <v-divider class="mb-1"></v-divider>
         <v-row no-gutters>
           <span class="text-overline">price</span>&nbsp;
-          <h3 class="text-h5 primary--text">
-            {{ product.price }}
-          </h3></v-row
+
+          <h4 class="text-h5 accent--text" v-if="product.special_price > 0">
+            <span class="text-decoration-line-through text-caption">
+              {{ product.formatted_price }}</span
+            >
+            {{ product.formatted_special_price }}
+          </h4>
+          <h4 class="text-h5 accent--text" v-else>
+            {{ product.formatted_price }}
+          </h4></v-row
         >
         <!-- <h5 class="text-body-1">
           by

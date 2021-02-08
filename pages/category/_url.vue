@@ -16,6 +16,7 @@
       </h3>
     </v-img>
     <v-divider class="my-2" /> -->
+    <v-container> <CategoryCard :category="category" /></v-container>
     <v-row no-gutters justify="center">
       <v-col cols="12" md="3" lg="3" class="px-4">
         <h4 class="overline" v-if="category.children.length > 0">
@@ -68,7 +69,6 @@
       </v-col>
 
       <v-col cols="12" md="8" lg="8">
-        <CategoryCard :category="category" />
         <!-- <v-row no-gutters align="center" justify="space-between" class="px-4">
           <h3 class="text-h6 my-2 landing-title secondary--text text-uppercase">
             #featured
@@ -85,38 +85,34 @@
             >see all results</v-btn
           ></v-row
         > -->
-        <v-container fluid>
-          <v-row no-gutters>
-            <!-- <v-carousel-item
+        <v-divider />
+        <v-container
+          fluid
+          v-for="(products, artists) in productData"
+          :key="artists"
+        >
+          <!-- <v-carousel-item
               v-for="(n, i) in Math.ceil(totalProducts / columns)"
               :key="n"
             > -->
+          <MiniProfile :vendor="products[0].vendor" />
+          <!-- v-for="product in products.slice(i, columns + i)" -->
+          <v-divider class="mb-2" />
+          <v-row no-gutters>
             <v-col
+              v-for="product in products"
+              :key="product.id"
               cols="12"
-              class="fill-height"
-              v-for="(products, artists) in productData"
-              :key="artists"
-              ><v-row no-gutters>
-                <MiniProfile :vendor="products[0].vendor"
-              /></v-row>
-              <v-divider />
-              <!-- v-for="product in products.slice(i, columns + i)" -->
-              <v-row no-gutters>
-                <v-col
-                  v-for="product in products"
-                  :key="product.sku"
-                  class="d-flex child-flex"
-                  cols="12"
-                  md="6"
-                  lg="3"
-                  sm="6"
-                  xs="12"
-                >
-                  <Product :product="product" /> </v-col
-              ></v-row>
+              md="6"
+              lg="3"
+              sm="6"
+              xs="12"
+              class="pa-1"
+            >
+              <Product :product="product" />
             </v-col>
           </v-row>
-          <v-divider dark class="py-5"></v-divider>
+          <v-divider />
         </v-container>
         <v-row no-gutters>
           <!-- <v-carousel-item
@@ -152,7 +148,7 @@ export default {
       .then((res) => {
         console.log(res)
         this.category = res.category
-        this.productData = res.products
+        this.productData = res.data
         // this.totalProducts = this.products.length
         // this.vendors = res.data.artists
         // this.totalVendors = this.vendors.length

@@ -108,7 +108,7 @@ export default {
    */
   axios: {
     baseURL: 'http://localhost:8000/api',
-    // browserBaseURL: 'http://api.butiq.store/api'
+    // browserBaseURL: 'http://api.butiq.store/api',
   },
   // auth module config
   auth: {

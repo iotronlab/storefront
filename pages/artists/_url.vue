@@ -20,7 +20,7 @@
         />
 
         <v-row no-gutters>
-          <v-col class="mt-n10" cols="12" lg="3">
+          <v-col class="mt-n10" cols="12" lg="4">
             <v-row no-gutters>
               <v-col class="flex-grow-0 flex-shrink-1"
                 ><v-card
@@ -39,14 +39,14 @@
                   >Follow</v-btn
                 >
                 <v-container fluid>
-                  <h5 class="overline">{{ vendor.display_name }}</h5>
-                  <h4 class="overline">{{ vendor.views }} views</h4>
+                  <h5 class="subtitle-1">{{ vendor.display_name }}</h5>
+                  <h4 class="subtitle-2">{{ vendor.views }} views</h4>
 
-                  <h4 class="overline">{{ vendor.views }} subs</h4>
+                  <h4 class="subtitle-2">{{ vendor.views }} subs</h4>
                 </v-container></v-col
               ></v-row
             ></v-col
-          ><v-col cols="12" lg="9">
+          ><v-col cols="12" lg="8">
             <v-container fluid>
               <h5 class="caption">
                 About the Artist -
@@ -63,9 +63,11 @@
       >
     </v-row>
     <v-container fluid>
-      <v-row no-gutters>
-        <h2 class="text-h6 text--primary">All art by {{ vendor.name }}</h2>
-        <v-carousel cycle hide-delimiters show-arrows-on-hover height="100%">
+      <h2 class="text-overline text--primary text-center">
+        All artworks by {{ vendor.display_name }}
+      </h2>
+
+      <!-- <v-carousel cycle hide-delimiters show-arrows-on-hover height="100%">
           <v-carousel-item
             v-for="(n, i) in Math.ceil(total / columns)"
             :key="n"
@@ -90,8 +92,23 @@
               </v-col>
             </v-row>
           </v-carousel-item>
-        </v-carousel> </v-row
-    ></v-container>
+        </v-carousel>
+         -->
+      <v-row no-gutters class="fill-height" align="center" justify="center">
+        <v-col
+          v-for="product in products"
+          :key="product.id"
+          cols="12"
+          md="6"
+          lg="3"
+          sm="6"
+          xs="12"
+          class="pa-1"
+        >
+          <Product :product="product" />
+        </v-col>
+      </v-row>
+    </v-container>
     <v-row no-gutters v-if="vendor.reviews">
       <Reviews :reviews="vendor.reviews" />
     </v-row>

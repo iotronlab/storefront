@@ -15,9 +15,7 @@
           </h2>
           <v-row no-gutters class="mt-4" justify="center">
             <v-btn rounded small class="mr-2" color="secondary">Shop</v-btn>
-            <v-btn outlined rounded small color="accent"
-              >Learn More</v-btn
-            ></v-row
+            <v-btn rounded small color="accent">Learn More</v-btn></v-row
           >
         </v-col>
         <v-col lg="8">
@@ -26,7 +24,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-row no-gutters class="pa-2 text-right">
+    <!-- <v-row no-gutters class="pa-2 text-right">
       <h2
         class="landing-title text-uppercase secondary--text text-h5 mx-auto mt-4"
       >
@@ -45,7 +43,7 @@
       </h2>
 
       <v-container height="600"></v-container>
-    </v-row>
+    </v-row> -->
     <v-row no-gutters justify="center" align="center">
       <v-col class="text-center" lg="10">
         <h2 class="landing-title text-uppercase secondary--text text-h5">
@@ -54,11 +52,11 @@
         <Discover />
       </v-col>
     </v-row>
-    <v-row no-gutters class="pa-10" justify="center">
+    <!-- <v-row no-gutters class="pa-10" justify="center">
       <v-col cols="12" lg="6" md="8" sm="12">
         <Reviews :reviews="reviews" />
       </v-col>
-    </v-row>
+    </v-row> -->
   </section>
 </template>
 

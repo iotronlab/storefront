@@ -42,64 +42,62 @@
             class="pa-1"
           >
             <v-item v-slot="{ active, toggle }" :value="address">
-              <v-card
-                :color="active ? 'secondary' : null"
-                outlined
-                @click="toggle"
-              >
-                <v-row no-gutters class="fill-height">
-                  <v-card class="ma-1 pa-2" width="100%">
-                    <h6 class="text-caption">
-                      Name - {{ address.name }}<br />
-                      Address - {{ address.address_1 }}
-                      {{ address.address_2 || null }} <br />
-                      City - {{ address.city }}<br />
-                      Pin - {{ address.postal_code }} <br />
-                      State - {{ address.state }}<br />
-                      Country - {{ address.country }}
-                    </h6>
+              <v-card @click="toggle" class="nucard">
+                <v-row no-gutters class="fill-height pa-2">
+                  <h6 class="text-caption">
+                    {{ address }}
+                    {{ address.name }}<br />
+                    {{ address.address_1 }}
+                    {{ address.address_2 || null }}, <br />
+                    {{ address.city }}<br />
+                    Pin {{ address.postal_code }} <br />
+                    State {{ address.state }}<br />
+                    Country {{ address.country }}
+                  </h6>
+                </v-row>
+                <v-card-actions>
+                  <v-scroll-y-transition>
+                    <v-row no-gutters v-if="active" align="center">
+                      <v-btn
+                        v-if="address.default === 0"
+                        x-small
+                        outlined
+                        rounded
+                        @click.self="a"
+                        >Set Default<v-icon small
+                          >mdi-map-marker-check-outline</v-icon
+                        ></v-btn
+                      >
 
-                    <v-card-actions>
-                      <v-scroll-y-transition>
-                        <v-row no-gutters v-if="active">
-                          <div v-if="address.default === 0">
-                            <v-btn small outlined rounded @click.self="a"
-                              >Set Default<v-icon small
-                                >mdi-map-marker-check-outline</v-icon
-                              ></v-btn
-                            >
-                          </div>
-                          <div v-if="address.default === 1">
-                            <v-icon color="success"
-                              >mdi-map-marker-check-outline</v-icon
-                            >Default
-                          </div>
-                          <v-btn
-                            small
-                            outlined
-                            rounded
-                            class="mx-2"
-                            @click.prevent="editAddress(address)"
-                          >
-                            edit
-                            <v-icon small
-                              >mdi-file-document-edit-outline</v-icon
-                            ></v-btn
-                          >
-                          <v-btn
-                            icon
-                            small
-                            outlined
-                            color="error"
-                            @click.prevent="deleteAddress(address)"
-                          >
-                            <v-icon small>mdi-delete</v-icon></v-btn
-                          ></v-row
-                        >
-                      </v-scroll-y-transition>
-                    </v-card-actions>
-                  </v-card></v-row
-                >
+                      <h6 class="caption" v-if="address.default === 1">
+                        <v-icon color="success"
+                          >mdi-map-marker-check-outline</v-icon
+                        >Default
+                      </h6>
+                      <v-btn
+                        x-small
+                        outlined
+                        rounded
+                        class="mx-2"
+                        @click.prevent="editAddress(address)"
+                      >
+                        edit
+                        <v-icon small
+                          >mdi-file-document-edit-outline</v-icon
+                        ></v-btn
+                      >
+                      <v-btn
+                        icon
+                        x-small
+                        outlined
+                        color="error"
+                        @click.prevent="deleteAddress(address)"
+                      >
+                        <v-icon small>mdi-delete</v-icon></v-btn
+                      ></v-row
+                    >
+                  </v-scroll-y-transition>
+                </v-card-actions>
               </v-card>
             </v-item>
           </v-col>
@@ -202,3 +200,15 @@ export default {
   },
 }
 </script>
+<style scoped>
+.v-application.theme--light .nucard {
+  transition: background 0.1s, color 0.1s;
+  box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.5) !important;
+}
+.v-application.theme--dark .nucard {
+  transition: background 0.1s, color 0.1s;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7),
+    -5px -5px 10px rgba(255, 255, 255, 0.1);
+}
+</style>

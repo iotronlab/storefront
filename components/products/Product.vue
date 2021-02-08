@@ -2,7 +2,11 @@
   <v-container fluid class="pa-0">
     <nuxt-link :to="link">
       <v-container fluid class="woodframe">
-        <v-img src="/landing.jpg" class="img" contain>
+        <v-img
+          :src="product.base_image ? product.base_image : defaultImageSrc"
+          :lazy-src="defaultImageSrc"
+          class="img"
+        >
           <v-row no-gutters>
             <v-btn icon color="primary"> <v-icon>mdi-heart</v-icon> </v-btn
             ><v-spacer />
@@ -26,7 +30,15 @@
             product.vendor.display_name
           }}</nuxt-link>
         </h5>
-        <h4 class="text-subtitle-2">{{ product.price }}</h4></v-col
+        <h4 class="text-subtitle-2" v-if="product.special_price > 0">
+          <span class="text-decoration-line-through text-caption">
+            {{ product.formatted_price }}</span
+          >
+          {{ product.formatted_special_price }}
+        </h4>
+        <h4 class="text-subtitle-2" v-else>
+          {{ product.formatted_price }}
+        </h4></v-col
       ><v-col class="flex-grow-0 flex-shrink-1" align="end">
         <v-chip
           small
@@ -85,20 +97,13 @@ export default {
         },
       }
     },
+    defaultImageSrc() {
+      return require('@/assets/img/default-product.png')
+    },
   },
 }
 </script>
 <style scoped>
-.v-application.theme--light .nucard {
-  transition: background 0.1s, color 0.1s;
-  box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6),
-    -9px -9px 16px rgba(255, 255, 255, 0.5) !important;
-}
-.v-application.theme--dark .nucard {
-  transition: background 0.1s, color 0.1s;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7),
-    -5px -5px 10px rgba(255, 255, 255, 0.1);
-}
 .woodframe {
   background-color: #ddc;
   border: solid 8px #eee;

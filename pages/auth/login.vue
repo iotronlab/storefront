@@ -6,7 +6,7 @@
           <v-container fluid>
             <v-row no-gutters>
               <v-col class="d-flex justify-center align-center">
-                <ValidationObserver ref="observer" v-slot="{ validate, reset }">
+                <ValidationObserver ref="observer" v-slot="{}">
                   <v-form @submit.prevent="login" id="login-form" method="post">
                     <v-img
                       src="/logo.png"
@@ -35,7 +35,7 @@
                     <ValidationProvider
                       v-slot="{ errors }"
                       name="Password"
-                      rules="required|min:8"
+                      rules="required|min:6"
                     >
                       <v-text-field
                         prepend-icon="mdi-lock"

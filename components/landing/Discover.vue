@@ -33,7 +33,9 @@
               >
                 {{ category.name }}
               </h5>
-              <v-btn outlined x-small rounded>view all</v-btn>
+              <v-btn outlined x-small rounded :to="'/category/' + category.url"
+                >view all</v-btn
+              >
               <v-scale-transition>
                 <v-icon
                   v-if="active"
@@ -78,6 +80,19 @@
               justify="center"
               ><v-col>
                 <v-row no-gutters>
+                  <v-col cols="12" lg="3" sm="12" md="4" class="pa-2">
+                    <h6 class="text-caption">
+                      {{ children.meta_desc }}
+                    </h6>
+                    <v-btn
+                      outlined
+                      x-small
+                      class="mt-2"
+                      rounded
+                      :to="'/category/' + children.url"
+                      >view all</v-btn
+                    ></v-col
+                  >
                   <v-col
                     v-for="subchild in children.children"
                     :key="subchild.url"
@@ -98,11 +113,9 @@
                           :src="
                             subchild.image_path
                               ? subchild.image_path
-                              : require('@/assets/img/default-profile.png')
+                              : defaultImageSrc
                           "
-                          :lazy-src="
-                            require('@/assets/img/default-profile.png')
-                          "
+                          :lazy-src="defaultImageSrc"
                           aspect-ratio="1"
                           dark
                           class="rounded"
@@ -150,6 +163,9 @@ export default {
     ...mapGetters({
       categories: 'categories',
     }),
+    defaultImageSrc() {
+      return require('@/assets/img/default-profile.png')
+    },
   },
   methods: {
     resetChildren() {
