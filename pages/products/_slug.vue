@@ -74,6 +74,7 @@
             </div> -->
         </v-row>
         <v-row v-else no-gutters>
+          {{ product }}
           <v-row
             class="px-5 py-5"
             v-for="[attribute, val] in Object.entries(product.attributes)"
@@ -96,7 +97,12 @@
           <p>{{ product.description }}</p> -->
         <v-row no-gutters class="hidden-sm-and-down">
           <v-col>
-            <v-btn block class="mr-1" color="primary" @click.prevent="add">
+            <v-btn
+              block
+              class="mr-1"
+              color="primary"
+              @click.prevent="addToCart"
+            >
               Add To Cart
               <v-icon right>mdi-cart</v-icon>
             </v-btn>
@@ -115,7 +121,12 @@
           <v-container class="px-0 py-0">
             <v-row no-gutters>
               <v-col>
-                <v-btn block class="mr-1" color="primary" @click.prevent="add">
+                <v-btn
+                  block
+                  class="mr-1"
+                  color="primary"
+                  @click.prevent="addToCart"
+                >
                   Add To Cart
                   <v-icon right>mdi-cart</v-icon>
                 </v-btn>
@@ -211,7 +222,7 @@ export default {
     //   .catch((error) => console.log('error', error))
   },
   methods: {
-    ...mapActions('cart', ['addToCart']),
+    ...mapActions({ store: 'cart/store' }),
     setType(type) {
       this.form.type = type != undefined ? type : null
       // console.log(this.form.type)
@@ -229,12 +240,12 @@ export default {
     //   console.log('form type and slug below')
     //   console.log(this.form)
     // },
-    store: 'cart/store',
-    add() {
+
+    addToCart() {
       this.store([
         {
-          slug: this.form.variation.slug,
-          quantity: this.form.quantity,
+          id: this.product.id,
+          quantity: 1,
         },
       ])
       this.form = {

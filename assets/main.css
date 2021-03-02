@@ -1,6 +1,6 @@
-html {
+/* html {
   font-family: 'Roboto', sans-serif;
-}
+} */
 
 .nav-transparent {
   background-color: transparent !important;
@@ -34,7 +34,7 @@ p a:hover {
   background-size: cover;
   position: relative;
 }
-.v-application.theme--light .landing-title {
+/* .v-application.theme--light .landing-title {
   transition: background 0.1s, color 0.1s;
   text-shadow: -5px -3px 8px rgb(163, 177, 198, 0.6),
     6px 2px 12px rgba(255, 255, 255, 0.5);
@@ -43,4 +43,73 @@ p a:hover {
   transition: background 0.1s, color 0.1s;
   text-shadow: -5px -3px 8px rgba(0, 0, 0, 0.7),
     6px 2px 12px rgba(255, 255, 255, 0.1);
+} */
+
+.v-application.theme--light .nucard {
+  transition: background 0.1s, color 0.1s;
+  box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.5) !important;
+}
+.v-application.theme--dark .nucard {
+  transition: background 0.1s, color 0.1s;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7),
+    -5px -5px 10px rgba(255, 255, 255, 0.1);
+}
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e6e6e6;
+  border-left: 1px solid #dadada;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b0b0b0;
+  border: solid 3px #e6e6e6;
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #7851a9;
+  transition: background 1s;
+  transition-timing-function: ease;
+}
+
+.v-application.theme--dark ::-webkit-scrollbar-track {
+  background: #202020;
+  border-left: 1px solid #2c2c2c;
+}
+
+.v-application.theme--dark ::-webkit-scrollbar-thumb {
+  background: #3e3e3e;
+  border: solid 3px #202020;
+  border-radius: 7px;
+}
+
+.v-application.theme--dark ::-webkit-scrollbar-thumb:hover {
+  background: #7851a9;
+  transition: background 1s;
+  transition-timing-function: ease;
+}
+
+@font-face {
+  font-family: 'samarkan';
+  src: local('samarkan'), url(~assets/font/samarkan.ttf) format('truetype');
+}
+
+.landing-title {
+  /* font-family: 'samarkan' !important; */
+  font-size: 2rem;
+  letter-spacing: 0.2rem;
+  color: #7851a9;
+  text-shadow: 0 1px 0 #bb86fc, 0 2px 0 #bb86fc,
+    0 6px 1px rgba(120, 81, 169, 0.1), 0 0 5px rgba(120, 81, 169, 0.1),
+    0 1px 3px rgba(120, 81, 169, 0.3), 0 3px 5px rgba(120, 81, 169, 0.2),
+    0 5px 10px rgba(120, 81, 169, 0.25), 0 10px 10px rgba(120, 81, 169, 0.2),
+    0 20px 20px rgba(120, 81, 169, 0.15);
 }

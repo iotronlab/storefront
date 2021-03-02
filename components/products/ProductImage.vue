@@ -5,7 +5,7 @@
     </v-carousel-item>
   </v-carousel> -->
   <template>
-  <v-card color="transparent">
+  <v-card>
     <v-window v-model="activeImage">
       <v-window-item v-for="(image, i) in imageList" :key="i">
         <v-row class="fill-height" align="center" justify="center">
@@ -70,12 +70,9 @@ export default {
   computed: {
     imageList() {
       if (!this.images || this.images.length == 0) {
-        this.images = ['/art.jpg']
+        this.images.push({ url: require('@/assets/img/default-product.png') })
       }
       return this.images
-    },
-    defaultImageSrc() {
-      return require('@/assets/img/default-profile.png')
     },
   },
   data() {

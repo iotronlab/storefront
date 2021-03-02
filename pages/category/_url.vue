@@ -16,9 +16,12 @@
       </h3>
     </v-img>
     <v-divider class="my-2" /> -->
-    <v-container> <CategoryCard :category="category" /></v-container>
+    <v-container>
+      <CategoryCard :category="category" />
+      <SubCategoryList :category="category" />
+    </v-container>
     <v-row no-gutters justify="center">
-      <v-col cols="12" md="3" lg="3" class="px-4">
+      <!-- <v-col cols="12" md="3" lg="3" class="px-4">
         <h4 class="overline" v-if="category.children.length > 0">
           Sub categories
         </h4>
@@ -66,9 +69,9 @@
             </v-expansion-panel>
           </v-expansion-panels>
         </div>
-      </v-col>
+      </v-col> -->
 
-      <v-col cols="12" md="8" lg="8">
+      <v-col cols="12" md="12" lg="10">
         <!-- <v-row no-gutters align="center" justify="space-between" class="px-4">
           <h3 class="text-h6 my-2 landing-title secondary--text text-uppercase">
             #featured
@@ -95,10 +98,13 @@
               v-for="(n, i) in Math.ceil(totalProducts / columns)"
               :key="n"
             > -->
-          <MiniProfile :vendor="products[0].vendor" />
+
           <!-- v-for="product in products.slice(i, columns + i)" -->
-          <v-divider class="mb-2" />
+
           <v-row no-gutters>
+            <v-col cols="12" lg="3">
+              <MiniProfile :vendor="products[0].vendor"
+            /></v-col>
             <v-col
               v-for="product in products"
               :key="product.id"
@@ -112,7 +118,7 @@
               <Product :product="product" />
             </v-col>
           </v-row>
-          <v-divider />
+          <v-divider class="mt-2" />
         </v-container>
         <v-row no-gutters>
           <!-- <v-carousel-item

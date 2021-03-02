@@ -16,11 +16,12 @@
       </v-col>
       <v-col class="flex-grow-1 flex-shrink-0">
         <h5 class="text-body-1">{{ vendor.display_name }}</h5>
-        <v-row no-gutters>
-          <p class="overline">{{ vendor.views }} views - 1k subscribers</p>
-          <v-btn small class="ml-2" color="secondary" @click.prevent=""
-            >Follow</v-btn
-          ></v-row
+
+        <p class="caption mb-0">{{ vendor.views }} views</p>
+
+        <p class="caption">1k subscribers</p>
+        <v-btn small class="ml-2" color="secondary" @click.prevent=""
+          >Follow</v-btn
         ></v-col
       >
     </v-row>

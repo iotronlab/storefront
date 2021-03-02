@@ -1,39 +1,59 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row no-gutters>
       <v-col>
-        <v-stepper vertical non-linear>
-          <v-stepper-step step="1" editable>
-            Select an address
-            <small>shipping charges may vary accordingly</small>
-          </v-stepper-step>
+        <v-stepper non-linear :alt-labels="$vuetify.breakpoint.xs">
+          <v-row no-gutters justify="center" align="center">
+            <v-col cols="4">
+              <v-stepper-step step="1" editable>
+                Address
+              </v-stepper-step></v-col
+            ><v-col cols="4">
+              <v-stepper-step step="2" editable>Shipping</v-stepper-step></v-col
+            >
+            <v-col cols="4">
+              <v-stepper-step step="3" editable>Payment</v-stepper-step></v-col
+            >
+          </v-row>
+          <v-stepper-items>
+            <v-stepper-content step="1" class="pa-0">
+              <h4 class="text-caption text-center">Select Shipping Address</h4>
+              <UserAddress
+                :addresses="addresses"
+                v-model="selectedAddress"
+                type="shipping"
+              />
+              <v-row no-gutters justify="center">
+                <v-checkbox
+                  v-model="billingAddress.status"
+                  label="same address as billing"
+                  class="mt-0"
+              /></v-row>
 
-          <v-stepper-content step="1">
-            <UserAddress :addresses="addresses" />
-          </v-stepper-content>
+              <section v-if="billingAddress.status == false">
+                <v-fade-transition>
+                  <UserAddress
+                    :addresses="addresses"
+                    v-model="billingAddress.value"
+                    type="shipping"
+                /></v-fade-transition>
+              </section>
+            </v-stepper-content>
 
-          <v-stepper-step step="2" editable>Configure analytics for this app</v-stepper-step>
+            <v-stepper-content step="2">
+              <ShippingSelect :address="selectedAddress" />
+            </v-stepper-content>
 
-          <v-stepper-content step="2">
-            <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
-            <v-btn color="primary" @click="e6 = 3">Continue</v-btn>
-            <v-btn text>Cancel</v-btn>
-          </v-stepper-content>
-
-          <v-stepper-step step="3" editable>Select an ad format and name ad unit</v-stepper-step>
-
-          <v-stepper-content step="3">
-            <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
-            <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
-            <v-btn text>Cancel</v-btn>
-          </v-stepper-content>
-
-          <v-stepper-step step="4" editable>View setup instructions</v-stepper-step>
-          <v-stepper-content step="4">
-            <v-card color="grey lighten-1" class="mb-12" height="200px"></v-card>
-            <v-btn color="primary" @click="e6 = 1">Continue</v-btn>
-            <v-btn text>Cancel</v-btn>
-          </v-stepper-content>
+            <v-stepper-content step="3">
+              <v-card
+                color="grey lighten-1"
+                class="mb-12"
+                height="200px"
+              ></v-card>
+              <v-btn color="primary" @click="e6 = 4">Continue</v-btn>
+              <v-btn text>Cancel</v-btn>
+            </v-stepper-content></v-stepper-items
+          >
         </v-stepper>
       </v-col>
     </v-row>
@@ -42,7 +62,7 @@
       <CartOverview>
         <template slot="rows">
           <p class="title my-0">Shipping: xxxx</p>
-          <p class="title my-0">total: {{total}}</p>
+          <p class="title my-0">total: {{ total }}</p>
         </template>
       </CartOverview>
     </v-row>
@@ -50,31 +70,57 @@
   </v-container>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import UserAddress from "@/components/checkout/UserAddress";
-import CartOverview from "@/components/cart/CartOverview";
+import { mapGetters } from 'vuex'
+import UserAddress from '@/components/checkout/UserAddress'
+import CartOverview from '@/components/cart/CartOverview'
 export default {
   data() {
     return {
-      addresses: []
-    };
+      addresses: [],
+      selectedAddress: {},
+      billingAddress: { status: true, value: {} },
+    }
   },
   components: {
     CartOverview,
-    UserAddress
+    UserAddress,
   },
   computed: {
     ...mapGetters({
-      total: "cart/total",
-      product: "cart/products",
-      empty: "cart/empty"
-    })
+      total: 'cart/total',
+      product: 'cart/products',
+      empty: 'cart/empty',
+    }),
   },
-  async asyncData({ app }) {
-    let addresses = await app.$axios.$get("addresses");
-    return {
-      addresses: addresses.data
-    };
-  }
-};
+  async fetch() {
+    await this.$axios
+      .$get('addresses')
+      .then((res) => {
+        this.addresses = res.data
+        this.selectedAddress = this.addresses.find(
+          (address) => address.default == true
+        )
+        this.billingAddress.value = this.selectedAddress
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+}
 </script>
+<style>
+@media only screen and (max-width: 959px) {
+  .v-stepper:not(.v-stepper--vertical) .v-stepper__label {
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */
+    display: flex !important; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  }
+}
+@media only screen and (max-width: 959px) {
+  .v-stepper:not(.v-stepper--vertical) .v-stepper__step__step {
+    margin: 4px 12px !important;
+  }
+}
+</style>

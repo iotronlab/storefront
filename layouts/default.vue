@@ -7,7 +7,12 @@
     <v-app-bar id="nav" fixed app flat class="nav-transparent">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <nuxt-link :to="{ name: 'index' }">
-        <v-img src="/logo.png" alt="artistic logo" width="85" />
+        <v-img
+          src="/logo.png"
+          alt="artistic logo"
+          class="fill-height mt-1"
+          :width="$vuetify.breakpoint.mdAndDown ? 100 : 120"
+        />
       </nuxt-link>
       <v-container fluid class="pa-0">
         <v-row no-gutters class="pa-0" align="center">

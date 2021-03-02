@@ -41,6 +41,9 @@ export const actions = {
       .$get('/categories')
       .then((res) => {
         commit('SET_CATEGORIES', res.data)
+        if (this.$auth.loggedIn) {
+          dispatch('cart/getCart')
+        }
         //  commit('SET_SHIPPING_TOKEN', res.shipping_token)
       })
       .catch((err) => {

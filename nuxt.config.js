@@ -107,8 +107,8 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:8000/api',
-    // browserBaseURL: 'http://api.butiq.store/api',
+    //baseURL: 'http://localhost:8000/api',
+    browserBaseURL: 'http://api.urartistic.com/api',
   },
   // auth module config
   auth: {
@@ -165,6 +165,10 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
+    // defaultAssets: {
+    //   font: false,
+    //   icons: 'mdi',
+    // },
     theme: {
       dark: true,
       themes: {

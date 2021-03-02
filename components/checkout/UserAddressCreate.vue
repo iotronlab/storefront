@@ -2,6 +2,14 @@
   <v-container fluid>
     <ValidationObserver ref="observer" v-slot="{}">
       <form action="#" @submit.prevent="store">
+        <v-app-bar fixed dense>
+          <v-btn @click="reset" text width="30%">
+            <v-icon left>mdi-close</v-icon>Cancel
+          </v-btn>
+          <v-btn class="" color="secondary" type="submit" width="70%">
+            {{ edit ? 'Update Address' : 'Add Address' }}</v-btn
+          >
+        </v-app-bar>
         <ValidationProvider
           v-slot="{ errors }"
           name="Name"
@@ -113,30 +121,32 @@
             v-model="address.state"
           ></v-text-field
         ></ValidationProvider>
-        <ValidationProvider
-          v-slot="{ errors }"
-          name="Country"
-          rules="required|max:100"
-        >
-          <v-text-field
+        <ValidationProvider v-slot="{ errors }" name="Country" rules="required">
+          <v-select
             label="Country"
+            :items="countries"
+            item-text="name"
+            item-value="id"
             filled
             dense
             :error-messages="errors"
-            v-model="address.country"
-          ></v-text-field
+            v-model="address.country_id"
+          ></v-select
         ></ValidationProvider>
-        <!-- <StateSelector v-model="address.state_id" /> -->
-        <v-checkbox v-model="address.default" label="Default"></v-checkbox>
 
-        <v-btn class="mb-1 mr-1" color="secondary" type="submit"
-          >Add Address</v-btn
+        <v-switch
+          class="mt-0"
+          v-model="address.default"
+          label="Set as Default"
+        ></v-switch>
+        <v-btn class="" color="secondary" type="submit">
+          {{ edit ? 'Update Address' : 'Add Address' }}</v-btn
         >
         <!-- <v-btn class="mb-1 ml-1" color="red" dark @click.prevent="$emit('cancel')"
         >cancel</v-btn
       > -->
       </form></ValidationObserver
-    >{{ edit }}
+    >
   </v-container>
 </template>
 <script>
@@ -144,69 +154,146 @@ import StateSelector from './StateSelector'
 import { ValidationObserver } from 'vee-validate'
 export default {
   props: {
-    address: { type: Object, required: false },
-    edit: { type: Boolean, required: true },
-  },
-  data() {
-    return {
-      addressType: ['Home', 'Work', 'Other'],
-      // form: {
-      //   name: '',
-      //   contact: '',
-
-      //   type: null,
-      //   address_1: '',
-      //   address_2: '',
-      //   landmark: '',
-      //   city: '',
-      //   postal_code: '',
-      //   state: '',
-      //   country: '',
-      //   default: true,
+    addressData: {
+      type: Object,
+      required: false,
+      // default: function () {
+      //   return {
+      //     name: '',
+      //     contact: '',
+      //     type: 'Home',
+      //     address_1: '',
+      //     address_2: '',
+      //     landmark: '',
+      //     city: '',
+      //     postal_code: '',
+      //     state: '',
+      //     country_code: '',
+      //     default: true,
+      //   }
       // },
-    }
+    },
+    edit: { type: Boolean, required: true },
   },
   components: {
     StateSelector,
     ValidationObserver,
   },
-  // mounted: function () {
-  //   this.form = this.address
-  // },
-  // watch: {
-  //   edit: function (val, oldVal) {
-  //     console.log('new: %s, old: %s', val, oldVal)
-  //     if (val == true) {
-  //       this.form = this.address
-  //     }
-  //   },
-  // },
+  data() {
+    return {
+      addressType: ['Home', 'Work', 'Other'],
+      countries: [],
+      defaultAddress: {
+        name: '',
+        contact: '',
+        type: 'Home',
+        address_1: '',
+        address_2: '',
+        landmark: '',
+        city: '',
+        postal_code: '',
+        state: '',
+        country_id: '',
+        default: false,
+      },
+    }
+  },
+  computed: {
+    address: {
+      get() {
+        let address = new Object()
+        if (this.edit == false) {
+          Object.assign(address, this.defaultAddress)
+        } else if (this.addressData && this.edit == true) {
+          Object.assign(address, this.addressData)
+        }
+        return address
+      },
+      set(value) {
+        //this.address = value
+        Object.assign(this.address, value)
+        // return address
+      },
+    },
+  },
+
+  async fetch() {
+    await this.$axios
+      .$get('countries')
+      .then((res) => {
+        this.countries = res
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
   methods: {
+    formUpdated() {
+      const addressKeys = Object.keys(this.addressData)
+      let formUpdated = false
+      for (let key of addressKeys) {
+        //comparing both object and building the form
+
+        if (this.address[key] != this.addressData[key]) {
+          formUpdated = true
+        }
+      }
+      if (formUpdated == false) {
+        this.$toast.error("Address hasn't been updated.")
+      }
+      return formUpdated
+    },
     async store() {
       if (this.edit == false) {
-        if (this.$refs.observer.validate()) {
+        if (await this.$refs.observer.validate()) {
           await this.$axios
             .$post('address', this.address)
             .then((res) => {
-              this.$emit('update:address', res.data)
+              this.updateData(res.data)
             })
-            .catch((err) => {})
+            .catch((err) => {
+              console.log(err)
+            })
+        } else {
+          this.showFormErrors()
         }
-      } else {
-        if (this.$refs.observer.validate()) {
+      } else if (await this.formUpdated()) {
+        if (await this.$refs.observer.validate()) {
           await this.$axios
             .$put(`address/${this.address.id}`, this.address)
             .then((res) => {
-              this.$emit('update:address', res.data)
+              this.updateData(res.data)
             })
-            .catch((err) => {})
+            .catch((err) => {
+              console.log(err)
+            })
+        } else {
+          this.showFormErrors()
         }
       }
       // this.$emit('created', response.data)
     },
-    editAddress(address) {
-      this.edit = true
-      this.form = address
+    showFormErrors() {
+      let errors = Object.values(this.$refs.observer.errors)
+
+      errors.forEach((err) => {
+        //  console.log(val)
+        if (err.length > 0) {
+          err.forEach((e) => {
+            this.$toast.error(e)
+          })
+        }
+      })
+    },
+    updateData(data) {
+      this.$refs.observer.reset()
+      this.address = this.defaultAddress
+      this.$emit('update:address', data)
+    },
+    reset() {
+      this.$refs.observer.reset()
+      this.address = this.defaultAddress
+      this.$emit('reset:address')
     },
   },
 }

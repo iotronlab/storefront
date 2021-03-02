@@ -114,8 +114,8 @@ export default {
       sheet: false,
       submitted: false,
       valid: true,
-      pincode1: 411002,
-      pincode2: 411002,
+      pincode1: 700074,
+      pincode2: 700074,
       endPoint: null,
       pinRules: [
         (v) => !!v || 'Name is required',

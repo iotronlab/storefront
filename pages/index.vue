@@ -1,26 +1,26 @@
 <template>
   <section>
     <v-container fluid class="body-image" style="margin-top: -60px">
-      <v-row class="mt-12" align="center" justify="center">
-        <v-col lg="3" class="text-center">
-          <h1 class="landing-title text-uppercase secondary--text text-h3">
-            Curated Store for Art
-          </h1>
+      <v-row no-gutters class="mt-12" align="center" justify="center">
+        <v-col cols="12" lg="3" class="text-center">
+          <h1 class="landing-title pb-4">Curated Store for Art</h1>
 
-          <h2 class="text-subtitle-2 text--secondary mt-4">
+          <h2 class="text-subtitle-2 text--secondary">
             A citizen's initiative to revive the Indian economy post the covid
             pandemic 2020, by empowering artists, creator of crafts, and
             boutiques at the grassroot level, to showcase their creations on a
             platform crafted for them.
           </h2>
           <v-row no-gutters class="mt-4" justify="center">
-            <v-btn rounded small class="mr-2" color="secondary">Shop</v-btn>
-            <v-btn rounded small color="accent">Learn More</v-btn></v-row
+            <v-btn shaped class="mr-2" color="primary" outlined
+              ><v-icon left>mdi-shopping</v-icon>Shop</v-btn
+            >
+            <v-btn shaped color="secondary">Learn More</v-btn></v-row
           >
         </v-col>
-        <v-col lg="8">
+        <v-col cols="12" lg="8">
           <!-- <v-img cover src="landing-img.png"></v-img> -->
-          <Trending />
+          <TrendingProducts />
         </v-col>
       </v-row>
     </v-container>
@@ -44,11 +44,12 @@
 
       <v-container height="600"></v-container>
     </v-row> -->
+    <v-divider />
+
     <v-row no-gutters justify="center" align="center">
-      <v-col class="text-center" lg="10">
-        <h2 class="landing-title text-uppercase secondary--text text-h5">
-          Discover
-        </h2>
+      <v-col class="text-center mt-4" lg="10">
+        <h2 class="landing-title">Discover</h2>
+
         <Discover />
       </v-col>
     </v-row>

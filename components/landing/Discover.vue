@@ -23,7 +23,8 @@
             dark
           >
             <v-img
-              :src="category.url + `.jpg`"
+              :src="category.image_path ? category.image_path : defaultImageSrc"
+              :lazy-src="defaultImageSrc"
               height="100%"
               gradient="to top, rgba(0,0,0,.1), rgba(0,0,0,.6)"
             >

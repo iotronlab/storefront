@@ -1,10 +1,11 @@
 <template>
-  <v-container fluid class="pa-0">
+  <v-card color="transparent" max-width="300" max-height="400">
     <nuxt-link :to="link">
       <v-container fluid class="woodframe">
         <v-img
           :src="product.base_image ? product.base_image : defaultImageSrc"
           :lazy-src="defaultImageSrc"
+          contain
           class="img"
         >
           <v-row no-gutters>
@@ -18,8 +19,9 @@
               offset-x="70"
             >
             </v-badge>
-          </v-row> </v-img
-      ></v-container>
+          </v-row>
+        </v-img>
+      </v-container>
     </nuxt-link>
     <v-row no-gutters class="mt-2" style="flex-wrap: nowrap">
       <v-col class="flex-grow-1 flex-shrink-0">
@@ -45,14 +47,31 @@
           :color="product.in_stock ? 'success' : ''"
           class="mb-2 caption"
           >{{ product.in_stock ? 'in stock' : 'sold' }}</v-chip
-        ><ProductPreview /> </v-col
-    ></v-row>
+        >
+        <v-dialog
+          v-model="previewModal"
+          :max-width="$vuetify.breakpoint.lgAndUp ? '50%' : '90%'"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="secondary" small rounded dark v-bind="attrs" v-on="on"
+              ><v-icon left small>mdi-eye</v-icon>Preview</v-btn
+            >
+          </template>
+          <v-container fluid>
+            <ProductImage :images="product.images" />
+            <v-btn rounded small top right fixed @click="previewModal = false"
+              >close<v-icon right>mdi-close</v-icon></v-btn
+            ></v-container
+          >
+        </v-dialog>
+      </v-col></v-row
+    >
     <!-- <v-row no-gutters>
       <v-btn small outlined
         >Add to cart<v-icon right small>mdi-cart-plus</v-icon></v-btn
       ></v-row
     > -->
-  </v-container>
+  </v-card>
 </template>
 
 <script>
@@ -62,6 +81,11 @@ export default {
       required: true,
       type: Object,
     },
+  },
+  data() {
+    return {
+      previewModal: false,
+    }
   },
 
   computed: {
@@ -127,8 +151,11 @@ export default {
   border-left-color: #eed;
   border-right-color: #eed;
   border-top-color: #ccb;
-  max-height: 100%;
-  max-width: 100%;
+}
+.close-button {
+  top: 0;
+  position: absolute;
+  margin: 0 0 16px 16px;
 }
 /* .frame:before {
   border-radius: 2px;
