@@ -102,13 +102,16 @@ export default {
   optimizedImages: {
     optimizeImages: true,
   },
+  publicRuntimeConfig: {
+    baseURL: 'http://localhost:8000/api/',
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    //baseURL: 'http://localhost:8000/api',
-    browserBaseURL: 'http://api.urartistic.com/api',
+    //baseURL: 'http://localhost:8000/api/',
+    browserBaseURL: 'https://api.urartistic.com/api',
   },
   // auth module config
   auth: {

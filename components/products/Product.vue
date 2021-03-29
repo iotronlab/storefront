@@ -1,28 +1,26 @@
 <template>
-  <v-card color="transparent" max-width="300" max-height="400">
+  <v-container fluid>
     <nuxt-link :to="link">
-      <v-container fluid class="woodframe">
-        <v-img
-          :src="product.base_image ? product.base_image : defaultImageSrc"
-          :lazy-src="defaultImageSrc"
-          contain
-          class="img"
-        >
-          <v-row no-gutters>
-            <v-btn icon color="primary"> <v-icon>mdi-heart</v-icon> </v-btn
-            ><v-spacer />
-            <v-badge
-              color="deep-purple accent-4"
-              content="Featured"
-              :value="product.featured"
-              offset-y="30"
-              offset-x="70"
-            >
-            </v-badge>
-          </v-row>
-        </v-img>
-      </v-container>
+      <v-img
+        :src="product.base_image ? product.base_image : defaultImageSrc"
+        contain
+        max-height="200"
+      >
+        <v-row no-gutters>
+          <v-btn icon color="primary"> <v-icon>mdi-heart</v-icon> </v-btn
+          ><v-spacer />
+          <v-badge
+            color="deep-purple accent-4"
+            content="Featured"
+            :value="product.featured"
+            offset-y="30"
+            offset-x="70"
+          >
+          </v-badge>
+        </v-row>
+      </v-img>
     </nuxt-link>
+
     <v-row no-gutters class="mt-2" style="flex-wrap: nowrap">
       <v-col class="flex-grow-1 flex-shrink-0">
         <h4 class="text-subtitle-2">{{ product.name }}</h4>
@@ -70,8 +68,8 @@
       <v-btn small outlined
         >Add to cart<v-icon right small>mdi-cart-plus</v-icon></v-btn
       ></v-row
-    > -->
-  </v-card>
+    >-->
+  </v-container>
 </template>
 
 <script>
@@ -127,7 +125,7 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style >
 .woodframe {
   background-color: #ddc;
   border: solid 8px #eee;

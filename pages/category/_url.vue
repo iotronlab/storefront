@@ -88,59 +88,82 @@
             >see all results</v-btn
           ></v-row
         > -->
+
         <v-divider />
-        <v-container
-          fluid
-          v-for="(products, artists) in productData"
-          :key="artists"
-        >
-          <!-- <v-carousel-item
+        <h5 v-if="productData.length < 1" class="caption text-center ma-4">
+          There are no products in this category.
+        </h5>
+        <section v-else>
+          <h5 class="caption text-center my-2">
+            showing ({{ pageData.from }} - {{ pageData.to }}) of
+            {{ pageData.total }} result<span v-if="pageData.total > 1">s</span>
+          </h5>
+          <v-container
+            fluid
+            v-for="(products, artists) in productData"
+            :key="artists.url"
+          >
+            <!-- <v-carousel-item
               v-for="(n, i) in Math.ceil(totalProducts / columns)"
               :key="n"
             > -->
 
-          <!-- v-for="product in products.slice(i, columns + i)" -->
+            <!-- v-for="product in products.slice(i, columns + i)" -->
 
-          <v-row no-gutters>
-            <v-col cols="12" lg="3">
-              <MiniProfile :vendor="products[0].vendor"
-            /></v-col>
-            <v-col
-              v-for="product in products"
-              :key="product.id"
-              cols="12"
-              md="6"
-              lg="3"
-              sm="6"
-              xs="12"
-              class="pa-1"
-            >
-              <Product :product="product" />
+            <v-row no-gutters style="flex-wrap: wrap">
+              <v-col cols="12" lg="3">
+                <MiniProfile :vendor="products[0].vendor"
+              /></v-col>
+              <v-col
+                v-for="(product, n) in products"
+                :key="n"
+                cols="12"
+                md="6"
+                lg="3"
+                sm="6"
+                xs="12"
+                class="pa-1 flex-grow-0 flex-shrink-1"
+              >
+                <Product :product="product" />
+              </v-col>
+            </v-row>
+            <v-divider class="mt-2" />
+            <!-- <ProductList :products="products" /> -->
+
+            <!-- <v-row no-gutters style="flex-wrap: nowrap">
+            <v-col cols="2" class="flex-grow-0 flex-shrink-0">
+              <v-card class="pa-2" outlined tile> I'm 2 column wide </v-card>
             </v-col>
-          </v-row>
-          <v-divider class="mt-2" />
-        </v-container>
-        <v-row no-gutters>
-          <!-- <v-carousel-item
-              v-for="(n, i) in Math.ceil(totalVendors / columns)"
-              :key="n"
-            > -->
-          <v-row no-gutters class="fill-height" align="center" justify="center">
-            <!-- v-for="vendor in vendors.slice(i, columns + i)" -->
-            <!-- <v-col
-              v-for="vendor in vendors"
-              :key="vendor.id"
-              class="d-flex child-flex"
-              cols="12"
-              md="6"
-              lg="3"
-              sm="6"
-              xs="12"
+            <v-col
+              cols="1"
+              style="min-width: 100px; max-width: 100%"
+              class="flex-grow-1 flex-shrink-0"
             >
-
-            </v-col> -->
+              <v-card class="pa-2" outlined tile>
+                I'm 1 column wide and I grow to take all the space
+              </v-card>
+            </v-col>
+            <v-col
+              cols="5"
+              style="min-width: 100px"
+              class="flex-grow-0 flex-shrink-1"
+            >
+              <v-card class="pa-2" outlined tile>
+                I'm 5 column wide and I shrink if there's not enough space
+              </v-card>
+            </v-col>
+          </v-row> -->
+          </v-container>
+          <v-row no-gutters align="center" justify="center">
+            <v-pagination
+              :value="pageData.current_page"
+              :length="pageData.last_page"
+              @input="fetchPage"
+              circle
+              class="mb-4"
+            />
           </v-row>
-        </v-row>
+        </section>
       </v-col>
     </v-row>
   </v-container>
@@ -150,12 +173,14 @@
 export default {
   async fetch() {
     await this.$axios
-      .$get(`/categories/${this.$route.params.url}`)
+      .$get(`/categories/${this.$route.params.url}`, {
+        params: { page: this.pageData.current_page },
+      })
       .then((res) => {
         console.log(res)
         this.category = res.category
         this.productData = res.data
-        // this.totalProducts = this.products.length
+        this.pageData = res.meta
         // this.vendors = res.data.artists
         // this.totalVendors = this.vendors.length
       })
@@ -163,36 +188,44 @@ export default {
         console.log(err)
       })
 
-    this.url = this.$route.params.url
+    ///this.url = this.$route.params.url
   },
   data() {
     return {
-      cardTitle: 'Casual Wear',
-      desp: '70% - 80%',
       productData: {},
       category: {},
-      totalProducts: null,
-      url: null,
-      totalVendors: null,
-      vendors: null,
+      pageData: { current_page: 1 },
+      selectedPage: null,
     }
   },
-
-  computed: {
-    columns() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return 1
-        case 'sm':
-          return 2
-        case 'md':
-          return 2
-        case 'lg':
-          return 4
-        case 'xl':
-          return 4
+  // watch: {
+  //   pageData(val) {
+  //     console.log(val)
+  //   },
+  // },
+  methods: {
+    fetchPage(data) {
+      if (data != this.pageData.current_page) {
+        this.pageData.current_page = data
+        this.$fetch()
       }
     },
+  },
+  computed: {
+    // columns() {
+    //   switch (this.$vuetify.breakpoint.name) {
+    //     case 'xs':
+    //       return 1
+    //     case 'sm':
+    //       return 2
+    //     case 'md':
+    //       return 2
+    //     case 'lg':
+    //       return 4
+    //     case 'xl':
+    //       return 4
+    //   }
+    // },
   },
 }
 </script>

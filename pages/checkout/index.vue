@@ -17,17 +17,29 @@
           </v-row>
           <v-stepper-items>
             <v-stepper-content step="1" class="pa-0">
-              <h4 class="text-caption text-center">Select Shipping Address</h4>
-              <UserAddress
+              <h4 class="text-subtitle-2 text-center">
+                Select Shipping Address
+              </h4>
+              <Address @selected:address="checkService" />
+              <!-- <UserAddress
                 :addresses="addresses"
                 v-model="selectedAddress"
                 type="shipping"
-              />
-              <v-row no-gutters justify="center">
+              /> -->
+              <!-- <CheckService :address="selectedAddress" /> -->
+              {{ selectedAddress }}
+              <v-row
+                no-gutters
+                justify="center"
+                align="center"
+                class="mb-4 px-4"
+              >
+                <h4 class="text-subtitle-2">Select Billing Address</h4>
                 <v-checkbox
                   v-model="billingAddress.status"
                   label="same address as billing"
-                  class="mt-0"
+                  class="mt-0 ml-2"
+                  hide-details
               /></v-row>
 
               <section v-if="billingAddress.status == false">
@@ -41,7 +53,7 @@
             </v-stepper-content>
 
             <v-stepper-content step="2">
-              <ShippingSelect :address="selectedAddress" />
+              <!-- <ShippingSelect :address="selectedAddress" /> -->
             </v-stepper-content>
 
             <v-stepper-content step="3">
@@ -57,9 +69,9 @@
         </v-stepper>
       </v-col>
     </v-row>
-    <v-row v-if="product.length">
+    <v-row no-gutters v-if="product.length">
       <h6 class="subtitle-1 my-2">Cart Overview</h6>
-      <CartOverview>
+      <CartOverview :deliveryAddress="selectedAddress">
         <template slot="rows">
           <p class="title my-0">Shipping: xxxx</p>
           <p class="title my-0">total: {{ total }}</p>
@@ -92,9 +104,15 @@ export default {
       empty: 'cart/empty',
     }),
   },
+  methods: {
+    checkService(val) {
+      this.selectedAddress = val
+    },
+  },
+
   async fetch() {
     await this.$axios
-      .$get('addresses')
+      .$get('address')
       .then((res) => {
         this.addresses = res.data
         this.selectedAddress = this.addresses.find(

@@ -14,12 +14,12 @@ p a:hover {
   text-decoration: underline;
 }
 
-.footer-image {
+/* .footer-image {
   background-image: url('/body.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+} */
 
 .landing-title {
   line-height: 95%;

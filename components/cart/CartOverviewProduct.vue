@@ -1,11 +1,12 @@
 <template>
-  <v-row no-gutters>
-    <v-col cols="12" sm="12" md="6">
-      <Product :product="product.product" />
-    </v-col>
-    <v-col cols="12" sm="12" md="6" class="pa-2">
-      <h5>Quantity: {{ product.quantity }}</h5>
-      <!-- <select v-model="quantity">
+  <v-container fluid>
+    <v-row no-gutters>
+      <v-col cols="12" sm="12" md="6">
+        <Product :product="product.product" />
+      </v-col>
+      <v-col cols="12" sm="12" md="6" class="pa-2">
+        <h5>Quantity: {{ product.quantity }}</h5>
+        <!-- <select v-model="quantity">
         <option value="0">0</option>
         <option
           :value="x"
@@ -16,7 +17,7 @@
           {{ x }}
         </option>
       </select> -->
-      <!-- <v-select
+        <!-- <v-select
           filled
           dense
           label="quantity"
@@ -25,17 +26,19 @@
           class="mx-2"
       /> -->
 
-      <v-btn
-        rounded
-        class="my-2"
-        small
-        @click.prevent="destroyProduct(product.product.sku)"
-      >
-        Remove
-        <v-icon>mdi-cart-remove</v-icon>
-      </v-btn>
-    </v-col>
-  </v-row>
+        <v-btn
+          rounded
+          class="my-2"
+          small
+          @click.prevent="destroyProduct(product.product.sku)"
+        >
+          Remove
+          <v-icon>mdi-cart-remove</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+    <CheckDeliveryService :product="product" :deliveryAddress="deliveryAddress"
+  /></v-container>
 </template>
 <script>
 import { mapActions } from 'vuex'
@@ -55,6 +58,10 @@ export default {
     product: {
       required: true,
       type: Object,
+    },
+    deliveryAddress: {
+      type: Object,
+      required: false,
     },
   },
 

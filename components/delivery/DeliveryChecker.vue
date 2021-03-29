@@ -105,6 +105,12 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  props: {
+    address: {
+      required: false,
+      type: Object,
+    },
+  },
   data() {
     return {
       selectedCourier: null,

@@ -74,7 +74,6 @@
             </div> -->
         </v-row>
         <v-row v-else no-gutters>
-          {{ product }}
           <v-row
             class="px-5 py-5"
             v-for="[attribute, val] in Object.entries(product.attributes)"
@@ -100,7 +99,7 @@
             <v-btn
               block
               class="mr-1"
-              color="primary"
+              color="secondary"
               @click.prevent="addToCart"
             >
               Add To Cart
@@ -242,12 +241,16 @@ export default {
     // },
 
     addToCart() {
-      this.store([
-        {
-          id: this.product.id,
-          quantity: 1,
-        },
-      ])
+      if (this.$auth.loggedIn) {
+        this.store([
+          {
+            id: this.product.id,
+            quantity: 1,
+          },
+        ])
+      } else {
+        this.$toast.error('You must log in first!')
+      }
       this.form = {
         variation: '',
         quantity: 1,
