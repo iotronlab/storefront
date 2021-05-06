@@ -4,6 +4,8 @@ export const state = () => ({
   subtotal: null,
   total: null,
   changed: false,
+  //set by courier availability of product
+  shippingAvailable: false,
 })
 
 export const getters = {
@@ -25,6 +27,9 @@ export const getters = {
   changed(state) {
     return state.changed
   },
+  shippingAvailable(state) {
+    return state.shippingAvailable
+  },
 }
 
 export const mutations = {
@@ -43,17 +48,25 @@ export const mutations = {
   SET_CHANGED(state, changed) {
     state.changed = changed
   },
+  SET_SHIPPING_AVAILABLE(state, shippingAvailable) {
+    state.shippingAvailable = shippingAvailable
+  },
 }
 
 export const actions = {
   async getCart({ commit }) {
-    let response = await this.$axios.$get('cart')
-    console.log(response)
-    commit('SET_PRODUCTS', response.data.products)
-    commit('SET_EMPTY', response.meta.empty)
-    commit('SET_SUBTOTAL', response.meta.subtotal)
-    commit('SET_TOTAL', response.meta.total),
-      commit('SET_CHANGED', response.meta.changed)
+    await this.$axios
+      .$get('cart')
+      .then((response) => {
+        commit('SET_PRODUCTS', response.data.products)
+        commit('SET_EMPTY', response.meta.empty)
+        commit('SET_SUBTOTAL', response.meta.subtotal)
+        commit('SET_TOTAL', response.meta.total)
+        commit('SET_CHANGED', response.meta.changed)
+      })
+      .catch((err) => {
+        this.$toast.error('Error fetching cart. Kindly contact support!')
+      })
   },
 
   async destroy({ dispatch }, sku) {

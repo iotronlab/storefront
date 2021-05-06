@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="pa-0">
     <v-item-group :value="selectedAddress" mandatory>
       <v-row no-gutters>
         <v-col v-for="address in addresses" :key="address.id" cols="12" md="4">
@@ -8,7 +8,12 @@
             :value="address"
             @change="addressSelected(address)"
           >
-            <v-card class="nucard ma-1" @click="toggle">
+            <v-card
+              class="ma-1"
+              :elevation="active ? 10 : 2"
+              @click="toggle"
+              rounded
+            >
               <v-row no-gutters class="fill-height">
                 <v-col class="ma-4">
                   <v-row no-gutters>
@@ -20,10 +25,9 @@
                     </h5>
                     <v-spacer />
                     <v-scroll-y-transition>
-                      <v-chip small outlined color="success" v-if="active"
-                        >Selected<v-icon small
-                          >mdi-map-marker-check</v-icon
-                        ></v-chip
+                      <v-chip small color="success" v-if="active"
+                        ><v-icon small>mdi-map-marker-check</v-icon
+                        >selected</v-chip
                       >
                     </v-scroll-y-transition></v-row
                   >
@@ -31,14 +35,13 @@
 
                   <h6 class="text--secondary text-caption">
                     {{ address.contact }}<br />
-                    {{ address.address_1 }}
-                    {{ address.address_2 || null }}, <br />
-                    {{ address.landmark }}<br />
-                    {{ address.city }}.<br />
-                    Pin {{ address.postal_code }} <br />
-                    State {{ address.state }}<br />
-                    Country {{ address.country_code }} Default:
-                    {{ address.default }}
+                    {{ address.address_1 }},<br />
+                    {{ address.address_2 }}&nbsp; {{ address.landmark }}<br />
+                    City - {{ address.city }}.<br />
+                    Pin - {{ address.postal_code }} <br />
+                    State - {{ address.state }}<br />
+                    Country - {{ address.country_code }}<br />
+                    Default - {{ address.default ? 'yes' : 'no' }}
                   </h6></v-col
                 >
               </v-row>

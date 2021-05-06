@@ -101,8 +101,13 @@
               class="mr-1"
               color="secondary"
               @click.prevent="addToCart"
+              v-if="product.in_stock"
             >
               Add To Cart
+              <v-icon right>mdi-cart</v-icon>
+            </v-btn>
+            <v-btn block class="mr-1" color="secondary" v-else>
+              Place Custom Order
               <v-icon right>mdi-cart</v-icon>
             </v-btn>
           </v-col>

@@ -9,9 +9,10 @@
       <nuxt-link :to="{ name: 'index' }">
         <v-img
           src="/logo.png"
-          alt="artistic logo"
-          class="fill-height mt-1"
-          :width="$vuetify.breakpoint.mdAndDown ? 100 : 120"
+          alt="artify logo"
+          class="fill-height"
+          :width="$vuetify.breakpoint.mdAndDown ? 90 : 110"
+          contain
         />
       </nuxt-link>
       <v-container fluid class="pa-0">

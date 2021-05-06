@@ -1,52 +1,44 @@
 <template>
-  <section>
-    <v-container fluid class="body-image" style="margin-top: -60px">
-      <v-row no-gutters class="mt-12" align="center" justify="center">
-        <v-col cols="12" lg="3" class="text-center">
-          <h1 class="landing-title pb-4">Curated Store for Art</h1>
+  <v-container fluid class="pa-0">
+    <v-carousel class="mt-n16" height="700">
+      <v-carousel-item
+        src="landing.png"
+        reverse-transition="fade-transition"
+        transition="fade-transition"
+      >
+        <v-row class="fill-height mt-12" align="center" justify="center">
+          <v-col cols="12" lg="3" class="text-center">
+            <h1 class="landing-title pb-4">Curated Store for Art</h1>
 
-          <h2 class="text-subtitle-2 text--secondary">
-            A citizen's initiative to revive the Indian economy post the covid
-            pandemic 2020, by empowering artists, creator of crafts, and
-            boutiques at the grassroot level, to showcase their creations on a
-            platform crafted for them.
-          </h2>
-          <v-row no-gutters class="mt-4" justify="center">
-            <v-btn shaped class="mr-2" color="primary" outlined
-              ><v-icon left>mdi-shopping</v-icon>Shop</v-btn
+            <h2 class="text-subtitle-2 text--secondary">
+              A citizen's initiative to revive the Indian economy post the covid
+              pandemic 2020, by empowering artists, creator of crafts, and
+              boutiques at the grassroot level, to showcase their creations on a
+              platform crafted for them.
+            </h2>
+            <v-row no-gutters class="mt-4" justify="center">
+              <v-btn shaped class="mr-2" color="primary" outlined
+                ><v-icon left>mdi-shopping</v-icon>Shop</v-btn
+              >
+              <v-btn shaped color="secondary">Learn More</v-btn></v-row
             >
-            <v-btn shaped color="secondary">Learn More</v-btn></v-row
-          >
-        </v-col>
-        <v-col cols="12" lg="8">
-          <!-- <v-img cover src="landing-img.png"></v-img> -->
-          <TrendingProducts />
-        </v-col>
-      </v-row>
-    </v-container>
-    <!-- <v-row no-gutters class="pa-2 text-right">
-      <h2
-        class="landing-title text-uppercase secondary--text text-h5 mx-auto mt-4"
+          </v-col>
+          <v-col cols="12" lg="8">
+            <TrendingProducts />
+          </v-col> </v-row
+      ></v-carousel-item>
+      <v-carousel-item
+        reverse-transition="fade-transition"
+        transition="fade-transition"
       >
-        Featured Artworks
-        <p class="overline primary--text">This week</p>
-      </h2>
+        <v-row class="fill-height" align="start" justify="center">
+          <video autoplay muted loop class="landing-video" width="100%">
+            <source src="stomp.mp4" type="video/mp4" />
+          </video> </v-row
+      ></v-carousel-item>
+    </v-carousel>
 
-      <v-container height="600"></v-container>
-    </v-row>
-    <v-row no-gutters class="pa-2 text-right">
-      <h2
-        class="landing-title text-uppercase secondary--text text-h5 mx-auto mt-4"
-      >
-        Featured Artists
-        <p class="overline primary--text">This week</p>
-      </h2>
-
-      <v-container height="600"></v-container>
-    </v-row> -->
-    <v-divider />
-
-    <v-row no-gutters justify="center" align="center">
+    <v-row no-gutters justify="center" align="center" class="body-image-invert">
       <v-col class="text-center mt-4" lg="10">
         <h2 class="landing-title">Discover</h2>
 
@@ -58,7 +50,7 @@
         <Reviews :reviews="reviews" />
       </v-col>
     </v-row> -->
-  </section>
+  </v-container>
 </template>
 
 <script>
@@ -137,3 +129,18 @@ export default {
 }
 </script>
 
+<style scoped>
+.landing-video {
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+.landing-video::after {
+  content: '';
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+}
+</style>

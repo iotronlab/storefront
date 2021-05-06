@@ -1,6 +1,5 @@
 <template>
-  <v-container fluid>
-    <v-img src="/aboutus.png" />
+  <v-container fluid class="pa-0">
     <section
       v-intersect="{
         handler: onIntersect,
@@ -10,11 +9,35 @@
       }"
       id="about-us"
     >
-      <v-row no-gutters>
-        <v-col>
-          <h2 headline class="landing-title mt-4" align="center">About Us</h2>
-        </v-col>
-      </v-row>
+      <v-img src="flag.png">
+        <h2 headline class="landing-title mt-4" align="center">About Us</h2>
+        <v-img
+          class="mx-auto mt-2"
+          width="210"
+          :src="require('@/assets/img/highlight.png')" />
+        <v-row no-gutters class="fill-height" justify="center">
+          <v-col cols="12" lg="4" class="px-2">
+            <h4 class="text-center text-body-2 mt-4">
+              We are an organization of Artists, Creators, Craftsmen, and
+              Entrepreneurs dedicated to preserving India’s vast and rich
+              cultural heritage. We have more than 100 indigenous art forms and
+              crafts in this great country. But the people who keep these
+              traditional art forms alive are also one of the most vulnerable
+              sections of our society. Post the Covid-19 pandemic and the
+              resulting economic devastation, many of our indigenous art forms
+              are feared to become extinct.<br /><br />
+              Our organization aims to empower artists & craftsmen at the
+              grassroots level by providing them with a platform where they can
+              showcase as well as sell their artworks. We take care of all the
+              required procedures from content management to legal and
+              logistics, so that the artist can focus on what they do best.
+            </h4>
+            <v-img class="mt-6" :src="require('@/assets/img/aboutus.png')" />
+          </v-col>
+          <v-col cols="12" lg="6">
+            <v-img src="india.png" />
+          </v-col> </v-row
+      ></v-img>
     </section>
     <section
       v-intersect="{

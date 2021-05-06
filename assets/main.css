@@ -34,6 +34,14 @@ p a:hover {
   background-size: cover;
   position: relative;
 }
+/* .body-image-invert {
+  background-image: url('/landing-invert.png');
+  height: 100%;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+} */
 /* .v-application.theme--light .landing-title {
   transition: background 0.1s, color 0.1s;
   text-shadow: -5px -3px 8px rgb(163, 177, 198, 0.6),
@@ -107,9 +115,20 @@ p a:hover {
   font-size: 2rem;
   letter-spacing: 0.2rem;
   color: #7851a9;
+  font-family: 'Montserrat', sans-serif;
   text-shadow: 0 1px 0 #bb86fc, 0 2px 0 #bb86fc,
     0 6px 1px rgba(120, 81, 169, 0.1), 0 0 5px rgba(120, 81, 169, 0.1),
     0 1px 3px rgba(120, 81, 169, 0.3), 0 3px 5px rgba(120, 81, 169, 0.2),
     0 5px 10px rgba(120, 81, 169, 0.25), 0 10px 10px rgba(120, 81, 169, 0.2),
     0 20px 20px rgba(120, 81, 169, 0.15);
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: ease-in-out 0.5s;
+}
+
+.page-enter,
+.page-leave-to {
+  opacity: 0;
 }

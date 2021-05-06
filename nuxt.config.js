@@ -18,7 +18,7 @@ export default {
    */
   head: {
     titleTemplate: process.env.npm_package_name + ' - curated store for art',
-    title: process.env.npm_package_name || 'artistic',
+    title: process.env.npm_package_name || 'artify',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -110,8 +110,8 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    //baseURL: 'http://localhost:8000/api/',
-    browserBaseURL: 'https://api.urartistic.com/api',
+    baseURL: 'http://localhost:8000/api/',
+    //browserBaseURL: 'https://api.urartistic.com/api',
   },
   // auth module config
   auth: {
@@ -183,7 +183,7 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.darken4,
-          success: colors.green.accent4,
+          success: colors.green.darken1,
         },
         light: {
           primary: colors.purple.darken3,

@@ -1,39 +1,116 @@
 <template>
   <v-container fluid>
-    <v-card class="pa-2">
-      <h1 class="text-body-1 ml-2">
+    <section v-if="$fetchState.pending" class="text-center">
+      <PageLoader :message="'fetching your cart...'" />
+    </section>
+    <section v-if="$fetchState.error">
+      There was some error fetching addresses.
+    </section>
+    <v-card class="pa-2" v-if="!$fetchState.pending">
+      <v-banner v-if="addresses.length == 0">
+        <v-icon slot="icon" color="warning" size="36">
+          mdi-map-marker-alert-outline
+        </v-icon>
+        <span>Kindly add a delivery address</span>
+
+        <template v-slot:actions>
+          <v-btn color="primary" text> Add Address </v-btn>
+        </template>
+      </v-banner>
+      <v-banner v-else-if="addresses.length > 0">
+        <v-icon slot="icon" color="success" size="36">
+          mdi-map-marker-check-outline
+        </v-icon>
+
+        <span>
+          <span class="text-caption">Addresses ({{ addresses.length }})</span
+          ><br />
+          <h5 class="text-subtitle-2">
+            Delivering to -
+            <span v-if="defaultAddress">
+              {{ defaultAddress.name }}, {{ defaultAddress.contact }},
+              {{ defaultAddress.postal_code }},
+              {{ defaultAddress.country_code }}</span
+            >
+            <span v-else>please select a default address</span>
+          </h5>
+        </span>
+
+        <template v-slot:actions>
+          <v-btn color="primary" outlined @click="addressSheet = !addressSheet">
+            Change address
+          </v-btn>
+        </template>
+      </v-banner>
+      <v-banner v-else>
+        <v-icon slot="icon" color="warning" size="36">
+          mdi-map-marker-alert-outline
+        </v-icon>
+        <span
+          >There was some error fetching addresses. Kindly contact
+          support.</span
+        >
+        <template v-slot:actions>
+          <v-btn color="primary" text> report issue </v-btn>
+        </template>
+      </v-banner>
+      <h1 class="text-overline ml-2">
         Your Cart
         <span v-if="cartProducts.length > 0">({{ cartProducts.length }})</span>
       </h1>
 
-      <h5 class="ml-2 body-2" v-if="changed">
+      <h5 class="ma-2 body-2" v-if="changed">
         Some products stocks may have changed
       </h5>
       <v-divider />
-      <section style="height: 200px" v-if="cartProducts.length == 0">
+      <section
+        style="height: 200px"
+        v-if="cartProducts.length && cartProducts.length == 0"
+      >
         <h3 class="text-h6 text-center accent--text mt-6">
           <v-icon>mdi-cart-outline</v-icon> Alas, Your Cart is empty.
           <v-icon>mdi-emoticon-sad-outline</v-icon>
         </h3>
       </section>
       <section v-if="cartProducts.length > 0">
-        <CartOverview />
+        <CartOverview
+          :deliveryAddress="shippingAddress ? shippingAddress : defaultAddress"
+        />
       </section>
 
       <v-divider />
+    </v-card>
+
+    <v-bottom-sheet v-model="addressSheet" inset>
+      <v-sheet class="text-center">
+        <v-btn
+          class="mt-6"
+          text
+          color="red"
+          @click="addressSheet = !addressSheet"
+        >
+          close
+        </v-btn>
+        <AddressSheet :addresses="addresses" />
+      </v-sheet>
+    </v-bottom-sheet>
+    <v-app-bar bottom fixed>
+      <h5 class="text-caption text-center" style="width: 50%">
+        subtotal &nbsp;<span class="overline"> {{ subtotal }}</span>
+      </h5>
       <v-btn
-        block
+        width="50%"
         color="secondary"
         :disabled="empty"
         :to="{ name: 'checkout' }"
         >CheckOut</v-btn
-      >
-    </v-card>
+      ></v-app-bar
+    >
   </v-container>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import CartOverview from '@/components/cart/CartOverview'
 
 export default {
@@ -41,16 +118,35 @@ export default {
   components: {
     CartOverview,
   },
-  created() {
-    if (this.$auth.loggedIn == false) {
-      this.$router.push('/')
-    }
+  data() {
+    return { addressSheet: false }
+  },
+
+  async fetch() {
+    await this.$store.dispatch('getUserAddress')
+    await this.$store.dispatch('getShippingToken')
+    // await this.$axios
+    //   .$get('address')
+    //   .then((res) => {
+    //     this.addresses = res.data
+    //     this.selectedAddress = this.addresses.find(
+    //       (address) => address.default == true
+    //     )
+    //     this.billingAddress.value = this.selectedAddress
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   },
   computed: {
     ...mapGetters({
       cartProducts: 'cart/products',
       empty: 'cart/empty',
       changed: 'cart/changed',
+      subtotal: 'cart/subtotal',
+      addresses: 'userAddresses',
+      defaultAddress: 'defaultAddress',
+      shippingAddress: 'shippingAddress',
     }),
   },
 }

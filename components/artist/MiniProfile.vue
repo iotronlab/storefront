@@ -3,14 +3,14 @@
     <v-row no-gutters>
       <v-col class="flex-grow-0 flex-shrink-1">
         <nuxt-link :to="link">
-          <v-avatar class="profile mx-4" color="grey" size="80">
+          <v-avatar class="profile mx-4" size="80">
             <v-img
               :src="
                 vendor.avatarimg
                   ? vendor.avatarimg
-                  : require('@/assets/img/default-profile.png')
+                  : require('@/assets/img/artist-dp.png')
               "
-              :lazy-src="require('@/assets/img/default-profile.png')"
+              :lazy-src="require('@/assets/img/artist-dp.png')"
             ></v-img> </v-avatar
         ></nuxt-link>
       </v-col>

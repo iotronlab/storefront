@@ -131,6 +131,7 @@
             dense
             :error-messages="errors"
             v-model="address.country_id"
+            @change="updateCountry"
           ></v-select
         ></ValidationProvider>
 
@@ -194,6 +195,7 @@ export default {
         postal_code: '',
         state: '',
         country_id: '',
+        country_code: null,
         default: false,
       },
     }
@@ -284,6 +286,14 @@ export default {
           })
         }
       })
+    },
+    updateCountry() {
+      let country = this.countries.find(
+        (el) => el.id == this.address.country_id
+      )
+
+      console.log(country)
+      this.address.country_code = country.iso_code_2
     },
     updateData(data) {
       this.$refs.observer.reset()

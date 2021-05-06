@@ -20,7 +20,7 @@
           <v-divider class="my-2" />
           <v-row no-gutters justify="space-around">
             <p class="caption">
-              <v-icon>mdi-phone </v-icon>&nbsp;+91-8770695893
+              <v-icon>mdi-phone </v-icon>&nbsp;+91 7980 665 957
             </p>
             <p class="caption">
               <v-icon>mdi-email</v-icon>&nbsp;info@urartistic.com

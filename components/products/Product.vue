@@ -1,11 +1,7 @@
 <template>
   <v-container fluid>
     <nuxt-link :to="link">
-      <v-img
-        :src="product.base_image ? product.base_image : defaultImageSrc"
-        contain
-        max-height="200"
-      >
+      <v-img :src="product.base_image ? product.base_image : defaultImageSrc">
         <v-row no-gutters>
           <v-btn icon color="primary"> <v-icon>mdi-heart</v-icon> </v-btn
           ><v-spacer />
@@ -24,12 +20,12 @@
     <v-row no-gutters class="mt-2" style="flex-wrap: nowrap">
       <v-col class="flex-grow-1 flex-shrink-0">
         <h4 class="text-subtitle-2">{{ product.name }}</h4>
-        <h5 class="text-caption py-0">
+        <!-- <h5 class="text-caption py-0" v-if="vendorLink">
           by
           <nuxt-link :to="vendorLink" class="primary--text">{{
             product.vendor.display_name
           }}</nuxt-link>
-        </h5>
+        </h5> -->
         <h4 class="text-subtitle-2" v-if="product.special_price > 0">
           <span class="text-decoration-line-through text-caption">
             {{ product.formatted_price }}</span
@@ -104,7 +100,16 @@ export default {
       }
     },
     vendorLink() {
-      let url = this.product.vendor.url
+      // if (this.product.vendor.url != null) {
+      //   return {
+      //     name: 'artists-url',
+      //     params: {
+      //       url: this.product.vendor.url,
+      //     },
+      //   }
+      // } else {
+      //   return null
+      // }
       // let slug =
       //   this.product.variants.length > 0
       //     ? this.product.variants[0].sku
@@ -112,12 +117,6 @@ export default {
       // console.log(slug)
       // console.log('slug above')
       // return '#'
-      return {
-        name: 'artists-url',
-        params: {
-          url: url,
-        },
-      }
     },
     defaultImageSrc() {
       return require('@/assets/img/default-product.png')
