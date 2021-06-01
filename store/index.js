@@ -2,6 +2,7 @@ export const state = () => ({
   categories: [],
   snackbars: [],
   shippingToken: null,
+  shippingDiscount: 0,
   userAddresses: [],
   shippingAddress: null,
 })
@@ -16,11 +17,14 @@ export const getters = {
   userAddresses(state) {
     return state.userAddresses
   },
-  defaultAddress: (state) => {
-    return state.userAddresses.find((address) => address.default == 1)
-  },
+  // defaultAddress: (state) => {
+  //   return state.userAddresses.find((address) => address.default == 1)
+  // },
   shippingAddress(state) {
     return state.shippingAddress
+  },
+  shippingDiscount(state) {
+    return state.shippingDiscount
   },
   // getDefaultAddress: (state) => (slug) => {
   //   return state.categories.find((category) => category.slug === slug)
@@ -34,11 +38,15 @@ export const mutations = {
   SET_CATEGORIES(state, categories) {
     state.categories = categories
   },
-  SET_SHIPPING_TOKEN(state, shippingToken) {
-    state.shippingToken = shippingToken
+  SET_SHIPPING_TOKEN(state, shipping) {
+    state.shippingToken = shipping.token
+    state.shippingDiscount = shipping.discount
   },
   SET_USER_ADDRESS(state, userAddresses) {
     state.userAddresses = userAddresses
+    state.shippingAddress = state.userAddresses.find(
+      (address) => address.default == 1
+    )
   },
   SET_SHIPPING_ADDRESS(state, shippingAddress) {
     state.shippingAddress = shippingAddress
@@ -60,6 +68,7 @@ export const actions = {
         commit('SET_CATEGORIES', res.data)
         if (this.$auth.loggedIn) {
           dispatch('cart/getCart')
+          dispatch('getUserAddress')
         }
         //  commit('SET_SHIPPING_TOKEN', res.shipping_token)
       })
@@ -71,8 +80,8 @@ export const actions = {
     await this.$axios
       .$get('/shipping')
       .then((res) => {
-        commit('SET_SHIPPING_TOKEN', res.token)
-        console.log(res.token)
+        commit('SET_SHIPPING_TOKEN', res)
+        // console.log(res.token)
       })
       .catch((err) => {
         console.log(err)

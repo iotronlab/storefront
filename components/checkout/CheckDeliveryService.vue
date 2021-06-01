@@ -4,29 +4,72 @@
       <PageLoader :message="'fetching courier serviceability...'" />
     </section>
     <section v-if="$fetchState.error">
-      There was some error fetching addresses.
+      <h4 class="text-center body-1">
+        There was some error fetching courier details.
+      </h4>
     </section>
     <section v-if="!$fetchState.pending">
       <v-container class="pa-0" fluid v-if="shippingAvailable">
-        <v-radio-group v-model="selectedShipping" row disabled>
-          <template v-slot:label>
-            <div>available <strong>shipping</strong></div>
-          </template>
-          <v-radio
-            v-for="(option, n) in shippingOptions"
-            :key="n"
-            :value="option"
+        <v-row no-gutters align="center">
+          <h5 class="text-subtitle-2 text--secondary ma-2">
+            available couriers({{ couriers.length }})
+          </h5>
+          <v-btn-toggle mandatory rounded>
+            <v-btn small @click.prevent="cheapestCourier">
+              <v-icon left>mdi-currency-usd</v-icon>cheapest
+            </v-btn>
+            <v-btn small @click.prevent="fastestCourier">
+              <v-icon left>mdi-bike-fast</v-icon>fastest
+            </v-btn>
+          </v-btn-toggle></v-row
+        >
+        <v-slide-group v-model="selectedCourier" mandatory>
+          <v-slide-item
+            class="ma-2"
+            v-for="(service, i) in couriers"
+            :key="i"
+            v-slot:default="{ active, toggle }"
+            :value="service"
           >
-            <template v-slot:label>
-              <div>
-                <strong class="success--text">{{ option.code }}</strong> | etd -
-                {{ option.etd }}
-              </div>
-            </template>
-          </v-radio>
-        </v-radio-group>
+            <v-row
+              no-gutters
+              class="fill-height mb-8"
+              align="center"
+              justify="center"
+            >
+              <v-card
+                width="100%"
+                class="nucard text-center text-caption px-2 py-4"
+                @click="toggle"
+                :color="active ? 'secondary' : null"
+                :dark="active ? true : false"
+                rounded="lg"
+              >
+                <p class="mb-1">
+                  {{ service.courier_name }}<br />
+                  Rate: ₹ {{ service.rate }}<br />
+                  ETD: {{ service.etd }}<br />
+                  Estimated: {{ service.estimated_delivery_days }}
+                  days
+                </p>
+
+                <v-row no-gutters justify="center" align="center">
+                  ({{ service.rating }})<v-rating
+                    :value="service.rating"
+                    color="yellow accent-4"
+                    dense
+                    half-increments
+                    readonly
+                    size="16"
+                  ></v-rating
+                ></v-row>
+              </v-card>
+            </v-row>
+          </v-slide-item>
+        </v-slide-group>
       </v-container>
-      <v-container fluid class="pa-0" v-else>
+      <v-container fluid v-else>
+        {{ token }}
         <v-alert border="right" colored-border type="error" elevation="2">
           Sorry, this product cannot be shipped to the selected location. :'(
         </v-alert></v-container
@@ -56,7 +99,7 @@ export default {
   data() {
     return {
       shippingAvailable: false,
-      selectedShipping: null,
+      selectedCourier: null,
 
       errorMessage: null,
 
@@ -71,18 +114,15 @@ export default {
       cod: 0,
       services: null,
       couriers: null,
-      shippingOptions: {
-        free: { code: 'free', etd: null, price: 0 },
-        standard: { code: 'standard', etd: null, price: null },
-        express: { code: 'express', etd: null, price: null },
-      },
+      shipping: {},
     }
   },
   watch: {
-    deliveryAddress(val) {
-      if (val.postal_code) {
-        this.checkService(val)
-      }
+    deliveryAddress() {
+      this.fetch()
+    },
+    selectedCourier() {
+      this.updateShipping()
     },
   },
 
@@ -98,60 +138,69 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setShippingAvailability: 'cart/SET_SHIPPING_AVAILABLE',
+      // setShippingAvailability: 'cart/SET_SHIPPING_AVAILABLE',
+      setShipping: 'cart/SET_PRODUCT_SHIPPING',
     }),
-    checkService(val) {
-      if (val.country_code == 'IN') {
-        // this.deliveryPin = val.postal_code
-        // this.pickupPin = this.product.pickup_address.postal_code
-        // this.weight = this.product.weight
-        this.getLocalDetails()
+    updateShipping() {
+      if (this.selectedCourier != null) {
+        this.shipping.id = this.product.id
+        this.shipping.courier_id = this.selectedCourier.courier_company_id
+        this.shipping.courier_name = this.selectedCourier.courier_name
+        this.shipping.shipping_rate = this.selectedCourier.rate
+        this.shipping.etd = this.selectedCourier.estimated_delivery_days
+        this.shipping.address_id = this.deliveryAddress.id
+        this.setShipping(this.shipping)
       }
     },
     async getLocalDetails() {
-      await this.$axios
-        .$get(
-          'https://apiv2.shiprocket.in/v1/external/courier/serviceability/',
-          {
-            headers: {
+      // this.$shipping.setHeader('Authorization', this.$token) not working
+      await this.$shipping.setToken(this.$token, 'Bearer')
+      // console.log(this.$shipping)
+      await this.$shipping
+        .$get('courier/serviceability', {
+          // withCredentials: false,
+          headers: {
+            common: {
               Authorization: `Bearer ${this.token}`,
-              'Content-Type': 'application/json',
+              // 'Content-Type': 'application/json',
             },
-            params: {
-              pickup_postcode: this.product.pickup_address.postal_code,
-              delivery_postcode: this.deliveryAddress.postal_code,
-              weight: this.product.weight,
-              cod: this.cod,
-            },
-          }
-        )
+          },
+          params: {
+            pickup_postcode: this.product.pickup_address.postal_code,
+            delivery_postcode: this.deliveryAddress.postal_code,
+            weight: this.product.weight,
+            cod: this.cod,
+          },
+        })
         .then((res) => {
           if (res.status == 200) {
             this.services = res.data
             this.couriers = res.data.available_courier_companies
-            this.availableServices()
-            this.submitted = true
+            //  this.availableServices()
+            this.cheapestCourier()
             this.shippingAvailable = true
           } else {
             this.shippingAvailable = false
-            this.setShippingAvailability(false)
+            // this.setShippingAvailability(false)
           }
         })
         .catch((err) => {
           console.log(err)
           this.errorMessage = 'service not available, kindly contact support.'
           this.shippingAvailable = false
-          this.setShippingAvailability(false)
+          //this.setShippingAvailability(false)
         })
     },
-    // fastestCourier() {
-    //   this.couriers.sort((a, b) => a.etd_hours - b.etd_hours)
-    //   this.selectedCourier = this.couriers[0]
-    // },
-    // cheapestCourier() {
-    //   this.couriers.sort((a, b) => a.rate - b.rate)
-    //   this.selectedCourier = this.couriers[0]
-    // },
+    fastestCourier() {
+      this.couriers.sort(
+        (a, b) => a.estimated_delivery_days - b.estimated_delivery_days
+      )
+      this.selectedCourier = this.couriers[0]
+    },
+    cheapestCourier() {
+      this.couriers.sort((a, b) => a.rate - b.rate)
+      this.selectedCourier = this.couriers[0]
+    },
     availableServices() {
       if (this.couriers) {
         this.couriers.sort((a, b) => a.etd_hours - b.etd_hours)
@@ -187,3 +236,15 @@ export default {
 }
 </script>
 
+<style scoped>
+.v-application.theme--light .nucard {
+  transition: background 0.1s, color 0.1s;
+  box-shadow: 9px 9px 16px rgb(163, 177, 198, 0.6),
+    -9px -9px 16px rgba(255, 255, 255, 0.5) !important;
+}
+.v-application.theme--dark .nucard {
+  transition: background 0.1s, color 0.1s;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7),
+    -5px -5px 10px rgba(255, 255, 255, 0.1);
+}
+</style>

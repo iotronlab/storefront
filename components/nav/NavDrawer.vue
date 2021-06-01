@@ -29,13 +29,6 @@
       </v-list-item>
       <v-divider />
     </v-list>
-    <v-list-item>
-      <v-switch
-        v-model="$vuetify.theme.dark"
-        color="primary"
-        label="Dark"
-      ></v-switch>
-    </v-list-item>
   </v-container>
 
   <!-- <div>

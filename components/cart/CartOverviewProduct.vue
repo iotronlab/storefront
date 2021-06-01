@@ -1,12 +1,16 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="pa-0">
     <v-row no-gutters>
-      <v-col cols="12" sm="12" md="6">
+      <v-col cols="12" sm="6" md="6" lg="3" xl="3">
         <Product :product="product.product" />
       </v-col>
-      <v-col cols="12" sm="12" md="6" class="pa-2">
-        <h5>Quantity: {{ product.quantity }}</h5>
-        <!-- <select v-model="quantity">
+      <v-col cols="12" sm="6" md="6" lg="9" xl="9">
+        <v-container fluid>
+          <h5 class="subtitle-2 mb-2">Price: {{ product.total }}</h5>
+          <v-row no-gutters align="center">
+            <h5>Quantity: {{ product.quantity }}</h5>
+
+            <!-- <select v-model="quantity">
         <option value="0">0</option>
         <option
           :value="x"
@@ -17,7 +21,7 @@
           {{ x }}
         </option>
       </select> -->
-        <!-- <v-select
+            <!-- <v-select
           filled
           dense
           label="quantity"
@@ -26,19 +30,29 @@
           class="mx-2"
       /> -->
 
-        <v-btn
-          rounded
-          class="my-2"
-          small
-          @click.prevent="destroyProduct(product.product.sku)"
-        >
-          Remove
-          <v-icon>mdi-cart-remove</v-icon>
-        </v-btn>
+            <v-btn
+              rounded
+              class="ml-2"
+              small
+              @click.prevent="destroyProduct(product.product.sku)"
+            >
+              Remove
+              <v-icon>mdi-cart-remove</v-icon>
+            </v-btn></v-row
+          >
+        </v-container>
+        <section v-if="deliveryAddress">
+          <CheckDeliveryService
+            :product="product"
+            :deliveryAddress="deliveryAddress"
+          />
+        </section>
+        <section v-else class="text-caption">
+          Select an address to display available courier services.
+        </section>
       </v-col>
     </v-row>
-    <CheckDeliveryService :product="product" :deliveryAddress="deliveryAddress"
-  /></v-container>
+  </v-container>
 </template>
 <script>
 import { mapActions } from 'vuex'

@@ -1,11 +1,13 @@
+import Vue from 'vue'
 export const state = () => ({
   products: [],
+  productShipping: [],
   empty: true,
   subtotal: null,
   total: null,
   changed: false,
   //set by courier availability of product
-  shippingAvailable: false,
+  // shippingAvailable: false,
 })
 
 export const getters = {
@@ -27,8 +29,19 @@ export const getters = {
   changed(state) {
     return state.changed
   },
+  productShipping(state) {
+    return state.productShipping
+  },
   shippingAvailable(state) {
-    return state.shippingAvailable
+    if (
+      state.products.some(function checkShipping(product) {
+        return product.courier_id == null
+      })
+    ) {
+      return false
+    } else {
+      return true
+    }
   },
 }
 
@@ -48,8 +61,28 @@ export const mutations = {
   SET_CHANGED(state, changed) {
     state.changed = changed
   },
-  SET_SHIPPING_AVAILABLE(state, shippingAvailable) {
-    state.shippingAvailable = shippingAvailable
+  // SET_SHIPPING_AVAILABLE(state, shippingAvailable) {
+  //   state.shippingAvailable = shippingAvailable
+  // },
+  SET_PRODUCT_SHIPPING(state, payload) {
+    let productIndex = state.products.findIndex((el) => el.id == payload.id)
+    console.log(productIndex)
+    if (productIndex >= 0) {
+      state.products[productIndex].courier_id = payload.courier_id
+      state.products[productIndex].courier_name = payload.courier_name
+      state.products[productIndex].shipping_rate = payload.shipping_rate
+      state.products[productIndex].etd = payload.etd
+      state.products[productIndex].address_id = payload.address_id
+    }
+    let shippingIndex = state.productShipping.findIndex(
+      (el) => el.id == payload.id
+    )
+    if (shippingIndex == -1) {
+      state.productShipping.push(payload)
+    } else {
+      state.productShipping.splice(shippingIndex, 1, payload)
+    }
+    // state.shippingAvailable = true
   },
 }
 

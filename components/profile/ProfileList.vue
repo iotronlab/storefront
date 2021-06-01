@@ -1,29 +1,32 @@
 <template>
   <v-list shaped dense nav>
-    <v-list-item-group v-model="item" color="primary">
-      <v-list-item
-        v-for="(item, i) in items"
-        :key="i"
-        @click.prevent="item.title == 'Logout' ? logoutUser() : ''"
-        :to="item.to != undefined ? item.to : ''"
-        exact
-      >
-        <v-list-item-icon>
-          <v-icon v-text="item.icon"></v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title v-text="item.title"></v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list-item-group>
+    <v-list-item
+      v-for="(item, i) in items"
+      :key="i"
+      @click.prevent="item.title == 'Logout' ? logoutUser() : ''"
+      :to="item.to != undefined ? item.to : ''"
+      exact
+    >
+      <v-list-item-icon>
+        <v-icon v-text="item.icon"></v-icon>
+      </v-list-item-icon>
+      <v-list-item-content>
+        <v-list-item-title v-text="item.title"></v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <v-list-item>
+      <v-switch
+        v-model="$vuetify.theme.dark"
+        color="primary"
+        label="Dark"
+      ></v-switch
+    ></v-list-item>
   </v-list>
 </template>
 <script>
 export default {
   data() {
     return {
-      item: 0,
-      hover: false,
       items: [
         {
           icon: 'mdi-home-account',

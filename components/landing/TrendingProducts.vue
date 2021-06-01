@@ -18,22 +18,24 @@
         <template v-slot:next="{ on, attrs }">
           <v-btn color="info" v-bind="attrs" v-on="on">Next slide</v-btn>
         </template>
-        <v-carousel-item v-for="i in Math.ceil(10 / columns)" :key="i">
-          <v-row class="fill-height" align="center" justify="center"
-            ><v-col
-              v-for="product in products.slice(i, columns + i)"
-              :key="product.id"
-              class="d-flex child-flex pa-1"
-              cols="12"
-              lg="3"
-              md="6"
-              sm="6"
-              xs="12"
-            >
-              <Product :product="product" />
-            </v-col>
-          </v-row>
-        </v-carousel-item>
+        <section v-if="columns">
+          <v-carousel-item v-for="i in Math.ceil(10 / columns)" :key="i">
+            <v-row class="fill-height" align="center" justify="center"
+              ><v-col
+                v-for="product in products.slice(i, columns + i)"
+                :key="product.id"
+                class="d-flex child-flex pa-1"
+                cols="12"
+                lg="3"
+                md="6"
+                sm="6"
+                xs="12"
+              >
+                <Product :product="product" />
+              </v-col>
+            </v-row>
+          </v-carousel-item>
+        </section>
       </v-carousel> </v-row
   ></v-container>
 </template>

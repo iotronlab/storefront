@@ -4,20 +4,46 @@
       <v-row no-gutters justify="center" align="center" class="text-caption">
         <v-col cols="4">
           <v-stepper-step step="1" editable color="secondary">
-            Address
+            Cart Review
           </v-stepper-step></v-col
         ><v-col cols="4">
-          <v-stepper-step step="2" editable>Shipping</v-stepper-step></v-col
+          <v-stepper-step step="2" editable>Payment</v-stepper-step></v-col
         >
         <v-col cols="4">
-          <v-stepper-step step="3" editable>Payment</v-stepper-step></v-col
+          <v-stepper-step step="3" editable>Confirmation</v-stepper-step></v-col
         >
       </v-row>
       <v-divider class="mb-2" />
       <v-stepper-items>
         <v-stepper-content step="1" class="pa-0">
-          <h4 class="text-subtitle-2 ml-4">1. Choose a delivery address</h4>
-          <Address @selected:address="checkService" />
+          <h4 class="text-subtitle-2 ml-4">1. Selected delivery address</h4>
+          {{ shippingAddress }}
+          <!-- <v-card class="nucard" rounded="lg">
+            <v-row no-gutters class="fill-height">
+              <v-col class="ma-4">
+                <h5 class="text-subtitle-2">
+                  {{ shippingAddress.name }}
+                  <v-chip x-small outlined color="primary">
+                    {{ shippingAddress.type }}</v-chip
+                  >
+                </h5>
+                <v-divider class="my-1" />
+
+                <h6 class="text--secondary text-caption">
+                  {{ shippingAddress.contact }}<br />
+                  {{ shippingAddress.address_1 }}
+                  {{ shippingAddress.address_2 || null }}, <br />
+                  {{ shippingAddress.landmark }}<br />
+                  {{ shippingAddress.city }}.<br />
+                  Pin {{ shippingAddress.postal_code }} <br />
+                  State {{ shippingAddress.state }}<br />
+                  Country {{ shippingAddress.country_code }}
+                </h6></v-col
+              >
+            </v-row>
+            shippingA
+          </v-card> -->
+          <!-- <Address @selected:address="checkService" /> -->
 
           <!-- <UserAddress
                 :addresses="addresses"
@@ -37,10 +63,11 @@
 
           <section v-if="billingAddress.status == false">
             <v-fade-transition>
-              <UserAddress
+              <!-- <UserAddress
                 :addresses="addresses"
                 v-model="billingAddress.value"
-            /></v-fade-transition>
+            /> -->
+            </v-fade-transition>
           </section>
           <v-app-bar bottom fixed
             ><v-btn color="secondary" block :disabled="empty"
@@ -50,12 +77,12 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <CartOverview :deliveryAddress="selectedAddress">
+          <!-- <CartOverview :deliveryAddress="selectedAddress">
             <template slot="rows">
               <p class="title my-0">Shipping: xxxx</p>
               <p class="title my-0">total: {{ total }}</p>
             </template>
-          </CartOverview>
+          </CartOverview> -->
           <!-- <ShippingSelect :address="selectedAddress" /> -->
           <v-app-bar bottom fixed
             ><v-btn color="primary" outlined width="50%" :disabled="empty"
@@ -101,6 +128,7 @@ export default {
       product: 'cart/products',
       empty: 'cart/empty',
       addresses: 'userAddress',
+      shippingAddress: 'shippingAddress',
     }),
   },
   methods: {
@@ -109,21 +137,21 @@ export default {
     },
   },
 
-  async fetch({ store }) {
-    await store.dispatch('getUserAddress')
-    // await this.$axios
-    //   .$get('address')
-    //   .then((res) => {
-    //     this.addresses = res.data
-    //     this.selectedAddress = this.addresses.find(
-    //       (address) => address.default == true
-    //     )
-    //     this.billingAddress.value = this.selectedAddress
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-  },
+  // async fetch({ store }) {
+  //   await store.dispatch('getUserAddress')
+  //   // await this.$axios
+  //   //   .$get('address')
+  //   //   .then((res) => {
+  //   //     this.addresses = res.data
+  //   //     this.selectedAddress = this.addresses.find(
+  //   //       (address) => address.default == true
+  //   //     )
+  //   //     this.billingAddress.value = this.selectedAddress
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.log(err)
+  //   //   })
+  // },
 }
 </script>
 <style>

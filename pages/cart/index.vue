@@ -4,7 +4,7 @@
       <PageLoader :message="'fetching your cart...'" />
     </section>
     <section v-if="$fetchState.error">
-      There was some error fetching addresses.
+      There was some error fetching your cart.
     </section>
     <v-card class="pa-2" v-if="!$fetchState.pending">
       <v-banner v-if="addresses.length == 0">
@@ -27,10 +27,10 @@
           ><br />
           <h5 class="text-subtitle-2">
             Delivering to -
-            <span v-if="defaultAddress">
-              {{ defaultAddress.name }}, {{ defaultAddress.contact }},
-              {{ defaultAddress.postal_code }},
-              {{ defaultAddress.country_code }}</span
+            <span v-if="shippingAddress">
+              {{ shippingAddress.name }}, {{ shippingAddress.contact }},
+              {{ shippingAddress.postal_code }},
+              {{ shippingAddress.country_code }}</span
             >
             <span v-else>please select a default address</span>
           </h5>
@@ -62,6 +62,10 @@
       <h5 class="ma-2 body-2" v-if="changed">
         Some products stocks may have changed
       </h5>
+      <h5 class="ma-2 body-2" v-if="!shippingAvailable">
+        <v-icon color="error">mdi-sync-alert</v-icon> A product cannot be
+        shipped to the selected location.
+      </h5>
       <v-divider />
       <section
         style="height: 200px"
@@ -73,9 +77,7 @@
         </h3>
       </section>
       <section v-if="cartProducts.length > 0">
-        <CartOverview
-          :deliveryAddress="shippingAddress ? shippingAddress : defaultAddress"
-        />
+        <CartOverview :deliveryAddress="shippingAddress" />
       </section>
 
       <v-divider />
@@ -95,14 +97,17 @@
       </v-sheet>
     </v-bottom-sheet>
     <v-app-bar bottom fixed>
-      <h5 class="text-caption text-center" style="width: 50%">
-        subtotal &nbsp;<span class="overline"> {{ subtotal }}</span>
+      <h5 class="text-caption text-center" style="width: 60%">
+        subtotal&nbsp;<span class="body-2"> {{ subtotal }}</span>
+        <span class="" v-if="cartShipping.length > 0">
+          + ₹ {{ shippingCost }}</span
+        >
       </h5>
       <v-btn
-        width="50%"
+        width="40%"
         color="secondary"
-        :disabled="empty"
-        :to="{ name: 'checkout' }"
+        :disabled="empty || !shippingAvailable"
+        @click="checkOut"
         >CheckOut</v-btn
       ></v-app-bar
     >
@@ -145,9 +150,39 @@ export default {
       changed: 'cart/changed',
       subtotal: 'cart/subtotal',
       addresses: 'userAddresses',
-      defaultAddress: 'defaultAddress',
+      // defaultAddress: 'defaultAddress',
       shippingAddress: 'shippingAddress',
+      cartShipping: 'cart/productShipping',
+      // shippingAvailable: 'cart/shippingAvailable',
     }),
+    shippingAvailable() {
+      if (
+        this.cartProducts.some(function checkShipping(product) {
+          return product.courier_id == null
+        })
+      ) {
+        return false
+      } else {
+        return true
+      }
+    },
+    shippingCost() {
+      let shippingCost = 0
+      this.cartShipping.forEach((el) => {
+        shippingCost += el.shipping_rate
+      })
+      return shippingCost
+    },
+  },
+  methods: {
+    async checkOut() {
+      await this.$axios
+        .$post('cart/shipping', { products: this.cartShipping })
+        .then((result) => {
+          this.$router.push('checkout')
+        })
+        .catch((err) => {})
+    },
   },
 }
 </script>

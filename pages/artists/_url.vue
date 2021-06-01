@@ -88,6 +88,7 @@
                     color="primary"
                     @click.prevent=""
                     :outlined="hover ? false : true"
+                    rounded
                   >
                     <v-icon left>mdi-bell-plus-outline</v-icon> Subscribe</v-btn
                   ></v-hover

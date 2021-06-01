@@ -24,9 +24,10 @@
             >
           </v-col>
           <v-col cols="12" lg="8">
-            <TrendingProducts />
-          </v-col> </v-row
-      ></v-carousel-item>
+            <!-- <TrendingProducts /> -->
+          </v-col>
+        </v-row></v-carousel-item
+      >
       <v-carousel-item
         reverse-transition="fade-transition"
         transition="fade-transition"

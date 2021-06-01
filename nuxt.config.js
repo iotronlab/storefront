@@ -49,13 +49,13 @@ export default {
     {
       src: '~/plugins/vee-validate.js',
     },
-    // { src: '~/plugins/masonry.js' },
+    { src: '~/plugins/shipping.js' },
   ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
    */
-  components: true,
+  components: [{ path: '~/components', pathPrefix: false }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -72,7 +72,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     ['@nuxtjs/axios', { anotherOption: true }],
-    '@nuxtjs/auth',
+    '@nuxtjs/auth-next',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt/content
     '@nuxtjs/component-cache',
@@ -103,14 +103,15 @@ export default {
     optimizeImages: true,
   },
   publicRuntimeConfig: {
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'http://localhost:8000/api',
   },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'http://localhost:8000/api',
+    //credentials: true,
     //browserBaseURL: 'https://api.urartistic.com/api',
   },
   // auth module config
@@ -122,35 +123,70 @@ export default {
       callback: '/',
     },
 
-    refresh_token: {
-      prefix: '_refresh_token.',
+    localStorage: {
+      prefix: 'artify.',
     },
-    token: {
-      prefix: '_token.',
-    },
-
     strategies: {
+      // laravelSanctum: {
+      //   provider: 'laravel/sanctum',
+      //   url: 'http://localhost:8000',
+      //   token: {
+      //     property: 'accessToken',
+      //     required: true,
+      //     type: 'Bearer',
+      //   },
+
+      //   user: {
+      //     property: 'data',
+      //     autoFetch: true,
+      //   },
+      //   endpoints: {
+      //     login: {
+      //       url: '/api/login',
+      //       method: 'post',
+      //       // propertyName: 'accessToken',
+      //     },
+      //     user: {
+      //       url: '/api/details',
+      //       method: 'get',
+      //     },
+      //     logout: {
+      //       url: '/api/logout',
+      //       method: 'get',
+      //     },
+      //   },
+
+      //   watchLoggedIn: true,
+      // },
       local: {
+        token: {
+          property: 'accessToken',
+          required: true,
+          type: 'Bearer',
+          prefix: '_cust.',
+          maxAge: false,
+        },
+
+        user: {
+          property: 'data',
+          autoFetch: true,
+        },
         endpoints: {
           login: {
-            url: '/login',
+            url: 'login',
             method: 'post',
-            propertyName: 'accessToken',
           },
           user: {
-            url: '/details',
+            url: 'details',
             method: 'get',
-            propertyName: 'data',
           },
           logout: {
-            url: '/logout',
+            url: 'logout',
             method: 'get',
           },
         },
-        tokenRequired: true,
-        tokenType: 'Bearer',
+
         watchLoggedIn: true,
-        localStorage: true,
       },
     },
   },
