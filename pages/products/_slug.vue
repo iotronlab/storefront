@@ -1,14 +1,36 @@
 <template>
   <v-container fluid v-if="!$fetchState.pending">
+    <v-breadcrumbs :items="breadCrumb" divider="-"></v-breadcrumbs>
+
     <v-row justify="center">
       <v-col cols="12" md="6" lg="6">
         <ProductImage :images="product.images" />
       </v-col>
       <v-col cols="12" md="5" lg="5">
-        <h4 class="text-h6 text--primary">{{ product.name }}</h4>
-        <v-divider class="mb-1"></v-divider>
+        <h4 class="text-h6 text--primary">
+          {{ product.name
+          }}<v-chip
+            v-if="product.featured"
+            small
+            class="ml-2"
+            color="primary"
+            outlined
+            >featured</v-chip
+          >
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-chip v-bind="attrs" v-on="on" small
+                ><v-icon small left>mdi-eye</v-icon>{{ product.views }}</v-chip
+              >
+            </template>
+            <span>Views</span>
+          </v-tooltip>
+        </h4>
+        <v-divider class="my-2"></v-divider>
+
         <v-row no-gutters>
-          <span class="text-overline">price</span>&nbsp;
+          <h5 class="text-overline">price</h5>
+          &nbsp;
 
           <h4 class="text-h5 accent--text" v-if="product.special_price > 0">
             <span class="text-decoration-line-through text-caption">
@@ -20,19 +42,16 @@
             {{ product.formatted_price }}
           </h4></v-row
         >
-        <!-- <h5 class="text-body-1">
-          by
-          <nuxt-link
-            class="secondary--text"
-            :to="'/artists/' + product.vendor.slug"
-          >
-            {{ product.vendor.name }}</nuxt-link
-          >
-        </h5> -->
         <MiniProfile :vendor="product.vendor" />
+        <v-chip v-if="product.in_stock" color="success">In Stock</v-chip>
+        <v-tooltip right v-else>
+          <template v-slot:activator="{ on, attrs }">
+            <v-chip v-bind="attrs" v-on="on">Out of Stock</v-chip>
+          </template>
+          <span>You can still place a custom order.</span>
+        </v-tooltip>
 
-        <p v-if="!product.in_stock">Out of Stock</p>
-        <h6 class="text-overline">Description</h6>
+        <h6 class="text-overline mt-2">Description</h6>
         <p class="text-body-2">{{ product.short_description }}</p>
         <!-- <v-rating
           :value="product.vendor.rating"
@@ -176,6 +195,15 @@ export default {
     ProductVariation,
     // availablility,
   },
+  computed: {
+    breadCrumb() {
+      let breadCrumb = []
+      this.product.categories.map((el) => {
+        breadCrumb.unshift({ text: el.name, href: el.url })
+      })
+      return breadCrumb
+    },
+  },
   async fetch() {
     await this.$axios
       .$get(`products/${this.$route.params.slug}`)
@@ -193,7 +221,7 @@ export default {
         }
 
         this.configurations = configurations
-        this.auth = auth
+        //  this.auth = auth
       })
       .catch((err) => {
         console.log(err)

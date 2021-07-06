@@ -1,19 +1,11 @@
-
-  <!-- <v-carousel v-model="model">
-    <v-carousel-item v-for="(image, i) in imageList" :key="i">
-      <v-img :src="image.url" />
-    </v-carousel-item>
-  </v-carousel> -->
-  <template>
-  <v-card>
+<template>
+  <v-card rounded>
     <v-window v-model="activeImage">
       <v-window-item v-for="(image, i) in imageList" :key="i">
-        <v-row class="fill-height" align="center" justify="center">
-          <v-img :src="image.url" />
-        </v-row>
+        <v-img max-height="700" contain :src="image.url" />
       </v-window-item>
     </v-window>
-    <v-card-actions class="justify-space-between">
+    <v-card-actions>
       <!-- <v-item-group v-model="onboarding" class="text-center" mandatory>
         <v-row no-gutters>
           <v-col v-for="(image, i) in imageList" :key="i">
