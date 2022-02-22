@@ -106,8 +106,9 @@ p a:hover {
 }
 
 @font-face {
-  font-family: 'samarkan';
-  src: local('samarkan'), url(~assets/font/samarkan.ttf) format('truetype');
+  font-family: 'Rockville Solid Regular';
+  font-display: swap;
+  src: url('~assets/fonts/Rockville.otf') format('opentype');
 }
 
 .landing-title {

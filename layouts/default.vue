@@ -2,11 +2,11 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" temporary fixed app>
       <!-- {{ categories }} -->
-      <LazyNavDrawer :items="categories" v-if="categories.length > 0" />
-      <ProfileList />
+      <!-- <LazyNavDrawer :items="categories" v-if="categories.length > 0" />
+      <ProfileList /> -->
     </v-navigation-drawer>
     <v-app-bar id="nav" fixed app flat class="nav-transparent">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
       <nuxt-link :to="{ name: 'index' }">
         <v-img
           src="/logo.png"
@@ -18,7 +18,6 @@
       </nuxt-link>
       <v-container fluid class="pa-0">
         <v-row no-gutters align="center">
-          <!-- nav categories -->
           <v-col cols="7" class="hidden-md-and-down font-weight-bold ml-4">
             <v-menu
               v-for="category in categories"
@@ -29,7 +28,6 @@
               offset-y
             >
               <template v-slot:activator="{ on }">
-                <!--url in name:'category-url' is taking the value of url defined in "params: { url: category.url, name: category}" -->
                 <v-btn
                   :to="{
                     name: 'category-url',
@@ -68,11 +66,9 @@
           />
 
           <section v-if="$auth.loggedIn == false">
-            <!-- <Login /> -->
             <v-btn rounded color="secondary" to="/auth/login">Sign in</v-btn>
           </section>
           <section v-if="$auth.loggedIn == true">
-            <!-- Account button -->
             <v-menu bottom offset-y>
               <template v-slot:activator="{ on }">
                 <v-btn color="secondary" dark v-on="on" icon>
@@ -81,7 +77,7 @@
               </template>
               <ProfileList />
             </v-menu>
-            <!-- Cart button -->
+
             <v-badge overlap color="secondary">
               <span slot="badge">{{ cartCount }}</span>
               <v-btn :to="{ name: 'cart' }" rounded outlined color="primary">
@@ -97,7 +93,7 @@
       <nuxt />
     </v-main>
 
-    <LazyFooter />
+    <!-- <LazyFooter /> -->
   </v-app>
 </template>
 

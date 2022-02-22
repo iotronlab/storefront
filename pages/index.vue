@@ -1,6 +1,8 @@
 <template>
   <v-container fluid class="pa-0">
-    <v-carousel class="mt-n16" height="700">
+    <v-img src="landing.png"> <h1 class="text-h1 text-center">Coming SOON</h1></v-img>
+
+    <!-- <v-carousel class="mt-n16" height="700">
       <v-carousel-item
         src="landing.png"
         reverse-transition="fade-transition"
@@ -24,7 +26,7 @@
             >
           </v-col>
           <v-col cols="12" lg="8">
-            <!-- <TrendingProducts /> -->
+
           </v-col>
         </v-row></v-carousel-item
       >
@@ -45,7 +47,7 @@
 
         <Discover />
       </v-col>
-    </v-row>
+    </v-row> -->
     <!-- <v-row no-gutters class="pa-10" justify="center">
       <v-col cols="12" lg="6" md="8" sm="12">
         <Reviews :reviews="reviews" />
@@ -70,8 +72,7 @@ export default {
     return {
       reviews: [
         {
-          img:
-            'https://cdn.singulart.com/artworks/pictures/cropped/522/892/carousel/892_a46fd52bec84f777f49a959a9ab3fa8e.jpeg',
+          img: 'https://cdn.singulart.com/artworks/pictures/cropped/522/892/carousel/892_a46fd52bec84f777f49a959a9ab3fa8e.jpeg',
           rating: 5,
           title: 'April',
           content:
@@ -79,8 +80,7 @@ export default {
           name: 'Philip',
         },
         {
-          img:
-            'https://cdn.singulart.com/artworks/pictures/cropped/206/1177/carousel/1177_9c1b46bcad4da7d0a817e8dd82add5c5.jpeg',
+          img: 'https://cdn.singulart.com/artworks/pictures/cropped/206/1177/carousel/1177_9c1b46bcad4da7d0a817e8dd82add5c5.jpeg',
           rating: 4,
           title: 'LA FEMME AU BALCON DE SAIGON - VIETNAM',
           content:
@@ -88,8 +88,7 @@ export default {
           name: 'Alexander',
         },
         {
-          img:
-            'https://cdn.singulart.com/artworks/pictures/cropped/4195/12125/carousel/serie_12125_c8613d5bbe38ce2543afb96205ef1d6a.jpeg',
+          img: 'https://cdn.singulart.com/artworks/pictures/cropped/4195/12125/carousel/serie_12125_c8613d5bbe38ce2543afb96205ef1d6a.jpeg',
           rating: 5,
           title: 'Late Evening Light Through Trees',
           content:
@@ -97,8 +96,7 @@ export default {
           name: 'John',
         },
         {
-          img:
-            'https://cdn.singulart.com/artworks/pictures/cropped/63/148/carousel/148_ca275018367f4dd7a63a72a43899fc67.jpeg',
+          img: 'https://cdn.singulart.com/artworks/pictures/cropped/63/148/carousel/148_ca275018367f4dd7a63a72a43899fc67.jpeg',
           rating: 5,
           title: 'La libre envolée... (2015)',
           content:
@@ -106,8 +104,7 @@ export default {
           name: 'Cario',
         },
         {
-          img:
-            'https://cdn.singulart.com/artworks/pictures/cropped/522/892/carousel/892_a46fd52bec84f777f49a959a9ab3fa8e.jpeg',
+          img: 'https://cdn.singulart.com/artworks/pictures/cropped/522/892/carousel/892_a46fd52bec84f777f49a959a9ab3fa8e.jpeg',
           rating: 5,
           title: 'April',
           content:
@@ -115,8 +112,7 @@ export default {
           name: 'Philip',
         },
         {
-          img:
-            'https://cdn.singulart.com/artworks/pictures/cropped/86/56/carousel/serie_56_e53f4d145a958ef8c8e2a348dfccd99b.jpeg',
+          img: 'https://cdn.singulart.com/artworks/pictures/cropped/86/56/carousel/serie_56_e53f4d145a958ef8c8e2a348dfccd99b.jpeg',
           rating: 5,
           title: 'April',
           content:

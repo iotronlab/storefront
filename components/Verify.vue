@@ -1,10 +1,10 @@
 <template>
   <v-card class="mx-auto" max-width="600">
-    <v-card-title class="title font-weight-regular justify-space-between">
-      <span>{{ pageName }}</span>
+    <v-card-title class="justify-space-between">
+      <span class="text-uppercase text-h6">{{ pageName }}</span>
       <v-avatar
-        color="primary lighten-1"
-        class="subheading white--text"
+        color="primary"
+        class="white--text"
         size="24"
         v-text="step"
       ></v-avatar>
@@ -24,7 +24,7 @@
             :loading="isLoading"
           ></v-text-field>
           <span class="caption grey--text text--darken-1">
-            You will be recieving an OTP on this email for verification.
+            You will be recieving an OTP on this number for verification.
           </span>
         </v-card-text>
       </v-window-item>
@@ -83,7 +83,8 @@ export default {
       required: (value) => !!value || 'Required.',
       counter: (value) => value.length <= 30 || 'Max 30 characters',
       email: (value) => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        const pattern =
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return pattern.test(value) || 'Invalid e-mail.'
       },
     },

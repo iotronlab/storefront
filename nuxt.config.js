@@ -65,6 +65,7 @@ export default {
     '@nuxtjs/vuetify',
     '@aceforth/nuxt-optimized-images',
     '@nuxtjs/pwa',
+    '@nuxtjs/google-fonts',
   ],
   /*
    ** Nuxt.js modules
@@ -98,6 +99,12 @@ export default {
         },
       },
     ],
+  },
+  googleFonts: {
+    families: {
+      Comfortaa: [400, 600],
+      Poppins: [600],
+    },
   },
   optimizedImages: {
     optimizeImages: true,
@@ -204,10 +211,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
-    // defaultAssets: {
-    //   font: false,
-    //   icons: 'mdi',
-    // },
+    defaultAssets: false,
     theme: {
       dark: true,
       themes: {

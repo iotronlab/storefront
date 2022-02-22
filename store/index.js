@@ -102,7 +102,7 @@ export const actions = {
       commit('SET_SHIPPING_ADDRESS', address)
     }
   },
-  setSnackbar({ commit, snackbar }) {
+  setSnackbar({ commit }, snackbar) {
     snackbar.showing = true
     commit('SET_SNACKBAR', snackbar)
     console.log(snackbar)
